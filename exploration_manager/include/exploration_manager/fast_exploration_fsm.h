@@ -8,6 +8,7 @@
 #include <std_msgs/Empty.h>
 #include <nav_msgs/Odometry.h>
 #include <visualization_msgs/Marker.h>
+#include "quadrotor_msgs/PositionCommand.h"
 
 #include <algorithm>
 #include <iostream>
@@ -48,7 +49,7 @@ private:
   ros::NodeHandle node_;
   ros::Timer exec_timer_, safety_timer_, vis_timer_, frontier_timer_;
   ros::Subscriber trigger_sub_, odom_sub_;
-  ros::Publisher replan_pub_, new_pub_, bspline_pub_;
+  ros::Publisher replan_pub_, new_pub_, bspline_pub_, return_cmd_pub;
 
   /* helper functions */
   int callExplorationPlanner();

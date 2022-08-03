@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 
   FastExplorationFSM expl_fsm;
   expl_fsm.init(nh);
-
+  
   ros::Duration(1.0).sleep();
   ros::spin();
 

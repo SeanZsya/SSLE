@@ -9,6 +9,7 @@
 #include <plan_env/sdf_map.h>
 
 using Eigen::Vector4d;
+quadrotor_msgs::PositionCommand cmd;
 
 namespace fast_planner {
 void FastExplorationFSM::init(ros::NodeHandle& nh) {
@@ -45,6 +46,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   replan_pub_ = nh.advertise<std_msgs::Empty>("/planning/replan", 10);
   new_pub_ = nh.advertise<std_msgs::Empty>("/planning/new", 10);
   bspline_pub_ = nh.advertise<bspline::Bspline>("/planning/bspline", 10);
+  return_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("/position_cmd", 2);
 }
 
 void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
@@ -70,6 +72,21 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
 
     case FINISH: {
       ROS_INFO_THROTTLE(1.0, "finish exploration.");
+      cmd.header.stamp = ros::Time::now();
+      cmd.trajectory_id = 1;
+      cmd.position.x = 0.0;
+      cmd.position.y = 0.0;
+      cmd.position.z = 0.0;
+      cmd.velocity.x = 0.0;
+      cmd.velocity.y = 0.0;
+      cmd.velocity.z = 0.0;
+      cmd.acceleration.x = 0.0;
+      cmd.acceleration.y = 0.0;
+      cmd.acceleration.z = 0.0;
+      cmd.yaw = 0.0;
+      cmd.yaw_dot = 0.0;
+      return_cmd_pub.publish(cmd);
+      ROS_INFO_THROTTLE(1.0, "initial point sended.");
       break;
     }
 
@@ -277,7 +294,7 @@ void FastExplorationFSM::frontierCallback(const ros::TimerEvent& e) {
   static int delay = 0;
   if (++delay < 5) return;
 
-  if (state_ == WAIT_TRIGGER || state_ == FINISH) {
+  if (state_ == WAIT_TRIGGER ) {
     auto ft = expl_manager_->frontier_finder_;
     auto ed = expl_manager_->ed_;
     ft->searchFrontiers();
