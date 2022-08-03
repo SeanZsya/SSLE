@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>traj_utils</name>
+  <version>0.0.0</version>
+  <description>The traj_utils package</description>
+  <maintainer email="bzhouai@todo.todo">bzhouai</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>bspline</build_depend>
+  <build_depend>bspline_opt</build_depend>
+  <build_depend>path_searching</build_depend>
+  <build_depend>poly_traj</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <build_export_depend>bspline</build_export_depend>
+  <build_export_depend>bspline_opt</build_export_depend>
+  <build_export_depend>path_searching</build_export_depend>
+  <build_export_depend>poly_traj</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+
+  <exec_depend>bspline</exec_depend>
+  <exec_depend>bspline_opt</exec_depend>
+  <exec_depend>path_searching</exec_depend>
+  <exec_depend>poly_traj</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

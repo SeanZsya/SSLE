@@ -1,0 +1,22 @@
+<launch>
+    <!-- Launch Gazebo Simulation -->
+    
+    <include file="$(find prometheus_gazebo)/launch_basic/sitl.launch">
+
+		<!-- <arg name="world" value="$(find prometheus_gazebo)/worlds/indoor3.world"/> -->
+		<!-- <arg name="world" value="$(find prometheus_gazebo)/worlds/indoor_race_track.world"/> -->
+		<arg name="world" value="$(find exploration_manager)/worlds/cas_museum.world"/>
+		<!-- <arg name="world" value="$(find rrt_exploration_tutorials)/launch/includes/worlds/maze_large.world"/> -->
+	
+		<arg name="sdf" value="$(find prometheus_gazebo)/amov_models/p450_SSlidar/p450_SSlidar.sdf"/>
+		<arg name="model" value="p450_SSlidar"/>
+	
+		<arg name="x" value="-1.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0"/>
+		<!-- <arg name="x" value="0.8"/>
+		<arg name="y" value="0.8"/>
+		<arg name="z" value="0"/> -->
+    </include>
+
+</launch>

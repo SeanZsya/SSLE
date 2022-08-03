@@ -1,0 +1,11 @@
+NAME : single.1957.tour
+COMMENT : Length = 1957
+COMMENT : Found by LKH [Keld Helsgaun] Wed Aug  3 14:22:22 2022
+TYPE : TOUR
+DIMENSION : 3
+TOUR_SECTION
+1
+3
+2
+-1
+EOF
