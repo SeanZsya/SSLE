@@ -8,6 +8,7 @@ project(prometheus_control)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  message_generation
   roscpp
   geometry_msgs
   nav_msgs
@@ -31,6 +32,13 @@ find_package(Boost REQUIRED COMPONENTS system)
 ## Declare ROS messages, services and actions ##
 ################################################
 
+generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+   geometry_msgs 
+   nav_msgs
+   sensor_msgs
+)
 
 catkin_package(
   INCLUDE_DIRS include
@@ -41,6 +49,8 @@ catkin_package(
 ###########
 ## Build ##
 ###########
+
+
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
@@ -70,7 +80,7 @@ target_link_libraries(px4_pos_controller ${catkin_LIBRARIES})
 
 ##px4_geometry_controller.cpp
 add_executable(px4_geometry_controller src/px4_geometry_controller.cpp)
-add_dependencies(px4_geometry_controller prometheus_control_gencpp) 
+add_dependencies(px4_geometry_controller  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(px4_geometry_controller ${catkin_LIBRARIES})
 
 ##px4_pos_estimator.cpp
