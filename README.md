@@ -31,3 +31,5 @@ Add these lines to your ~./bashrc:
     source <path to your workspace>/devel/setup.bash
     export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/models
     export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/plugins
+    
+### Run FUEL Simulation in Gazebo
