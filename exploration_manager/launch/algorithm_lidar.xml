@@ -100,7 +100,7 @@
     <param name="exploration/tsp_dir" value="$(find lkh_tsp_solver)/resource" type="string"/>
     <param name="exploration/relax_time" value="1.0" type="double"/>
 
-    <param name="frontier/cluster_min" value="100" type="int"/>
+    <param name="frontier/cluster_min" value="50" type="int"/>
     <param name="frontier/cluster_size_xy" value="2.0" type="double"/>
     <param name="frontier/cluster_size_z" value="10.0" type="double"/>
     <param name="frontier/min_candidate_dist" value="0.75" type="double"/>

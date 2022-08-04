@@ -4,15 +4,11 @@ project(run_onboard)
 find_package(catkin REQUIRED COMPONENTS
    roscpp  
    mavros
-   std_srvs
-   message_generation 
-
+   std_srvs 
    prometheus_control
-
    tf
    tf2_ros
    tf2_eigen
-
    std_msgs
    nav_msgs
    sensor_msgs

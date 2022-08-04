@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="SSlidar">
+    <link name="link">
+
+      <!-- 物理参数 -->
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+
+      <!-- 显示设置 -->
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://SSlidar/meshes/VLP16_base_1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <!-- 传感器参数设置 -->
+      <sensor type='ray' name='SSlidar'>          
+          <ray>
+            <scan>
+            <!-- FoV: 70*30 -->
+               <!-- 水平140点 -->
+              <horizontal>
+                <samples>140</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.6109</min_angle>
+                <max_angle>0.6109</max_angle>
+              </horizontal>
+              <vertical>
+                <!-- 垂直50线 -->
+                <samples>50</samples>
+                <min_angle>-0.2618</min_angle>
+                <max_angle>0.2618</max_angle>
+              </vertical>
+            </scan>
+            <!--最小距离1.5m, 最大距离10m-->
+            <range>
+              <min>1.5</min>
+              <max>10</max>
+              <resolution>0.01</resolution>
+            </range>
+          </ray>
+
+          <plugin name='3D_laser' filename='libgazebo_ros_velodyne_laser.so'>
+            <topicName>/sensors/SSlidar_scan</topicName>
+            <frameName>SSlidar_link</frameName>
+            <min_range>1.5</min_range>
+            <max_range>10</max_range>
+            <gaussianNoise>0.001</gaussianNoise>
+          </plugin>
+          
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>false</visualize>
+      
+      </sensor>
+    
+    </link>
+  </model>
+</sdf>
