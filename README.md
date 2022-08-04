@@ -14,15 +14,15 @@ This project has been tested on 18.04(ROS Melodic).
 
     Coming soon.
 
-3. Baic Models
+3. Other Required Tools 
+
+        sudo apt-get install libarmadillo-dev ros-melodic-nlopt
+
+4. *Gazebo Models (optional)*
 
     In `~/.gazebo/models/ `, run:
 
         git clone https://github.com/osrf/gazebo_models
-
-4. Other Required Tools 
-
-        sudo apt-get install libarmadillo-dev ros-melodic-nlopt
 
 ### Path Setup
 
@@ -33,3 +33,11 @@ Add these lines to your ~./bashrc:
     export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/plugins
     
 ### Run FUEL Simulation in Gazebo
+
+Launch Exploration:
+
+    roslaunch exploration_manager exploration_gazebo_sslidar.launch
+
+Start Keyboard Control (follow the instructions inside it):
+
+    rosrun run_onboard pub_px4_cmd
