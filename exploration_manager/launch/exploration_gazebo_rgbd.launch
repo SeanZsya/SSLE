@@ -1,6 +1,23 @@
 <launch>
 
-  <include file="$(find exploration_manager)/launch/sitl_rgbd_with_fuel.launch"/>
+  <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
+    <!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/indoor3.world"/> -->
+    <arg name="world" value="$(find fuel_in_gazebo)/worlds/room_mini.world"/>
+		<!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/indoor_race_track.world"/> -->
+		<!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/cas_museum.world"/> -->
+		<!-- <arg name="world" value="$(find rrt_exploration_tutorials)/launch/includes/worlds/maze_simple_high.world"/> -->
+	
+		<arg name="sdf" value="$(find fuel_in_gazebo)/models/p450_D435i/p450_D435i.sdf"/>
+		<arg name="model" value="p450_D435i"/>
+	
+		<arg name="x" value="-1.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0"/>
+		<!-- <arg name="x" value="0.8"/>
+		<arg name="y" value="0.8"/>
+		<arg name="z" value="0"/> -->
+  </include>
+  
   <include file="$(find exploration_manager)/launch/rviz.launch"/>
   <node pkg="run_onboard" type="pub_cam_pose" name="pub_cam_pose" output="screen"/> 
   <!-- <node pkg="run_onboard" type="pub_px4_cmd" name="pub_px4_cmd" output="screen"/>  -->

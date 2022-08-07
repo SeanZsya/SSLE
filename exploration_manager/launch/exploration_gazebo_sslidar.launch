@@ -1,6 +1,22 @@
 <launch>
 
-  <include file="$(find exploration_manager)/launch/sitl_sslidar_with_fuel.launch"/>
+  <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
+    <arg name="world" value="$(find fuel_in_gazebo)/worlds/indoor3.world"/>
+		<!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/indoor_race_track.world"/> -->
+		<!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/cas_museum.world"/> -->
+		<!-- <arg name="world" value="$(find rrt_exploration_tutorials)/launch/includes/worlds/maze_simple_high.world"/> -->
+	
+		<arg name="sdf" value="$(find fuel_in_gazebo)/models/p450_SSlidar/p450_SSlidar.sdf"/>
+		<arg name="model" value="p450_SSlidar"/>
+	
+		<arg name="x" value="-1.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0"/>
+		<!-- <arg name="x" value="0.8"/>
+		<arg name="y" value="0.8"/>
+		<arg name="z" value="0"/> -->
+  </include>
+
   <include file="$(find exploration_manager)/launch/rviz.launch"/>
   <node pkg="run_onboard" type="pub_lidar_pose" name="pub_lidar_pose" output="screen"/> 
 
@@ -28,7 +44,7 @@
     <arg name="box_min_z" value=" -0.5"/>
     <arg name="box_max_x" value="100.0"/>
     <arg name="box_max_y" value="100.0"/>
-    <arg name="box_max_z" value="1.5"/>
+    <arg name="box_max_z" value="1.0"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
     <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
