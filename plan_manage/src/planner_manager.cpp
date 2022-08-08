@@ -829,7 +829,7 @@ void FastPlannerManager::planYawExplore(const Eigen::Vector3d& start_yaw, const 
 
   // Debug rapid change of yaw
   if (fabs(start_yaw3d[0] - end_yaw3d[0]) >= M_PI) {
-    ROS_ERROR("Yaw change rapidly!");
+    ROS_WARN("Yaw change rapidly!");
     //std::cout << "start yaw: " << start_yaw3d[0] << ", " << end_yaw3d[0] << std::endl;
   }
 
