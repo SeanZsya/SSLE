@@ -13,37 +13,28 @@
 
 - **plan_manage:** High-level modules that schedule and call the mapping and planning algorithms. 
 
-- **plan_env:** Online mapping algorithms, build an Euclidean signed distance filed (ESDF) for the planning systems 
+- **path_searching:** Path searching algorithems like kinodynamic astar and topology PRM.
+
+### Mapping
+
+- **plan_env:** Online mapping algorithms, build an Euclidean signed distance filed (ESDF) for the planning systems.
+
+### Running Preparation
+
+- **fuel_in_gazebo:** Components required by Gazebo, like models, worlds and pulgins.
+  
+- **px4_connection:** Command analysis and other tools for communicate with px4 (both on sitl and onboard).
+  
+- **run_onboard:** Tools for running FUEL onboard, including keyboard control，sensor pose / control command conversion.
+
+### others
 
 - **bspline:** A implementation of the B-spline-based trajectory representation. 
 
 - **bspline_opt:** The gradient-based trajectory optimization using B-spline trajectory.
 
+- **poly_traj, traj_utils, utils**
 
-poly_traj 
-
-Traj_generator.cpp相对fast_planner无改动 
-
-polynomial_traj.cpp删改较多 
-
-
- 
-
-工具类： 
-
-traj_utils 
-
-轨迹等元素的visualization 
-
-Process_msg:  
-
-未知作用的cloudCallback函数 
-
-对点进行膨胀inflate 
-
-uitls 
-
-Lkh_tsp_solver：用来求解tsp问题
 
 
 ## Quick Start
@@ -60,11 +51,15 @@ This project has been tested on 18.04(ROS Melodic).
 
     Coming soon.
 
-3. Other Required Tools 
+3. Gazebo Plugins
+   
+   Coming soon
+
+4. Other Required Tools 
 
         sudo apt-get install libarmadillo-dev ros-melodic-nlopt
 
-4. *Gazebo Models (optional)*
+5. *Gazebo Models (optional)*
 
     In `~/.gazebo/models/ `, run:
 
