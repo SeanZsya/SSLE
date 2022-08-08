@@ -1,5 +1,51 @@
 # FUEL (with SSLidar option and Gazebo Simulation)
 
+## Project Structure
+
+
+### Exploration
+
+- **exploration_manager:** High-level modules that schedule and call the exploration algorithms. 
+
+- **active_perception:** Find and organize frontier clusters, observe and avoid unknown obstacles.
+
+### Planning
+
+- **plan_manage:** High-level modules that schedule and call the mapping and planning algorithms. 
+
+- **plan_env:** Online mapping algorithms, build an Euclidean signed distance filed (ESDF) for the planning systems 
+
+- **bspline:** A implementation of the B-spline-based trajectory representation. 
+
+- **bspline_opt:** The gradient-based trajectory optimization using B-spline trajectory.
+
+
+poly_traj 
+
+Traj_generator.cpp相对fast_planner无改动 
+
+polynomial_traj.cpp删改较多 
+
+
+ 
+
+工具类： 
+
+traj_utils 
+
+轨迹等元素的visualization 
+
+Process_msg:  
+
+未知作用的cloudCallback函数 
+
+对点进行膨胀inflate 
+
+uitls 
+
+Lkh_tsp_solver：用来求解tsp问题
+
+
 ## Quick Start
 
 ### Dependencies

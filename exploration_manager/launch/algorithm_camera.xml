@@ -84,6 +84,7 @@
     <!-- <param name="fsm/thresh_replan2" value="100.0" type="double"/> -->
     <!-- <param name="fsm/thresh_replan3" value="0.1" type="double"/> -->
     <param name="fsm/replan_time" value="0.200" type="double"/>
+    <param name="fsm/enable_returning" value="true" type="bool"/>
 
     <!-- Exploration manager -->
 

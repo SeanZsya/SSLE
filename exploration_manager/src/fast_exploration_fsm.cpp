@@ -1,4 +1,3 @@
-
 #include <plan_manage/planner_manager.h>
 #include <exploration_manager/fast_exploration_manager.h>
 #include <traj_utils/planning_visualization.h>
@@ -10,6 +9,7 @@
 
 using Eigen::Vector4d;
 quadrotor_msgs::PositionCommand cmd;
+bool enable_returning;
 
 namespace fast_planner {
 void FastExplorationFSM::init(ros::NodeHandle& nh) {
@@ -21,6 +21,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   nh.param("fsm/thresh_replan2", fp_->replan_thresh2_, -1.0);
   nh.param("fsm/thresh_replan3", fp_->replan_thresh3_, -1.0);
   nh.param("fsm/replan_time", fp_->replan_time_, -1.0);
+  nh.param("fsm/enable_returning", enable_returning, true);
 
   /* Initialize main modules */
   expl_manager_.reset(new FastExplorationManager);
@@ -164,7 +165,7 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
       // Saty in FINSH state more than 5s, RETURN
       ROS_INFO_THROTTLE(1.0, "finish exploration.");
       finish_time_= ros::Time::now();
-      if ((finish_time_ - unfinish_time_).toSec() > 3){
+      if ((finish_time_ - unfinish_time_).toSec() > 3 && enable_returning){
         transitState(RETURN, "Returning");
         ROS_INFO_THROTTLE(1.0, "Start Returning Process");
       }
@@ -211,11 +212,7 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
         fd_->newest_traj_.start_time = ros::Time::now();
         bspline_pub_.publish(fd_->newest_traj_);
         fd_->static_state_ = false;
-
-        ROS_INFO_STREAM_THROTTLE(1,"Stage8");
         transitState(EXEC_RETURN, "FSM");
-        ROS_INFO_STREAM_THROTTLE(1,"Stage9");
-
         thread vis_thread(&FastExplorationFSM::visualize, this);
         vis_thread.detach();
       }  

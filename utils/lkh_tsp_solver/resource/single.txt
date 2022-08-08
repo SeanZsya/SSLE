@@ -1,6 +1,6 @@
 NAME : single.482.tour
 COMMENT : Length = 482
-COMMENT : Found by LKH [Keld Helsgaun] Mon Aug  8 11:44:23 2022
+COMMENT : Found by LKH [Keld Helsgaun] Mon Aug  8 13:46:05 2022
 TYPE : TOUR
 DIMENSION : 3
 TOUR_SECTION
