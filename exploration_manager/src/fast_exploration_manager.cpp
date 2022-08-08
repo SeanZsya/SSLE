@@ -87,14 +87,14 @@ void FastExplorationManager::initialize(ros::NodeHandle& nh) {
 
 int FastExplorationManager::planExploreMotion(
     const Vector3d& pos, const Vector3d& vel, const Vector3d& acc, const Vector3d& yaw) {
+  
   ros::Time t1 = ros::Time::now();
   auto t2 = t1;
   ed_->views_.clear();
   ed_->global_tour_.clear();
 
-  //std::cout << "start pos: " << pos.transpose() << ", vel: " << vel.transpose()
-  //          << ", acc: " << acc.transpose() 
-  //          << std::endl;
+  // std::cout << "start pos: " << pos.transpose() << ", vel: " << vel.transpose()
+  //           << ", acc: " << acc.transpose() << std::endl;
 
   // Search frontiers and group them into clusters
   frontier_finder_->searchFrontiers();
@@ -221,7 +221,7 @@ int FastExplorationManager::planExploreMotion(
   } else
     ROS_ERROR("Empty destination.");
 
-  //std::cout << "Next view: " << next_pos.transpose() << ", " << next_yaw << std::endl;
+  ROS_INFO_STREAM("Next view: " << next_pos.transpose() << ", " << next_yaw);
 
   // Plan trajectory (position and yaw) to the next viewpoint
   t1 = ros::Time::now();
@@ -238,10 +238,16 @@ int FastExplorationManager::planExploreMotion(
   }
   ed_->path_next_goal_ = planner_manager_->path_finder_->getPath();
   shortenPath(ed_->path_next_goal_);
-
+  
+  for (auto x: ed_->path_next_goal_)
+    std::cout << x.transpose() << "\n" << std::endl;
+  
   const double radius_far = 5.0;
   const double radius_close = 1.5;
+
+  //atsar not used, sum length of each segmentation
   const double len = Astar::pathLength(ed_->path_next_goal_);
+  
   if (len < radius_close) {
     // Next viewpoint is very close, no need to search kinodynamic path, just use waypoints-based
     // optimization
@@ -251,7 +257,104 @@ int FastExplorationManager::planExploreMotion(
   } else if (len > radius_far) {
     // Next viewpoint is far away, select intermediate goal on geometric path (this also deal with
     // dead end)
+    std::cout << "Far goal." << std::endl;
+    double len2 = 0.0;
+    vector<Eigen::Vector3d> truncated_path = { ed_->path_next_goal_.front() };
+    for (int i = 1; i < ed_->path_next_goal_.size() && len2 < radius_far; ++i) {
+      auto cur_pt = ed_->path_next_goal_[i];
+      len2 += (cur_pt - truncated_path.back()).norm();
+      truncated_path.push_back(cur_pt);
+    }
+    ed_->next_goal_ = truncated_path.back();
+    planner_manager_->planExploreTraj(truncated_path, vel, acc, time_lb);
+    // if (!planner_manager_->kinodynamicReplan(
+    //         pos, vel, acc, ed_->next_goal_, Vector3d(0, 0, 0), time_lb))
+    //   return FAIL;
+    // ed_->kino_path_ = planner_manager_->kino_path_finder_->getKinoTraj(0.02);
+  } else {
+    // Search kino path to exactly next viewpoint and optimize
+    std::cout << "Mid goal" << std::endl;
+    ed_->next_goal_ = next_pos;
+
+    if (!planner_manager_->kinodynamicReplan(
+            pos, vel, acc, ed_->next_goal_, Vector3d(0, 0, 0), time_lb))
+      return FAIL;
+  }
+
+  if (planner_manager_->local_data_.position_traj_.getTimeSum() < time_lb - 0.1)
+    ROS_ERROR("Lower bound not satified!");
+
+  planner_manager_->planYawExplore(yaw, next_yaw, true, ep_->relax_time_);
+
+  // double traj_plan_time = (ros::Time::now() - t1).toSec();
+  // t1 = ros::Time::now();
+
+  // double yaw_time = (ros::Time::now() - t1).toSec();
+  // ROS_WARN("Traj: %lf, yaw: %lf", traj_plan_time, yaw_time);
+  // double total = (ros::Time::now() - t2).toSec();
+  // ROS_WARN("Total time: %lf", total);
+  // ROS_ERROR_COND(total > 0.1, "Total time too long!!!");
+
+  return SUCCEED;
+}
+
+int FastExplorationManager::planReturnMotion(
+    const Vector3d& pos, const Vector3d& vel, const Vector3d& acc, const Vector3d& yaw) {
+  
+  ROS_ERROR_STREAM_THROTTLE(1,"Start planning to return");
+  ros::Time t1 = ros::Time::now();
+  auto t2 = t1;
+
+  Vector3d next_pos(0,0,0);
+  double next_yaw = 0.0;
+
+  // Only 1 destination, no need to find global tour through TSP
+  ed_->views_.clear();
+  ed_->global_tour_ = { pos, ed_->points_[0] };
+  ed_->refined_tour_.clear();
+  ed_->refined_views1_.clear();
+  ed_->refined_views2_.clear();
+
+  // Plan trajectory (position and yaw) to the next viewpoint
+  t1 = ros::Time::now();
+
+  // Compute time lower bound of yaw and use in trajectory generation
+  double diff = fabs(next_yaw - yaw[0]);
+  double time_lb = min(diff, 2 * M_PI - diff) / ViewNode::yd_;
+
+  // Generate trajectory of x,y,z
+  planner_manager_->path_finder_->reset();
+
+  if (planner_manager_->path_finder_->search(pos, next_pos) != Astar::REACH_END) {
+    ROS_ERROR("No path to next viewpoint");
+    return FAIL;
+  }
+  
+  ROS_INFO_STREAM("Next view: " << next_pos.transpose() << ", " << next_yaw);
+
+  ed_->path_next_goal_ = planner_manager_->path_finder_->getPath();
+
+
+  shortenPath(ed_->path_next_goal_);
+
+  //output the shortenPath result
+  for (auto x: ed_->path_next_goal_)
+    std::cout << x.transpose() << "\n" << std::endl;
+  
+  const double radius_far = 5.0;
+  const double radius_close = 1.5;
+  const double len = Astar::pathLength(ed_->path_next_goal_);
+  
+  if (len < radius_close) {
+    // Next viewpoint is very close, no need to search kinodynamic path, just use waypoints-based optimization
+    ROS_INFO_STREAM_THROTTLE(1,"Stage4");
+    planner_manager_->planExploreTraj(ed_->path_next_goal_, vel, acc, time_lb);
+    ed_->next_goal_ = next_pos;
+
+  } else if (len > radius_far) {
+    // Next viewpoint is far away, select intermediate goal on geometric path (this also deal with dead end)
     //std::cout << "Far goal." << std::endl;
+    ROS_INFO_STREAM_THROTTLE(1,"Stage5");
     double len2 = 0.0;
     vector<Eigen::Vector3d> truncated_path = { ed_->path_next_goal_.front() };
     for (int i = 1; i < ed_->path_next_goal_.size() && len2 < radius_far; ++i) {
@@ -268,6 +371,7 @@ int FastExplorationManager::planExploreMotion(
   } else {
     // Search kino path to exactly next viewpoint and optimize
     //std::cout << "Mid goal" << std::endl;
+    ROS_INFO_STREAM_THROTTLE(1,"Stage6");
     ed_->next_goal_ = next_pos;
 
     if (!planner_manager_->kinodynamicReplan(
@@ -275,22 +379,23 @@ int FastExplorationManager::planExploreMotion(
       return FAIL;
   }
 
-  if (planner_manager_->local_data_.position_traj_.getTimeSum() < time_lb - 0.1)
-    ROS_ERROR("Lower bound not satified!");
-
+  // if (planner_manager_->local_data_.position_traj_.getTimeSum() < time_lb - 0.1)
+  //   ROS_ERROR("Lower bound not satified!");
   planner_manager_->planYawExplore(yaw, next_yaw, true, ep_->relax_time_);
+  ROS_INFO_STREAM_THROTTLE(1,"Stage7");
+  // double traj_plan_time = (ros::Time::now() - t1).toSec();
+  // t1 = ros::Time::now();
 
-  double traj_plan_time = (ros::Time::now() - t1).toSec();
-  t1 = ros::Time::now();
-
-  double yaw_time = (ros::Time::now() - t1).toSec();
-  ROS_WARN("Traj: %lf, yaw: %lf", traj_plan_time, yaw_time);
-  double total = (ros::Time::now() - t2).toSec();
-  ROS_WARN("Total time: %lf", total);
-  ROS_ERROR_COND(total > 0.1, "Total time too long!!!");
+  // double yaw_time = (ros::Time::now() - t1).toSec();
+  // ROS_WARN("Traj: %lf, yaw: %lf", traj_plan_time, yaw_time);
+  // double total = (ros::Time::now() - t2).toSec();
+  // ROS_WARN("Total time: %lf", total);
+  // ROS_ERROR_COND(total > 0.1, "Total time too long!!!");
 
   return SUCCEED;
 }
+
+
 
 void FastExplorationManager::shortenPath(vector<Vector3d>& path) {
   if (path.empty()) {
@@ -339,7 +444,7 @@ void FastExplorationManager::findGlobalTour(
   t1 = ros::Time::now();
 
   // Write params and cost matrix to problem file
-  ofstream prob_file(ep_->tsp_dir_ + "/single.tsp");
+  // ofstream prob_file(ep_->tsp_dir_ + "/single.tsp");
   // Problem specification part, follow the format of TSPLIB
 
   string prob_spec = "NAME : single\nTYPE : ATSP\nDIMENSION : " + to_string(dimension) +
@@ -350,9 +455,9 @@ void FastExplorationManager::findGlobalTour(
   //     "\nEDGE_WEIGHT_TYPE : "
   //     "EXPLICIT\nEDGE_WEIGHT_FORMAT : LOWER_ROW\nEDGE_WEIGHT_SECTION\n";
 
-  prob_file << prob_spec;
-  // prob_file << "TYPE : TSP\n";
-  // prob_file << "EDGE_WEIGHT_FORMAT : LOWER_ROW\n";
+  //prob_file << prob_spec;
+  //prob_file << "TYPE : TSP\n";
+  //prob_file << "EDGE_WEIGHT_FORMAT : LOWER_ROW\n";
   // Problem data part
   const int scale = 100;
   if (false) {
@@ -360,9 +465,9 @@ void FastExplorationManager::findGlobalTour(
     for (int i = 1; i < dimension; ++i) {
       for (int j = 0; j < i; ++j) {
         int int_cost = cost_mat(i, j) * scale;
-        prob_file << int_cost << " ";
+        //prob_file << int_cost << " ";
       }
-      prob_file << "\n";
+      //prob_file << "\n";
     }
 
   } else {
@@ -370,14 +475,14 @@ void FastExplorationManager::findGlobalTour(
     for (int i = 0; i < dimension; ++i) {
       for (int j = 0; j < dimension; ++j) {
         int int_cost = cost_mat(i, j) * scale;
-        prob_file << int_cost << " ";
+        //prob_file << int_cost << " ";
       }
-      prob_file << "\n";
+      //prob_file << "\n";
     }
   }
 
-  prob_file << "EOF";
-  prob_file.close();
+  //prob_file << "EOF";
+  //prob_file.close();
 
   // Call LKH TSP solver
   solveTSPLKH((ep_->tsp_dir_ + "/single.par").c_str());
