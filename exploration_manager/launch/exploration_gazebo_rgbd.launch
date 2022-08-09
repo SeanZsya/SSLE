@@ -56,7 +56,7 @@
     <!-- depth topic: depth image, 640x480 by default -->
     <!-- cloud topic: point cloud measurement  -->
     <!-- subscribe ONLY TO ONE of the two topics -->
-    <arg name="depth_topic" value="/realsense_plugin/camera/depth/image_raw"/>
+    <arg name="depth_topic" value="/realsense_plugin/depth/image_raw"/>
     <arg name="cloud_topic" value="/pcl_render_node/cloud"/>
 
     <!-- intrinsic params of the depth camera -->

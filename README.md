@@ -41,7 +41,7 @@
 
 ### Dependencies
 
-This project has been tested on 18.04(ROS Melodic).
+This project has been tested on 18.04(ROS Melodic). Before you build it using `catkin_make`, make sure you meet the following requirements:
 
 1. Basic ROS Environment (recommand desktop-full)
 
@@ -53,7 +53,9 @@ This project has been tested on 18.04(ROS Melodic).
 
 3. Gazebo Plugins
    
-   Coming soon
+    For realsense sensors and lidar Gazebo plugins, in your workspace, run:
+
+        git clone https://github.com/SeanZsya/gazebo_pulgins
 
 4. Other Required Tools 
 
@@ -71,14 +73,21 @@ Add these lines to your ~./bashrc:
 
     source <path to your workspace>/devel/setup.bash
     export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/models
-    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/plugins
+    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:<path to your workspace>/devel/lib
     
 ### Run FUEL Simulation in Gazebo
 
-Launch Exploration:
+**Launch Exploration:**
 
-    roslaunch exploration_manager exploration_gazebo_sslidar.launch
+- For Solid-state lidar:
 
-Start Keyboard Control (follow the instructions inside it):
+        roslaunch exploration_manager exploration_gazebo_sslidar.launch
+
+- For RGBD camera:
+
+        roslaunch exploration_manager exploration_gazebo_rgbd.launch
+
+
+**Start Keyboard Control:** (follow the instructions inside it)
 
     rosrun run_onboard pub_px4_cmd
