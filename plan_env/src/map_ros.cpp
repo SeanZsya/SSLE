@@ -212,7 +212,7 @@ void MapROS::processDepthImage() {
   int rows = depth_image_->rows;
   double depth;
   Eigen::Matrix3d camera_r = camera_q_.toRotationMatrix();
-  Eigen::Vector3d pt_cur, pt_world;
+  Eigen::Vector3d pt_cur, pt_mid, pt_world;
   const double inv_factor = 1.0 / k_depth_scaling_factor_;  //depth_scaling为1000
 
   //skip_pixel为2
@@ -237,8 +237,13 @@ void MapROS::processDepthImage() {
       pt_cur(1) = (v - cy_) * depth / fy_;
       pt_cur(2) = depth;
 
+      //相机坐标，世界坐标对齐
+      pt_mid(0) = pt_cur(2);
+      pt_mid(1) = -pt_cur(0);
+      pt_mid(2) = -pt_cur(1);
+
       //转换到统一世界坐标下
-      pt_world = camera_r * pt_cur + camera_pos_;
+      pt_world = camera_r * pt_mid + camera_pos_;
 
       auto& pt = point_cloud_.points[proj_points_cnt++];
       pt.x = pt_world[0];
