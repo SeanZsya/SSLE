@@ -9,7 +9,7 @@
 
 using Eigen::Vector4d;
 quadrotor_msgs::PositionCommand cmd;
-bool enable_returning;
+bool auto_return;
 
 namespace fast_planner {
 void FastExplorationFSM::init(ros::NodeHandle& nh) {
@@ -21,7 +21,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   nh.param("fsm/thresh_replan2", fp_->replan_thresh2_, -1.0);
   nh.param("fsm/thresh_replan3", fp_->replan_thresh3_, -1.0);
   nh.param("fsm/replan_time", fp_->replan_time_, -1.0);
-  nh.param("fsm/enable_returning", enable_returning, true);
+  nh.param("fsm/auto_return", auto_return, true);
 
   /* Initialize main modules */
   expl_manager_.reset(new FastExplorationManager);
@@ -165,7 +165,7 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
       // Saty in FINSH state more than 5s, RETURN
       ROS_INFO_THROTTLE(1.0, "finish exploration.");
       finish_time_= ros::Time::now();
-      if ((finish_time_ - unfinish_time_).toSec() > 3 && enable_returning){
+      if ((finish_time_ - unfinish_time_).toSec() > 3 && auto_return){
         transitState(RETURN, "Returning");
         ROS_INFO_THROTTLE(1.0, "Start Returning Process");
       }

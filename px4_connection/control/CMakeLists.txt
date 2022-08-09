@@ -32,14 +32,6 @@ find_package(Boost REQUIRED COMPONENTS system)
 ## Declare ROS messages, services and actions ##
 ################################################
 
-generate_messages(
-   DEPENDENCIES
-   std_msgs  # Or other packages containing msgs
-   geometry_msgs 
-   nav_msgs
-   sensor_msgs
-)
-
 catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS  message_runtime
@@ -91,23 +83,7 @@ target_link_libraries(px4_pos_estimator OptiTrackFeedbackRigidBody)
 
 ##ros_info_color_test.cpp
 add_executable(ros_info_color_test src/Utilities/ros_info_color_test.cpp)
-add_dependencies(ros_info_color_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(ros_info_color_test ${catkin_LIBRARIES})
-
-# add_executable(planner_server src/Test/planner_server.cpp)
-# add_dependencies(planner_server prometheus_control_gencpp)
-# target_link_libraries(planner_server ${catkin_LIBRARIES})
-
-
-###### Test File ##########
-#add_executable(px4_fw_controller src/Test/px4_fw_controller.cpp)
-#add_dependencies(px4_fw_controller prometheus_control_gencpp)
-#target_link_libraries(px4_fw_controller ${catkin_LIBRARIES})
-
-add_executable(px4_sender src/px4_sender.cpp)
-add_dependencies(px4_sender  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(px4_sender ${catkin_LIBRARIES})
-
+add_dependencies(ros_info_color_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) set_mode
 
 ###### Utilities File ##########
 #add_executable(keyboard_control src/Utilities/keyboard_control.cpp)
@@ -116,7 +92,7 @@ target_link_libraries(px4_sender ${catkin_LIBRARIES})
 
 ##px4_pos_estimator_with_noise.cpp
 add_executable(px4_pos_estimator_with_noise src//Utilities/px4_pos_estimator_with_noise.cpp)
-add_dependencies(px4_pos_estimator_with_noise prometheus_control_gencpp)
+add_dependencies(px4_pos_estimator_with_noise  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(px4_pos_estimator_with_noise ${catkin_LIBRARIES})
 target_link_libraries(px4_pos_estimator_with_noise OptiTrackFeedbackRigidBody)
 
@@ -125,21 +101,21 @@ add_dependencies(filter_tester  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXP
 target_link_libraries(filter_tester ${catkin_LIBRARIES})
 
 add_executable(TFmini src/Utilities/TFmini.cpp)
-add_dependencies(TFmini prometheus_control_gencpp)
+add_dependencies(TFmini  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(TFmini ${catkin_LIBRARIES})
 
 add_executable(fake_vicon src/Utilities/fake_vicon.cpp)
-add_dependencies(fake_vicon prometheus_control_gencpp)
+add_dependencies(fake_vicon  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(fake_vicon ${catkin_LIBRARIES})
 
 
 
 add_executable(set_mode src/Utilities/set_mode.cpp)
-add_dependencies(set_mode prometheus_control_gencpp)
+add_dependencies(set_mode  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(set_mode ${catkin_LIBRARIES})
 
 add_executable(eigen_test src/Utilities/eigen_test.cpp)
-add_dependencies(eigen_test prometheus_control_gencpp)
+add_dependencies(eigen_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(eigen_test ${catkin_LIBRARIES})
 #############
 ## Install ##

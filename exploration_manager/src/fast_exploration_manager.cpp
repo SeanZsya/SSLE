@@ -301,7 +301,7 @@ int FastExplorationManager::planExploreMotion(
 int FastExplorationManager::planReturnMotion(
     const Vector3d& pos, const Vector3d& vel, const Vector3d& acc, const Vector3d& yaw) {
   
-  ROS_ERROR_STREAM_THROTTLE(1,"Start planning to return");
+  ROS_INFO_STREAM_THROTTLE(1,"Start planning to return");
   ros::Time t1 = ros::Time::now();
   auto t2 = t1;
 
