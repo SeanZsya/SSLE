@@ -444,7 +444,7 @@ void FastExplorationManager::findGlobalTour(
   t1 = ros::Time::now();
 
   // Write params and cost matrix to problem file
-  // ofstream prob_file(ep_->tsp_dir_ + "/single.tsp");
+  ofstream prob_file(ep_->tsp_dir_ + "/single.tsp");
   // Problem specification part, follow the format of TSPLIB
 
   string prob_spec = "NAME : single\nTYPE : ATSP\nDIMENSION : " + to_string(dimension) +
@@ -455,7 +455,7 @@ void FastExplorationManager::findGlobalTour(
   //     "\nEDGE_WEIGHT_TYPE : "
   //     "EXPLICIT\nEDGE_WEIGHT_FORMAT : LOWER_ROW\nEDGE_WEIGHT_SECTION\n";
 
-  //prob_file << prob_spec;
+  prob_file << prob_spec;
   //prob_file << "TYPE : TSP\n";
   //prob_file << "EDGE_WEIGHT_FORMAT : LOWER_ROW\n";
   // Problem data part
@@ -465,9 +465,9 @@ void FastExplorationManager::findGlobalTour(
     for (int i = 1; i < dimension; ++i) {
       for (int j = 0; j < i; ++j) {
         int int_cost = cost_mat(i, j) * scale;
-        //prob_file << int_cost << " ";
+        prob_file << int_cost << " ";
       }
-      //prob_file << "\n";
+      prob_file << "\n";
     }
 
   } else {
@@ -475,14 +475,14 @@ void FastExplorationManager::findGlobalTour(
     for (int i = 0; i < dimension; ++i) {
       for (int j = 0; j < dimension; ++j) {
         int int_cost = cost_mat(i, j) * scale;
-        //prob_file << int_cost << " ";
+        prob_file << int_cost << " ";
       }
-      //prob_file << "\n";
+      prob_file << "\n";
     }
   }
 
-  //prob_file << "EOF";
-  //prob_file.close();
+  prob_file << "EOF";
+  prob_file.close();
 
   // Call LKH TSP solver
   solveTSPLKH((ep_->tsp_dir_ + "/single.par").c_str());
