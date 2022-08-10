@@ -77,7 +77,7 @@ target_link_libraries(px4_geometry_controller ${catkin_LIBRARIES})
 
 ##px4_pos_estimator.cpp
 add_executable(px4_pos_estimator src/px4_pos_estimator.cpp)
-add_dependencies(px4_pos_estimator prometheus_control_gencpp)
+add_dependencies(px4_pos_estimator  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(px4_pos_estimator ${catkin_LIBRARIES})
 target_link_libraries(px4_pos_estimator OptiTrackFeedbackRigidBody)
 
