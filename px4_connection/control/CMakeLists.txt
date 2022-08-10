@@ -83,8 +83,8 @@ target_link_libraries(px4_pos_estimator OptiTrackFeedbackRigidBody)
 
 ##ros_info_color_test.cpp
 add_executable(ros_info_color_test src/Utilities/ros_info_color_test.cpp)
-add_dependencies(ros_info_color_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) set_mode
-
+add_dependencies(ros_info_color_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
+target_link_libraries(ros_info_color_test ${catkin_LIBRARIES})
 ###### Utilities File ##########
 #add_executable(keyboard_control src/Utilities/keyboard_control.cpp)
 #add_dependencies(keyboard_control prometheus_control_gencpp)
