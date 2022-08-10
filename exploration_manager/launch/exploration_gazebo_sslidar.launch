@@ -40,10 +40,10 @@
 
     <arg name="box_min_x" value="-100.0"/>
     <arg name="box_min_y" value="-100.0"/>
-    <arg name="box_min_z" value=" -0.5"/>
+    <arg name="box_min_z" value=" -0.2"/>
     <arg name="box_max_x" value="100.0"/>
     <arg name="box_max_y" value="100.0"/>
-    <arg name="box_max_z" value="1.0"/>
+    <arg name="box_max_z" value="1.5"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
     <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
