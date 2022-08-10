@@ -85,6 +85,22 @@ target_link_libraries(px4_pos_estimator OptiTrackFeedbackRigidBody)
 add_executable(ros_info_color_test src/Utilities/ros_info_color_test.cpp)
 add_dependencies(ros_info_color_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(ros_info_color_test ${catkin_LIBRARIES})
+
+# add_executable(planner_server src/Test/planner_server.cpp)
+# add_dependencies(planner_server prometheus_control_gencpp)
+# target_link_libraries(planner_server ${catkin_LIBRARIES})
+
+
+###### Test File ##########
+#add_executable(px4_fw_controller src/Test/px4_fw_controller.cpp)
+#add_dependencies(px4_fw_controller prometheus_control_gencpp)
+#target_link_libraries(px4_fw_controller ${catkin_LIBRARIES})
+
+add_executable(px4_sender src/px4_sender.cpp)
+add_dependencies(px4_sender  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
+target_link_libraries(px4_sender ${catkin_LIBRARIES})
+
+
 ###### Utilities File ##########
 #add_executable(keyboard_control src/Utilities/keyboard_control.cpp)
 #add_dependencies(keyboard_control prometheus_control_gencpp)
