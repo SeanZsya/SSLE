@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
-  <model name="D435i">
+  <model name="d435i">
     <pose>0 0 0.015 0 0 0</pose>
     <link name="realsense_camera_link">
       <!-- 物理参数 -->
@@ -23,7 +23,7 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>model://D435i/meshes/D435i.dae</uri>
+            <uri>model://d435i/meshes/d435i.dae</uri>
           </mesh>
         </geometry>
       </visual>

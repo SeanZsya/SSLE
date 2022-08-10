@@ -10,7 +10,7 @@ Panels:
         - /LocalMap1/occupied_local1/Autocompute Value Bounds1
         - /processed_msg1/Namespaces1
         - /TF1/Frames1
-        - /SSlidar1
+        - /sslidar1
       Splitter Ratio: 0.5498891472816467
     Tree Height: 559
   - Class: rviz/Selection
@@ -519,7 +519,7 @@ Visualization Manager:
         3Dlidar_link:
           Value: true
         All Enabled: false
-        SSlidar_link:
+        sslidar_link:
           Value: true
         base_link:
           Value: true
@@ -553,7 +553,7 @@ Visualization Manager:
           base_link:
             3Dlidar_link:
               {}
-            SSlidar_link:
+            sslidar_link:
               {}
             base_link_frd:
               {}
@@ -588,14 +588,14 @@ Visualization Manager:
       Max Intensity: 4096
       Min Color: 0; 0; 0
       Min Intensity: 0
-      Name: SSlidar
+      Name: sslidar
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
-      Topic: /sensors/SSlidar_scan
+      Topic: /sensors/sslidar_scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true

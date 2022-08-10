@@ -7,8 +7,8 @@
 		<!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/iscas_museum.world"/> -->
 		<!-- <arg name="world" value="$(find rrt_exploration_tutorials)/launch/includes/worlds/maze_simple_high.world"/> -->
 	
-		<arg name="sdf" value="$(find fuel_in_gazebo)/models/p450_D435i/p450_D435i.sdf"/>
-		<arg name="model" value="p450_D435i"/>
+		<arg name="sdf" value="$(find fuel_in_gazebo)/models/p450_d435i/p450_d435i.sdf"/>
+		<arg name="model" value="p450_d435i"/>
 	
 		<arg name="x" value="-1.0"/>
 		<arg name="y" value="0.0"/>

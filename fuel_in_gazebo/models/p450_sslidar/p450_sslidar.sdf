@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
-  <model name="p450_SSlidar">
+  <model name="p450_sslidar">
     <include>
       <uri>model://p450</uri>
     </include>
     <include>
-      <uri>model://SSlidar</uri>
+      <uri>model://sslidar</uri>
       <pose>0 0 0.1 0 0 0</pose>
     </include>
-    <joint name="SSlidar_joint" type="fixed">
-      <child>SSlidar::link</child>
+    <joint name="sslidar_joint" type="fixed">
+      <child>sslidar::link</child>
       <parent>p450::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>

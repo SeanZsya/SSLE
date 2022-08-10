@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
-  <model name="SSlidar">
+  <model name="sslidar">
     <link name="link">
 
       <!-- 物理参数 -->
@@ -21,13 +21,13 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>model://SSlidar/meshes/VLP16_base_1.dae</uri>
+            <uri>model://sslidar/meshes/VLP16_base_1.dae</uri>
           </mesh>
         </geometry>
       </visual>
 
       <!-- 传感器参数设置 -->
-      <sensor type='ray' name='SSlidar'>          
+      <sensor type='ray' name='sslidar'>          
           <ray>
             <scan>
             <!-- FoV: 70*30 -->
@@ -54,8 +54,8 @@
           </ray>
 
           <plugin name='3D_laser' filename='libgazebo_ros_velodyne_laser.so'>
-            <topicName>/sensors/SSlidar_scan</topicName>
-            <frameName>SSlidar_link</frameName>
+            <topicName>/sensors/sslidar_scan</topicName>
+            <frameName>sslidar_link</frameName>
             <min_range>1.5</min_range>
             <max_range>10</max_range>
             <gaussianNoise>0.001</gaussianNoise>
