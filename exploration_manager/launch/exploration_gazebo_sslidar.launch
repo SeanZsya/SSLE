@@ -2,7 +2,7 @@
 
   <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
     <!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/indoor3.world"/> -->
-		<arg name="world" value="$(find fuel_in_gazebo)/worlds/cas_museum.world"/>
+		<arg name="world" value="$(find fuel_in_gazebo)/worlds/iscas_museum.world"/>
 		<!-- <arg name="world" value="$(find rrt_exploration_tutorials)/launch/includes/worlds/maze_simple_high.world"/> -->
 	
 		<arg name="sdf" value="$(find fuel_in_gazebo)/models/p450_SSlidar/p450_SSlidar.sdf"/>

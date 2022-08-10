@@ -1,8 +1,18 @@
-<?xml version="1.0" ?>
 <sdf version='1.6'>
   <world name='default'>
-    
-    
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
     <model name='ground_plane'>
       <static>1</static>
       <link name='link'>
@@ -35,13 +45,13 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>22 22</size>
+              <size>100 100</size>
             </plane>
           </geometry>
           <material>
             <script>
-              <uri>model://texture/texture.material</uri>
-              <name>Floor_Wood</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
             </script>
           </material>
         </visual>
@@ -50,31 +60,29 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-
-
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
     <physics name='default_physics' default='0' type='ode'>
-      <ode>
-        <solver>
-          <type>quick</type>
-          <iters>150</iters>
-          <sor>1.3</sor>
-          <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
-        </solver>
-        <constraints>
-          <cfm>1e-05</cfm>
-          <erp>0.2</erp>
-          <contact_max_correcting_vel>1000</contact_max_correcting_vel>
-          <contact_surface_layer>0.01</contact_surface_layer>
-        </constraints>
-      </ode>
-      <max_step_size>0.004</max_step_size>
-      <real_time_factor>1000</real_time_factor>
-      <real_time_update_rate>250</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
     </physics>
-
-
-    <model name='room'>
-      <link name='iscas_museum::link'>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='iscas_museum'>
+      <link name='link'>
         <inertial>
           <mass>15</mass>
         </inertial>
@@ -107,50 +115,18 @@
             </mesh>
           </geometry>
         </visual>
-        <pose frame=''>0 0 0 0 -0 0</pose>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
       <static>1</static>
+      <pose frame=''>0.341565 -1.04985 0 0 -0 0</pose>
     </model>
-    
-    <gravity>0 0 -9.8066</gravity>
-    
-    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
-    
-    <atmosphere type='adiabatic'/>
-    
-    <scene>
-      <ambient>0.4 0.4 0.4 1</ambient>
-      <background>0.7 0.7 0.7 1</background>
-      <shadows>1</shadows>
-    </scene>
-
-
-    <spherical_coordinates>
-      <surface_model>EARTH_WGS84</surface_model>
-      <latitude_deg>0</latitude_deg>
-      <longitude_deg>0</longitude_deg>
-      <elevation>0</elevation>
-      <heading_deg>0</heading_deg>
-    </spherical_coordinates>
-
-
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose frame=''>-0.07779 1.06501 9.93603 -0 1.5698 0.00128</pose>
-        <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
-      </camera>
-    </gui>
-
-
     <state world_name='default'>
-      <sim_time>197 312000000</sim_time>
-      <real_time>135 970250722</real_time>
-      <wall_time>1659438655 933397427</wall_time>
-      <iterations>27072</iterations>
+      <sim_time>0</sim_time>
+      <real_time>354 502010575</real_time>
+      <wall_time>1660114056 605151208</wall_time>
+      <iterations>352618</iterations>
       <model name='ground_plane'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -161,38 +137,26 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-
-      <model name='room'>
-        <pose frame=''>0 0 0 0 -0 0</pose>
+      <model name='iscas_museum'>
+        <pose frame=''>-0.135953 -0.335522 0 0 -0 0</pose>
         <scale>1 1 1</scale>
-        <link name='iscas_museum::link'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
+        <link name='link'>
+          <pose frame=''>-0.135953 -0.335522 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <light name='user_directional_light_0'>
-        <pose frame=''>-0.024934 0.002945 1 0 -0 0</pose>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
     </state>
-
-
-    <light name='user_directional_light_0' type='directional'>
-      <pose frame=''>-0.024934 0.002945 1 0 -0 0</pose>
-      <diffuse>0.5 0.5 0.5 1</diffuse>
-      <specular>0.1 0.1 0.1 1</specular>
-      <direction>0.1 0.1 -0.9</direction>
-      <attenuation>
-        <range>20</range>
-        <constant>0.5</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <cast_shadows>1</cast_shadows>
-    
-    </light>
-
-
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>1.61119 0.114581 25.7844 0 1.5698 0.000211</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
   </world>
 </sdf>
