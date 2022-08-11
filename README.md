@@ -51,7 +51,11 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
     Coming soon.
 
-3. Gazebo Plugins
+3. MavROS
+
+        sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
+
+4. Gazebo Plugins
    
     For realsense sensors and lidar Gazebo plugins, in your workspace, run:
 
@@ -63,11 +67,11 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
         sudo apt-get install freeglut3-dev
         sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev 
 
-5. Other Required Tools 
+6. Other Required Tools 
 
         sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev
 
-6. *Gazebo Models (optional)*
+7. *Gazebo Models (optional)*
 
     Clone the third-party models:
 
