@@ -1,38 +1,60 @@
 <launch>
+
+  <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
+    <!-- <arg name="world" value="$(find fuel_in_gazebo)/worlds/indoor3.world"/> -->
+		<arg name="world" value="$(find fuel_in_gazebo)/worlds/iscas_museum.world"/>
+		<!-- <arg name="world" value="$(find rrt_exploration_tutorials)/launch/includes/worlds/maze_simple_high.world"/> -->
+	
+		<arg name="sdf" value="$(find fuel_in_gazebo)/models/p450_sslidar/p450_sslidar.sdf"/>
+		<arg name="model" value="p450_sslidar"/>
+	
+		<arg name="x" value="-1.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0"/>
+		<!-- <arg name="x" value="0.8"/>
+		<arg name="y" value="0.8"/>
+		<arg name="z" value="0"/> -->
+  </include>
+
+  <include file="$(find exploration_manager)/launch/rviz.launch"/>
+  <node pkg="run_onboard" type="pub_lidar_pose" name="pub_lidar_pose" output="screen"/> 
+
   <!-- size of map, change the size in x, y, z according to your application -->
-  <arg name="map_size_x" value="50.0"/>
-  <arg name="map_size_y" value="50.0"/>
-  <arg name="map_size_z" value=" 10.0"/>
+  <arg name="map_size_x" value="200.0"/>
+  <arg name="map_size_y" value="200.0"/>
+  <arg name="map_size_z" value=" 3.0"/>
 
-  <arg name="init_x" value="1"/>
+  <arg name="init_x" value="0"/>
   <arg name="init_y" value="0"/>
-  <arg name="init_z" value="1.0"/> 
-
+  <arg name="init_z" value="0"/>
+  
   <!-- topic of your odometry such as VIO or LIO -->
-  <arg name="odom_topic" value="/state_ukf/odom" />
+  <arg name="odom_topic" value="/mavros/local_position/odom" />
 
   <!-- main algorithm params -->
-  <include file="$(find exploration_manager)/launch/algorithm_camera.xml">
+  <include file="$(find exploration_manager)/launch/algorithm_lidar.xml">
 
     <arg name="map_size_x_" value="$(arg map_size_x)"/>
     <arg name="map_size_y_" value="$(arg map_size_y)"/>
     <arg name="map_size_z_" value="$(arg map_size_z)"/>
 
-    <arg name="box_min_x" value="-20.0"/>
-    <arg name="box_min_y" value="-25.0"/>
-    <arg name="box_min_z" value=" 0.0"/>
-    <arg name="box_max_x" value="20.0"/>
-    <arg name="box_max_y" value="25.0"/>
-    <arg name="box_max_z" value=" 2.0"/>
+    <arg name="box_min_x" value="-100.0"/>
+    <arg name="box_min_y" value="-100.0"/>
+    <arg name="box_min_z" value=" -0.2"/>
+    <arg name="box_max_x" value="100.0"/>
+    <arg name="box_max_y" value="100.0"/>
+    <arg name="box_max_z" value="1.5"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
-    <!-- sensor pose: transform of camera frame in the world frame -->
-    <arg name="sensor_pose_topic" value="/pcl_render_node/sensor_pose"/>
+    <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
+    <!-- <arg name="sensor_pose_topic" value="/mavros/local_position/pose"/> -->
+    <arg name="sensor_pose_topic" value="/pub_lidar_pose/sensor_pose"/>
+      
     <!-- depth topic: depth image, 640x480 by default -->
     <!-- cloud topic: point cloud measurement  -->
     <!-- subscribe ONLY TO ONE of the two topics -->
-    <arg name="depth_topic" value="/pcl_render_node/depth"/>
-    <arg name="cloud_topic" value="/pcl_render_node/cloud"/>
+    <arg name="depth_topic" value="/realsense_plugin/camera/depth/image_raw"/>
+    <arg name="cloud_topic" value="/sensors/sslidar_scan"/>
 
     <!-- intrinsic params of the depth camera -->
     <arg name="cx" value="321.04638671875"/>
@@ -41,13 +63,15 @@
     <arg name="fy" value="387.229248046875"/>
 
     <!-- maximum velocity and acceleration the drone will reach -->
-    <arg name="max_vel" value="2.0" />
-    <arg name="max_acc" value="2.0" />
+    <arg name="max_vel" value="0.8" />
+    <arg name="max_acc" value="0.8" />
   </include>
+ 
 
   <!-- trajectory server -->
   <node pkg="plan_manage" name="traj_server" type="traj_server" output="screen">
-    <remap from="/position_cmd" to="planning/pos_cmd"/>
+    
+    <remap from="/position_cmd" to="/planning/pos_cmd"/>
 
     <remap from="/odom_world" to="$(arg odom_topic)"/>
     <param name="traj_server/time_forward" value="1.5" type="double"/>
@@ -60,10 +84,10 @@
     <param name="perception_utils/left_angle" value="0.69222" type="double"/>
     <param name="perception_utils/right_angle" value="0.68901" type="double"/>
     <param name="perception_utils/max_dist" value="4.5" type="double"/>
-    <param name="perception_utils/vis_dist" value="1.0" type="double"/>
-    
-  </node>
+    <param name="perception_utils/vis_dist" value="1.0" type="double"/>  
 
+  </node>
+  
   <node pkg="waypoint_generator" name="waypoint_generator" type="waypoint_generator" output="screen">
     <remap from="~odom" to="$(arg odom_topic)"/>        
     <remap from="~goal" to="/move_base_simple/goal"/>
@@ -71,20 +95,5 @@
     <param name="waypoint_type" value="point"/>    
   </node>
 
-  <!-- use simulator -->
-  <include file="$(find exploration_manager)/launch/simulator.xml">
-    <arg name="map_size_x_" value="$(arg map_size_x)"/>
-    <arg name="map_size_y_" value="$(arg map_size_y)"/>
-    <arg name="map_size_z_" value="$(arg map_size_z)"/>
 
-    <arg name="init_x" value="$(arg init_x)"/>
-    <arg name="init_y" value="$(arg init_y)"/>
-    <arg name="init_z" value="$(arg init_z)"/>
-
-    <arg name="odometry_topic" value="$(arg odom_topic)" />
-    <arg name="c_num" value="0"/>
-    <arg name="p_num" value="130"/>
-  </include>
-
-  <include file="$(find exploration_manager)/launch/rviz.launch"/>
 </launch>
