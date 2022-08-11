@@ -63,17 +63,19 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
 5. *Gazebo Models (optional)*
 
-    In `~/.gazebo/models/ `, run:
+    Clone the third-party models:
 
         git clone https://github.com/osrf/gazebo_models
+     
+     Put them in `~/.gazebo/models/ `
 
 ### Path Setup
 
 Add these lines to your ~./bashrc:
 
-    source <path to your workspace>/devel/setup.bash
-    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/models
-    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:<path to your workspace>/devel/lib
+    source ${path to your workspace}/devel/setup.bash
+    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${path to your workspace}/src/FUEL/fuel_in_gazebo/models
+    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:${path to your workspace}/devel/lib
     
 ### Run FUEL Simulation in Gazebo
 
