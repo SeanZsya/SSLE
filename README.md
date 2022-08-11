@@ -45,7 +45,7 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
 1. Basic ROS Environment (recommand desktop-full)
 
-        sudo apt install ros-melodic-desktop-full
+        sudo apt-get install ros-melodic-desktop-full
 
 2. PX4
 
@@ -56,12 +56,18 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
     For realsense sensors and lidar Gazebo plugins, in your workspace, run:
 
         git clone https://github.com/SeanZsya/gazebo_pulgins
+        
+5. OpenGL
+        
+        sudo apt-get install build-essential libgl1-mesa-dev
+        sudo apt-get install freeglut3-dev
+        sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev 
 
-4. Other Required Tools 
+5. Other Required Tools 
 
-        sudo apt-get install libarmadillo-dev ros-melodic-nlopt
+        sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev
 
-5. *Gazebo Models (optional)*
+6. *Gazebo Models (optional)*
 
     Clone the third-party models:
 
