@@ -45,35 +45,47 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
 1. Basic ROS Environment (recommand desktop-full)
 
-        sudo apt install ros-melodic-desktop-full
+        sudo apt-get install ros-melodic-desktop-full
 
 2. PX4
 
     Coming soon.
 
-3. Gazebo Plugins
+3. MavROS
+
+        sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
+
+4. Gazebo Plugins
    
     For realsense sensors and lidar Gazebo plugins, in your workspace, run:
 
         git clone https://github.com/SeanZsya/gazebo_pulgins
+        
+5. OpenGL
+        
+        sudo apt-get install build-essential libgl1-mesa-dev
+        sudo apt-get install freeglut3-dev
+        sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev 
 
-4. Other Required Tools 
+6. Other Required Tools 
 
-        sudo apt-get install libarmadillo-dev ros-melodic-nlopt
+        sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev
 
-5. *Gazebo Models (optional)*
+7. *Gazebo Models (optional)*
 
-    In `~/.gazebo/models/ `, run:
+    Clone the third-party models:
 
         git clone https://github.com/osrf/gazebo_models
+     
+     Put them in `~/.gazebo/models/ `
 
 ### Path Setup
 
 Add these lines to your ~./bashrc:
 
-    source <path to your workspace>/devel/setup.bash
-    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:<path to your workspace>/src/FUEL/fuel_in_gazebo/models
-    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:<path to your workspace>/devel/lib
+    source ${path to your workspace}/devel/setup.bash
+    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${path to your workspace}/src/FUEL/fuel_in_gazebo/models
+    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:${path to your workspace}/devel/lib
     
 ### Run FUEL Simulation in Gazebo
 
