@@ -75,6 +75,16 @@ void MapROS::init() {
   pose_sub_.reset(
       new message_filters::Subscriber<geometry_msgs::PoseStamped>(node_, "/map_ros/pose", 25));
 
+//////////////////////////////////////////////
+  uav1PosSub =
+      node_.subscribe<geometry_msgs::PoseStamped>("/uav_1/pose", 10, &MapROS::uav1Callback, this);
+  ROS_ERROR("UAVS_POSE_SUB");
+  uav2PosSub = 
+      node_.subscribe<geometry_msgs::PoseStamped>("/uav_2/pose", 10, &MapROS::uav2Callback, this);
+  uavs_pos_ << 0., 0., 10., 0., 0., 10.;
+///////////////////////////////////////////
+
+
   sync_image_pose_.reset(new message_filters::Synchronizer<MapROS::SyncPolicyImagePose>(
       MapROS::SyncPolicyImagePose(100), *depth_sub_, *pose_sub_));
   sync_image_pose_->registerCallback(boost::bind(&MapROS::depthPoseCallback, this, _1, _2));
@@ -85,7 +95,88 @@ void MapROS::init() {
   map_start_time_ = ros::Time::now();
 }
 
+///////////////////////////////////////////////////
+void MapROS::appendMap() {
+  const double step = 0.4, s = map_->getResolution();
+
+  if (uavs_pos_(0, 2) > 10.)
+    ROS_INFO("no uav1 pose");
+  else {
+    pts1.clear();
+    for (double x = -step; x <= step; x+=s)
+      for (double y = -step; y <= step; y+=s)
+        for (double z = -step; z <= step; z+=s) {
+          Eigen::Vector3d p = Eigen::Vector3d(uavs_pos_(0,0) + x, uavs_pos_(0,1) + y, uavs_pos_(0,2) + z);
+          Eigen::Vector3i id;
+          map_->posToIndex(p, id);
+          if (map_->isInMap(id)) {
+            auto id_m = map_->toAddress(id);
+            map_->md_->occupancy_buffer_inflate_[id_m] = 1;
+            map_->md_->occupancy_buffer_[id_m] = map_->mp_->clamp_max_log_;
+            pts1.emplace_back(id);
+            // map_->setOccupied(pts1.back(), 2);
+          }
+        }
+    // uav1 = true;
+  }
+  
+  if (uavs_pos_(1, 2) > 10.)
+    ROS_INFO("no uav2 pose");
+  else {
+    pts2.clear();
+    for (double x = -step; x <= step; x+=s)
+      for (double y = -step; y <= step; y+=s)
+        for (double z = -step; z <= step; z+=s) {
+          Eigen::Vector3d p = Eigen::Vector3d(uavs_pos_(1,0) + x, uavs_pos_(1,1) + y, uavs_pos_(1,2) + z);
+          Eigen::Vector3i id;
+          map_->posToIndex(p, id);
+          if (map_->isInMap(id)) {
+            auto id_m = map_->toAddress(id);
+            map_->md_->occupancy_buffer_inflate_[id_m] = 1;
+            map_->md_->occupancy_buffer_[id_m] = map_->mp_->clamp_max_log_;
+            pts2.emplace_back(id);
+          }
+        }
+  }
+}
+
+void MapROS::removeMap() {
+  static double occ_free = (map_->mp_->clamp_min_log_ - 1e-3 + map_->mp_->min_occupancy_log_) * 0.5;
+
+  if (pts1.size()) {
+    for (auto& id : pts1) {
+      auto id_m = map_->toAddress(id);
+      map_->md_->occupancy_buffer_inflate_[id_m] = 0;//map_->setOccupied(p, 0);
+      map_->md_->occupancy_buffer_[id_m] = occ_free;
+    }
+    pts1.clear();
+  }
+  if (pts2.size()) {
+    for (auto& id : pts2) {
+      auto id_m = map_->toAddress(id);
+      map_->md_->occupancy_buffer_inflate_[id_m] = 0;
+      map_->md_->occupancy_buffer_[id_m] = occ_free;
+    }
+    pts2.clear();
+  }
+}
+
+void MapROS::uav1Callback(const geometry_msgs::PoseStampedConstPtr& pose) {
+  uavs_pos_(0,0) = pose->pose.position.x;
+  uavs_pos_(0,1) = pose->pose.position.y;
+  uavs_pos_(0,2) = pose->pose.position.z;
+}
+
+void MapROS::uav2Callback(const geometry_msgs::PoseStampedConstPtr& pose) {
+  uavs_pos_(1,0) = pose->pose.position.x;
+  uavs_pos_(1,1) = pose->pose.position.y;
+  uavs_pos_(1,2) = pose->pose.position.z;
+}
+///////////////////////////////////////////////////
+
 void MapROS::visCallback(const ros::TimerEvent& e) {
+  appendMap();/////////////////////////////////////
+  
   publishMapLocal();
   if (show_all_map_) {
     // Limit the frequency of all map
@@ -101,6 +192,8 @@ void MapROS::visCallback(const ros::TimerEvent& e) {
 
   // publishUpdateRange();
   // publishDepth();
+
+  removeMap();//////////////////////////////////
 }
 
 void MapROS::updateESDFCallback(const ros::TimerEvent& /*event*/) {

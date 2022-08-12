@@ -38,6 +38,14 @@ private:
   void updateESDFCallback(const ros::TimerEvent& /*event*/);
   void visCallback(const ros::TimerEvent& /*event*/);
 
+  ///////////////////////////
+  void appendMap();
+  void removeMap();
+
+  void uav1Callback(const geometry_msgs::PoseStampedConstPtr& pose);
+  void uav2Callback(const geometry_msgs::PoseStampedConstPtr& pose);
+  ////////////////////////////
+
   void publishMapAll();
   void publishMapLocal();
   void publishESDF();
@@ -66,6 +74,7 @@ private:
 
   ros::Publisher map_local_pub_, map_local_inflate_pub_, esdf_pub_, map_all_pub_, unknown_pub_,
       update_range_pub_, depth_pub_;
+  ros::Subscriber uav1PosSub, uav2PosSub;
   ros::Timer esdf_timer_, vis_timer_;
 
   // params, depth projection
@@ -93,6 +102,12 @@ private:
   double fuse_time_, esdf_time_, max_fuse_time_, max_esdf_time_;
   int fuse_num_, esdf_num_;
   pcl::PointCloud<pcl::PointXYZ> point_cloud_;
+
+  /////////////////////////////////
+  Eigen::Matrix<double, 2, 3> uavs_pos_;
+  std::vector<Eigen::Vector3i> pts1, pts2;
+  // bool uav1 = false, uav2 = false;
+  ///////////////////////////////
 
   normal_distribution<double> rand_noise_;
   default_random_engine eng_;
