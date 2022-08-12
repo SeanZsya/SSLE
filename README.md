@@ -1,5 +1,7 @@
 # FUEL (with SSLidar option and Gazebo Simulation)
 
+Adapted from [FUEL](https://github.com/HKUST-Aerial-Robotics/FUEL), an excellent drone exploration algorithm from Boyu Zhou.
+
 ## Project Structure
 
 
