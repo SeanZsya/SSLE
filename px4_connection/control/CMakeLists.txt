@@ -106,12 +106,6 @@ target_link_libraries(px4_sender ${catkin_LIBRARIES})
 #add_dependencies(keyboard_control prometheus_control_gencpp)
 #target_link_libraries(keyboard_control ${catkin_LIBRARIES})
 
-##px4_pos_estimator_with_noise.cpp
-add_executable(px4_pos_estimator_with_noise src//Utilities/px4_pos_estimator_with_noise.cpp)
-add_dependencies(px4_pos_estimator_with_noise  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(px4_pos_estimator_with_noise ${catkin_LIBRARIES})
-target_link_libraries(px4_pos_estimator_with_noise OptiTrackFeedbackRigidBody)
-
 add_executable(filter_tester src/Utilities/filter_tester.cpp)
 add_dependencies(filter_tester  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(filter_tester ${catkin_LIBRARIES})
