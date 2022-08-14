@@ -37,7 +37,6 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
-    nh.getParam("uav_name", uav_name);
 
 
         cout << ">>>>>>>>>>>>>>>> Welcome to use ros_info_color_test <<<<<<<<<<<<<<<<"<< endl;

@@ -37,7 +37,6 @@ int main(int argc, char **argv)
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>主  循  环<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     while(ros::ok())
     {
-    nh.getParam("uav_name", uav_name);
 
         cout << "Please input the thrust_x: "<<endl;
         cin >> thr_sp(0);
