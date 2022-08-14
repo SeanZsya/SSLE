@@ -115,6 +115,7 @@ int main(int argc, char **argv)
     nh.param<string>("uav_name", uav_name, "/uav0");
     if (uav_name == "/uav0")
         uav_name = "";
+nh.getParam("uav_name", uav_name);
 
     // 参数读取
     nh.param<float>("refresh_time", refresh_time, 1.0);
