@@ -40,7 +40,6 @@ int main(int argc, char **argv)
     nh.param<string>("uav_name", uav_name, "/uav0");
     if (uav_name == "/uav0")
         uav_name = "";
-nh.getParam("uav_name", uav_name);
 
     // 【订阅】 各类消息
     ros::Subscriber message_main_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/main", 10, msg_planning_cb);
@@ -60,6 +59,7 @@ nh.getParam("uav_name", uav_name);
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Main Loop<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     while(ros::ok())
     {
+    nh.getParam("uav_name", uav_name);
         //回调一次 更新传感器状态
         ros::spinOnce();
 

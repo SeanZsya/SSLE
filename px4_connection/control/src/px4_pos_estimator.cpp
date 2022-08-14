@@ -217,7 +217,6 @@ int main(int argc, char **argv)
     nh.param<string>("uav_name", uav_name, "/uav0");
     if (uav_name == "/uav0")
             uav_name = "";
-nh.getParam("uav_name", uav_name);
 
     // 【订阅】cartographer估计位置
     ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>(uav_name  +  "/tf", 100, laser_cb);

@@ -39,7 +39,6 @@ int main(int argc, char **argv)
     nh.param<string>("uav_name", uav_name, "/uav0");
     if (uav_name == "/uav0")
       uav_name = "";
-nh.getParam("uav_name", uav_name);
       
     // 【订阅】无人机当前状态 - 来自飞控
     //  本话题来自飞控(通过/plugins/sys_status.cpp)
@@ -63,6 +62,7 @@ nh.getParam("uav_name", uav_name);
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>主  循  环<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     while(ros::ok())
     {
+    nh.getParam("uav_name", uav_name);
         switch (Num_StateMachine)
         {
             // input

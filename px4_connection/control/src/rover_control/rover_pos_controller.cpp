@@ -94,7 +94,6 @@ int main(int argc, char **argv)
     nh.param<string>("uav_name", uav_name, "/uav0");
     if (uav_name == "/uav0")
         uav_name = "";
-nh.getParam("uav_name", uav_name);
 
     //【订阅】指令
     // 本话题为任务模块生成的控制指令
@@ -185,6 +184,7 @@ nh.getParam("uav_name", uav_name);
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>主  循  环<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     while(ros::ok())
     {
+    nh.getParam("uav_name", uav_name);
         // 当前时间
         cur_time = prometheus_control_utils::get_time_in_sec(begin_time);
         dt = cur_time  - last_time;

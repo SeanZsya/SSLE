@@ -55,7 +55,6 @@ int main(int argc, char **argv)
     nh.param<string>("uav_name", uav_name, "/uav0");
     if (uav_name == "/uav0")
         uav_name = "";
-nh.getParam("uav_name", uav_name);
 
     // 参数读取
     nh.param<float>("refresh_time", refresh_time, 1.0);
@@ -78,6 +77,7 @@ nh.getParam("uav_name", uav_name);
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Main Loop<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     while(ros::ok())
     {
+    nh.getParam("uav_name", uav_name);
         //回调一次 更新传感器状态
         ros::spinOnce();
 
