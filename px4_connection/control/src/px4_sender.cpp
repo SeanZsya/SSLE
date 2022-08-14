@@ -119,24 +119,24 @@ int main(int argc, char **argv)
 
     //【订阅】指令
     // 本话题为任务模块生成的控制指令
-    ros::Subscriber Command_sub = nh.subscribe<prometheus_msgs::ControlCommand>("/prometheus/control_command", 10, Command_cb);
+    ros::Subscriber Command_sub = nh.subscribe<prometheus_msgs::ControlCommand>(uav_name + "/prometheus/control_command", 10, Command_cb);
 
     //【订阅】指令
     // 本话题为Prometheus地面站发送的控制指令
-    ros::Subscriber station_command_sub = nh.subscribe<prometheus_msgs::ControlCommand>("/prometheus/control_command_station", 10, station_command_cb);
+    ros::Subscriber station_command_sub = nh.subscribe<prometheus_msgs::ControlCommand>(uav_name + "/prometheus/control_command_station", 10, station_command_cb);
     
     //【订阅】无人机状态
     // 本话题来自px4_pos_estimator.cpp
-    ros::Subscriber drone_state_sub = nh.subscribe<prometheus_msgs::DroneState>("/prometheus/drone_state", 10, drone_state_cb);
+    ros::Subscriber drone_state_sub = nh.subscribe<prometheus_msgs::DroneState>(uav_name + "/prometheus/drone_state", 10, drone_state_cb);
 
     //【发布】参考位姿 RVIZ显示用
-    rivz_ref_pose_pub = nh.advertise<geometry_msgs::PoseStamped>("/prometheus/control/ref_pose_rviz", 10);
+    rivz_ref_pose_pub = nh.advertise<geometry_msgs::PoseStamped>(uav_name + "/prometheus/control/ref_pose_rviz", 10);
 
     // 【发布】用于地面站显示的提示消息
-    message_pub = nh.advertise<prometheus_msgs::Message>("/prometheus/message/main", 10);
+    message_pub = nh.advertise<prometheus_msgs::Message>(uav_name + "/prometheus/message/main", 10);
 
     // 【发布】用于log的消息
-    log_message_pub = nh.advertise<prometheus_msgs::LogMessageControl>("/prometheus/log/control", 10);
+    log_message_pub = nh.advertise<prometheus_msgs::LogMessageControl>(uav_name + "/prometheus/log/control", 10);
 
     // 10秒定时打印，以确保程序在正确运行
     ros::Timer timer = nh.createTimer(ros::Duration(10.0), timerCallback);

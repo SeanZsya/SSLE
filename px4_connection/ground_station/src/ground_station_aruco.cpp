@@ -58,13 +58,13 @@ int main(int argc, char **argv)
     nh.param<int>("mission_type", mission_type, 0);
 
     // 【订阅】
-    ros::Subscriber aruco_sub = nh.subscribe<prometheus_msgs::ArucoInfo>("/prometheus/object_detection/aruco_det", 10, aruco_cb);
+    ros::Subscriber aruco_sub = nh.subscribe<prometheus_msgs::ArucoInfo>(uav_name + "/prometheus/object_detection/aruco_det", 10, aruco_cb);
     
     // 【订阅】
-    ros::Subscriber multi_aruco_sub = nh.subscribe<prometheus_msgs::MultiArucoInfo>("/prometheus/object_detection/multi_aruco_det", 10, multi_aruco_cb);
+    ros::Subscriber multi_aruco_sub = nh.subscribe<prometheus_msgs::MultiArucoInfo>(uav_name + "/prometheus/object_detection/multi_aruco_det", 10, multi_aruco_cb);
     
     //【订阅】无人机状态
-    ros::Subscriber drone_state_sub = nh.subscribe<prometheus_msgs::DroneState>("/prometheus/drone_state", 10, drone_state_cb);
+    ros::Subscriber drone_state_sub = nh.subscribe<prometheus_msgs::DroneState>(uav_name + "/prometheus/drone_state", 10, drone_state_cb);
     // 频率
     float hz = 1.0 / refresh_time;
     ros::Rate rate(hz);

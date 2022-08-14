@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 
 
     //　【发布】　控制指令
-    move_pub = nh.advertise<prometheus_msgs::ControlCommand>("/prometheus/control_command", 10);
+    move_pub = nh.advertise<prometheus_msgs::ControlCommand>(uav_name + "/prometheus/control_command", 10);
 
     fuel_cmd_sub = nh.subscribe<quadrotor_msgs::PositionCommand>("/planning/pos_cmd", 10, cmd_transfer_cb);
 

@@ -38,15 +38,15 @@ int main(int argc, char **argv)
     ros::NodeHandle nh("~");
 
     // 【订阅】 各类消息
-    ros::Subscriber message_main_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/main", 10, msg_planning_cb);
-    ros::Subscriber message_local_planner_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/local_planner", 10, msg_planning_cb);
-    ros::Subscriber message_global_planner_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/global_planner", 10, msg_planning_cb);
-    ros::Subscriber message_fast_planner_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/fast_planner", 10, msg_planning_cb);
+    ros::Subscriber message_main_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/main", 10, msg_planning_cb);
+    ros::Subscriber message_local_planner_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/local_planner", 10, msg_planning_cb);
+    ros::Subscriber message_global_planner_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/global_planner", 10, msg_planning_cb);
+    ros::Subscriber message_fast_planner_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/fast_planner", 10, msg_planning_cb);
 
-    ros::Subscriber num_det_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/num_det", 10, msg_det_cb);
-    ros::Subscriber circle_det_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/circle_det", 10, msg_det_cb);
-    ros::Subscriber pad_det_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/landpad_det", 10, msg_det_cb);
-    ros::Subscriber kcf_det_sub = nh.subscribe<prometheus_msgs::Message>("/prometheus/message/kcf_det", 10, msg_det_cb);
+    ros::Subscriber num_det_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/num_det", 10, msg_det_cb);
+    ros::Subscriber circle_det_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/circle_det", 10, msg_det_cb);
+    ros::Subscriber pad_det_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/landpad_det", 10, msg_det_cb);
+    ros::Subscriber kcf_det_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/kcf_det", 10, msg_det_cb);
 
     // 频率
     ros::Rate rate(1.0);

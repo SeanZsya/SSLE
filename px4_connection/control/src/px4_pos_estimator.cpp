@@ -223,7 +223,7 @@ int main(int argc, char **argv)
     ros::Subscriber optitrack_sub = nh.subscribe<geometry_msgs::PoseStamped>("/vrpn_client_node/"+ object_name + "/pose", 100, mocap_cb);
 
     // 【订阅】gazebo仿真真值
-    ros::Subscriber gazebo_sub = nh.subscribe<nav_msgs::Odometry>("/prometheus/ground_truth/p300_basic", 100, gazebo_cb);
+    ros::Subscriber gazebo_sub = nh.subscribe<nav_msgs::Odometry>(uav_name + "/prometheus/ground_truth/p300_basic", 100, gazebo_cb);
 
     // 【订阅】SLAM估计位姿
     ros::Subscriber slam_sub = nh.subscribe<geometry_msgs::PoseStamped>("/slam/pose", 100, slam_cb);
@@ -233,16 +233,16 @@ int main(int argc, char **argv)
     vision_pub = nh.advertise<geometry_msgs::PoseStamped>("/mavros/vision_pose/pose", 10);
 
     // 【发布】无人机状态量
-    drone_state_pub = nh.advertise<prometheus_msgs::DroneState>("/prometheus/drone_state", 10);
+    drone_state_pub = nh.advertise<prometheus_msgs::DroneState>(uav_name + "/prometheus/drone_state", 10);
 
     //　【发布】无人机odometry，用于RVIZ显示
-    odom_pub = nh.advertise<nav_msgs::Odometry>("/prometheus/drone_odom", 10);
+    odom_pub = nh.advertise<nav_msgs::Odometry>(uav_name + "/prometheus/drone_odom", 10);
 
     // 【发布】无人机移动轨迹，用于RVIZ显示
-    trajectory_pub = nh.advertise<nav_msgs::Path>("/prometheus/drone_trajectory", 10);
+    trajectory_pub = nh.advertise<nav_msgs::Path>(uav_name + "/prometheus/drone_trajectory", 10);
     
     // 【发布】提示消息
-    message_pub = nh.advertise<prometheus_msgs::Message>("/prometheus/message/main", 10);
+    message_pub = nh.advertise<prometheus_msgs::Message>(uav_name + "/prometheus/message/main", 10);
 
     // 10秒定时打印，以确保程序在正确运行
     ros::Timer timer = nh.createTimer(ros::Duration(10.0), timerCallback);

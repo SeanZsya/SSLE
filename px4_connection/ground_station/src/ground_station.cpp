@@ -121,7 +121,7 @@ int main(int argc, char **argv)
     nh.param<bool>("gimbal_enable", gimbal_enable, false);
 
     // 【订阅】prometheus_control模块回传的消息
-    ros::Subscriber log_control_sub = nh.subscribe<prometheus_msgs::LogMessageControl>("/prometheus/log/control", 10, log_control_cb);
+    ros::Subscriber log_control_sub = nh.subscribe<prometheus_msgs::LogMessageControl>(uav_name + "/prometheus/log/control", 10, log_control_cb);
     
     // 【订阅】飞控回传
     ros::Subscriber attitude_target_sub = nh.subscribe<mavros_msgs::AttitudeTarget>("/mavros/setpoint_raw/target_attitude", 10, att_target_cb);
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
 
     if(mission_type == 1)
     {
-        ros::Subscriber landpad_det_sub = nh.subscribe<prometheus_msgs::DetectionInfo>("/prometheus/object_detection/ellipse_det", 10, landpad_det_cb);
+        ros::Subscriber landpad_det_sub = nh.subscribe<prometheus_msgs::DetectionInfo>(uav_name + "/prometheus/object_detection/ellipse_det", 10, landpad_det_cb);
     }
 
     ros::Subscriber gimbal_att_sub = nh.subscribe<geometry_msgs::Quaternion>("/mavros/mount_control/orientation", 10, gimbal_att_cb);
