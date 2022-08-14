@@ -36,6 +36,10 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "ground_station_msg");
     ros::NodeHandle nh("~");
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+        uav_name = "";
 
     // 【订阅】 各类消息
     ros::Subscriber message_main_sub = nh.subscribe<prometheus_msgs::Message>(uav_name + "/prometheus/message/main", 10, msg_planning_cb);

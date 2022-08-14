@@ -212,25 +212,30 @@ int main(int argc, char **argv)
     nh.param<float>("offset_y", pos_offset[1], 0);
     nh.param<float>("offset_z", pos_offset[2], 0);
     nh.param<float>("offset_yaw", yaw_offset, 0);
+    
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+            uav_name = "";
 
     // 【订阅】cartographer估计位置
-    ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>("/tf", 100, laser_cb);
+    ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>(uav_name  +  "/tf", 100, laser_cb);
 
     //  【订阅】t265估计位置
-    ros::Subscriber t265_sub = nh.subscribe<nav_msgs::Odometry>("/t265/odom/sample", 100, t265_cb);
+    ros::Subscriber t265_sub = nh.subscribe<nav_msgs::Odometry>(uav_name  +  "/t265/odom/sample", 100, t265_cb);
 
     // 【订阅】optitrack估计位置
-    ros::Subscriber optitrack_sub = nh.subscribe<geometry_msgs::PoseStamped>("/vrpn_client_node/"+ object_name + "/pose", 100, mocap_cb);
+    ros::Subscriber optitrack_sub = nh.subscribe<geometry_msgs::PoseStamped>(uav_name  +  "/vrpn_client_node/"+ object_name + "/pose", 100, mocap_cb);
 
     // 【订阅】gazebo仿真真值
     ros::Subscriber gazebo_sub = nh.subscribe<nav_msgs::Odometry>(uav_name + "/prometheus/ground_truth/p300_basic", 100, gazebo_cb);
 
     // 【订阅】SLAM估计位姿
-    ros::Subscriber slam_sub = nh.subscribe<geometry_msgs::PoseStamped>("/slam/pose", 100, slam_cb);
+    ros::Subscriber slam_sub = nh.subscribe<geometry_msgs::PoseStamped>(uav_name  +  "/slam/pose", 100, slam_cb);
 
     // 【发布】无人机位置和偏航角 坐标系 ENU系
     //  本话题要发送飞控(通过mavros_extras/src/plugins/vision_pose_estimate.cpp发送), 对应Mavlink消息为VISION_POSITION_ESTIMATE(#102), 对应的飞控中的uORB消息为vehicle_vision_position.msg 及 vehicle_vision_attitude.msg
-    vision_pub = nh.advertise<geometry_msgs::PoseStamped>("/mavros/vision_pose/pose", 10);
+    vision_pub = nh.advertise<geometry_msgs::PoseStamped>(uav_name  +  "/mavros/vision_pose/pose", 10);
 
     // 【发布】无人机状态量
     drone_state_pub = nh.advertise<prometheus_msgs::DroneState>(uav_name + "/prometheus/drone_state", 10);

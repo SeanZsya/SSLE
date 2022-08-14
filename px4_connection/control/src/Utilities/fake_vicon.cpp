@@ -25,8 +25,13 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "fake_vicon");
     ros::NodeHandle nh("~");
 
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+        uav_name = "";
+
     // 【订阅】optitrack估计位置
-    ros::Publisher optitrack_pub = nh.advertise<geometry_msgs::PoseStamped>("/vrpn_client_node/UAV/pose", 1000);
+    ros::Publisher optitrack_pub = nh.advertise<geometry_msgs::PoseStamped>(uav_name  +  "/vrpn_client_node/UAV/pose", 1000);
 
     // 频率
     ros::Rate rate(100.0);

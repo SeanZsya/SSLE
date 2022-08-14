@@ -34,15 +34,20 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "set_mode");
     ros::NodeHandle nh("~");
-
+    
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+      uav_name = "";
+      
     // 【订阅】无人机当前状态 - 来自飞控
     //  本话题来自飞控(通过/plugins/sys_status.cpp)
-    ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>("/mavros/state", 10, state_cb);
+    ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>(uav_name  +  "/mavros/state", 10, state_cb);
 
     // 【服务】修改系统模式
-    ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>("/mavros/set_mode");
+    ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>(uav_name  +  "/mavros/set_mode");
 
-    ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>("/mavros/cmd/arming");
+    ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>(uav_name  +  "/mavros/cmd/arming");
 
     mavros_msgs::SetMode mode_cmd;
 

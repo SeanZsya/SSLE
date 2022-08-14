@@ -108,6 +108,11 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "px4_geometry_controller");
     ros::NodeHandle nh("~");
+    
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+        uav_name = "";
 
     //【订阅】指令
     // 本话题为任务模块生成的控制指令

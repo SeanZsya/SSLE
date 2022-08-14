@@ -51,6 +51,10 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "ground_station_aruco");
     ros::NodeHandle nh("~");
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+        uav_name = "";
 
     // 参数读取
     nh.param<float>("refresh_time", refresh_time, 1.0);

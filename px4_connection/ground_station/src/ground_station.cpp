@@ -111,6 +111,10 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "ground_station");
     ros::NodeHandle nh("~");
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+        uav_name = "";
 
     // 参数读取
     nh.param<float>("refresh_time", refresh_time, 1.0);
@@ -124,17 +128,17 @@ int main(int argc, char **argv)
     ros::Subscriber log_control_sub = nh.subscribe<prometheus_msgs::LogMessageControl>(uav_name + "/prometheus/log/control", 10, log_control_cb);
     
     // 【订阅】飞控回传
-    ros::Subscriber attitude_target_sub = nh.subscribe<mavros_msgs::AttitudeTarget>("/mavros/setpoint_raw/target_attitude", 10, att_target_cb);
+    ros::Subscriber attitude_target_sub = nh.subscribe<mavros_msgs::AttitudeTarget>(uav_name  +  "/mavros/setpoint_raw/target_attitude", 10, att_target_cb);
     
     // 【订阅】 本话题来自飞控(通过Mavros功能包 /plugins/setpoint_raw.cpp读取), 对应Mavlink消息为POSITION_TARGET_LOCAL_NED, 对应的飞控中的uORB消息为vehicle_local_position_setpoint.msg
-    ros::Subscriber position_target_sub = nh.subscribe<mavros_msgs::PositionTarget>("/mavros/setpoint_raw/target_local", 10, pos_target_cb);
+    ros::Subscriber position_target_sub = nh.subscribe<mavros_msgs::PositionTarget>(uav_name  +  "/mavros/setpoint_raw/target_local", 10, pos_target_cb);
 
     if(mission_type == 1)
     {
         ros::Subscriber landpad_det_sub = nh.subscribe<prometheus_msgs::DetectionInfo>(uav_name + "/prometheus/object_detection/ellipse_det", 10, landpad_det_cb);
     }
 
-    ros::Subscriber gimbal_att_sub = nh.subscribe<geometry_msgs::Quaternion>("/mavros/mount_control/orientation", 10, gimbal_att_cb);
+    ros::Subscriber gimbal_att_sub = nh.subscribe<geometry_msgs::Quaternion>(uav_name  +  "/mavros/mount_control/orientation", 10, gimbal_att_cb);
 
     // 频率
     float hz = 1.0 / refresh_time;

@@ -10,9 +10,15 @@ int main(int argc, char **argv)
   std::string portName;
   int baud_rate;
   benewake::TFmini *tfmini_obj;
+  
+  string uav_name;
+  nh.param<string>("uav_name", uav_name, "/uav0");
+  if (uav_name == "/uav0")
+      uav_name = "";
 
-  nh.param("serial_port", portName, std::string("/dev/ttyUSB0"));
+  nh.param("serial_port", portName, std::string(uav_name  +  "/dev/ttyUSB0"));
   nh.param("baud_rate", baud_rate, 115200);
+  
 
   tfmini_obj = new benewake::TFmini(portName, baud_rate);
   ros::Publisher pub_range = nh.advertise<sensor_msgs::Range>(uav_name + "/prometheus/tfmini_range", 1000, true);
