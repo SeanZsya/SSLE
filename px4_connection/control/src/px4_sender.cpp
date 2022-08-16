@@ -196,6 +196,7 @@ int main(int argc, char **argv)
     while(ros::ok())
     {
     nh.getParam("uav_name", uav_name);
+    // ROS_ERROR("uav_name_param: %s", uav_name.c_str());
         // 当前时间
         cur_time = prometheus_control_utils::get_time_in_sec(begin_time);
         dt = cur_time  - last_time;

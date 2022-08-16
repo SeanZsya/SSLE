@@ -1,0 +1,7 @@
+<launch>
+
+<node name="pub_cmd_uav1" pkg="run_onboard" type="pub_px4_cmd" output="screen">
+	<param name="uav_name" value="uav1"/>
+</node>
+
+</launch>

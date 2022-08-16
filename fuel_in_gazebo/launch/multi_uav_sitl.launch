@@ -1,0 +1,55 @@
+<launch>
+
+	<env name="PX4_SIM_MODEL" value="p450" />
+	<env name="PX4_ESTIMATOR" value="ekf2_vision" />
+	<env name="PX4_SIM_SPEED_FACTOR" value="1.0" />
+
+	<!-- 启动Gazebo -->
+	<!-- Gazebo configs -->
+    <arg name="gui" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="false"/>
+    <arg name="paused" default="false"/>
+    <arg name="respawn_gazebo" default="false"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="world" default="$(find fuel_in_gazebo)/worlds/empty.world"/>
+    <!-- Gazebo sim -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
+        <arg name="world_name" value="$(arg world)"/>	
+    </include>
+
+
+	<!-- UAV1 -->
+	<include file="$(find fuel_in_gazebo)/launch/sitl.launch">
+		<arg name="uav_name" value="/uav1"/>
+		<arg name="ID" value="0"/>
+		<arg name="vehicle" default="p450_sslidar"/>
+		<arg name="x" value="0.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0.2"/>
+		<arg name="R" value="0.0"/>
+		<arg name="P" value="0.0"/>
+		<arg name="Y" value="0.0"/>
+	</include>
+
+	<!-- UAV2 -->
+	<!-- <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
+		<arg name="uav_name" value="/uav2"/>
+		<arg name="ID" value="1"/>
+		<arg name="vehicle" default="p450_sslidar"/>
+		<arg name="x" value="1.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0.2"/>
+		<arg name="R" value="0.0"/>
+		<arg name="P" value="0.0"/>
+		<arg name="Y" value="0.0"/>
+	</include> -->
+
+
+</launch>

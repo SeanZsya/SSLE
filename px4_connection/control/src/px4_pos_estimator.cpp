@@ -219,7 +219,7 @@ int main(int argc, char **argv)
             uav_name = "";
 
     // 【订阅】cartographer估计位置
-    ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>(uav_name  +  "/tf", 100, laser_cb);
+    ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>("/tf", 100, laser_cb);
 
     //  【订阅】t265估计位置
     ros::Subscriber t265_sub = nh.subscribe<nav_msgs::Odometry>(uav_name  +  "/t265/odom/sample", 100, t265_cb);
@@ -228,7 +228,7 @@ int main(int argc, char **argv)
     ros::Subscriber optitrack_sub = nh.subscribe<geometry_msgs::PoseStamped>(uav_name  +  "/vrpn_client_node/"+ object_name + "/pose", 100, mocap_cb);
 
     // 【订阅】gazebo仿真真值
-    ros::Subscriber gazebo_sub = nh.subscribe<nav_msgs::Odometry>(uav_name + "/prometheus/ground_truth/p300_basic", 100, gazebo_cb);
+    ros::Subscriber gazebo_sub = nh.subscribe<nav_msgs::Odometry>(uav_name + "/prometheus/ground_truth/p450_basic", 100, gazebo_cb);
 
     // 【订阅】SLAM估计位姿
     ros::Subscriber slam_sub = nh.subscribe<geometry_msgs::PoseStamped>(uav_name  +  "/slam/pose", 100, slam_cb);
