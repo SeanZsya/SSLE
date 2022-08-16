@@ -523,7 +523,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>50.0</updateRate>
       <bodyName>base_link</bodyName>
-      <topicName>prometheus/ground_truth/p450_basic</topicName>
+      <topicName>/uav1/prometheus/ground_truth/p450_basic</topicName>
       <gaussianNoise>0.00</gaussianNoise>
       <frameName>world</frameName>
       <xyzOffsets>0 0 0</xyzOffsets>
