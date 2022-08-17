@@ -25,6 +25,8 @@
     </include>
 
 
+	<node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find exploration_manager)/config/multi_exp.rviz" />
+
 	<arg name="uav1_name" value="/uav1"/>
 	<arg name="uav2_name" value="/uav2"/>
 

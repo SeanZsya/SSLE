@@ -2,7 +2,7 @@
 
   <arg name="uav_name" default="/uav0"/>
 
-	<node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find exploration_manager)/config/multi_exp.rviz" />
+	
 
 	<!-- size of map, change the size in x, y, z according to your application -->
 	<arg name="map_size_x" value="200.0"/>

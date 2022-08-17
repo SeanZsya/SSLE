@@ -361,9 +361,9 @@ int main(int argc, char** argv) {
   ros::NodeHandle node;
   ros::NodeHandle nh("~");
 
-  ros::Subscriber bspline_sub = node.subscribe("planning/bspline", 10, bsplineCallback);
-  ros::Subscriber replan_sub = node.subscribe("planning/replan", 10, replanCallback);
-  ros::Subscriber new_sub = node.subscribe("planning/new", 10, newCallback);
+  ros::Subscriber bspline_sub = node.subscribe("exploration_node/planning/bspline", 10, bsplineCallback);
+  ros::Subscriber replan_sub = node.subscribe("exploration_node/planning/replan", 10, replanCallback);
+  ros::Subscriber new_sub = node.subscribe("exploration_node/planning/new", 10, newCallback);
   ros::Subscriber odom_sub = node.subscribe("/odom_world", 50, odomCallbck);
   ros::Subscriber pg_T_vio_sub = node.subscribe("loop_fusion/pg_T_vio", 10, pgTVioCallback);
 
