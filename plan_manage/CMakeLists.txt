@@ -44,7 +44,7 @@ add_executable(fast_planner_node
   src/fast_planner_node.cpp 
   src/kino_replan_fsm.cpp
   src/topo_replan_fsm.cpp
-  test/local_explore_fsm.cpp
+  src/local_explore_fsm.cpp
   src/planner_manager.cpp
   src/planner_manager_dev.cpp
   )
@@ -76,18 +76,18 @@ target_link_libraries(traj_server ${catkin_LIBRARIES} -ldw)
 # add_executable(rotation test/rotation.cpp)
 # target_link_libraries(rotation ${catkin_LIBRARIES})
 
-add_executable(proc_msg 
-    test/process_msg.cpp
-)
-target_link_libraries( proc_msg
-    ${catkin_LIBRARIES} 
-    ${PCL_LIBRARIES}
-    )  
+# add_executable(proc_msg 
+#     test/process_msg.cpp
+# )
+# target_link_libraries( proc_msg
+#     ${catkin_LIBRARIES} 
+#     ${PCL_LIBRARIES}
+#     )  
 
-add_executable(proc_msg2 
-    test/process_msg2.cpp
-)
-target_link_libraries( proc_msg2
-    ${catkin_LIBRARIES} 
-    ${PCL_LIBRARIES}
-    )
+# add_executable(proc_msg2 
+#     test/process_msg2.cpp
+# )
+# target_link_libraries( proc_msg2
+#     ${catkin_LIBRARIES} 
+#     ${PCL_LIBRARIES}
+#     )

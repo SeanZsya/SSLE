@@ -31,12 +31,12 @@ void TopoReplanFSM::init(ros::NodeHandle& nh) {
   // frontier_timer_ = nh.createTimer(ros::Duration(0.1), &TopoReplanFSM::frontierCallback, this);
 
   waypoint_sub_ =
-      nh.subscribe("/waypoint_generator/waypoints", 1, &TopoReplanFSM::waypointCallback, this);
+      nh.subscribe("waypoint_generator/waypoints", 1, &TopoReplanFSM::waypointCallback, this);
   odom_sub_ = nh.subscribe("/odom_world", 1, &TopoReplanFSM::odometryCallback, this);
 
-  replan_pub_ = nh.advertise<std_msgs::Empty>("/planning/replan", 20);
-  new_pub_ = nh.advertise<std_msgs::Empty>("/planning/new", 20);
-  bspline_pub_ = nh.advertise<bspline::Bspline>("/planning/bspline", 20);
+  replan_pub_ = nh.advertise<std_msgs::Empty>("planning/replan", 20);
+  new_pub_ = nh.advertise<std_msgs::Empty>("planning/new", 20);
+  bspline_pub_ = nh.advertise<bspline::Bspline>("planning/bspline", 20);
 }
 
 void TopoReplanFSM::waypointCallback(const nav_msgs::PathConstPtr& msg) {

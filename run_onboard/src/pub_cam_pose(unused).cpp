@@ -52,7 +52,7 @@ int main(int argc, char** argv)
    ros::NodeHandle nh("~");
    cam2body << 0.0,0.0,1.0,0.0,  -1.0,0.0,0.0,0.0,    0.0,-1.0,0.0,0.0,    0.0,0.0,0.0,1.0; 
 
-   sub_cam_pos = nh.subscribe("/mavros/local_position/odom", 50, OdometryCallback);  
+   sub_cam_pos = nh.subscribe("mavros/local_position/odom", 50, OdometryCallback);  
    pub_cam_pos = nh.advertise<geometry_msgs::PoseStamped>("sensor_pose", 50);
 
    ros::spin();

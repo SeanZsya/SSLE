@@ -152,8 +152,8 @@ void goal_callback(const geometry_msgs::PoseStamped::ConstPtr& msg) {
   trigged_time = ros::Time::now();  // odom.header.stamp;
   // ROS_ASSERT(trigged_time > ros::Time(0));
 
-  ros::NodeHandle n("~");
-  n.param("waypoint_type", waypoint_type, string("manual"));
+  ros::NodeHandle nh("~");
+  nh.param("waypoint_type", waypoint_type, string("manual"));
 
   if (waypoint_type == string("circle")) {
     waypoints = circle();
@@ -168,7 +168,7 @@ void goal_callback(const geometry_msgs::PoseStamped::ConstPtr& msg) {
     publish_waypoints_vis();
     publish_waypoints();
   } else if (waypoint_type == string("series")) {
-    load_waypoints(n, trigged_time);
+    load_waypoints(nh, trigged_time);
   } else if (waypoint_type == string("manual-lonely-waypoint")) {
     if (msg->pose.position.z > -0.1) {
       // if height > 0, it's a valid goal;
@@ -216,8 +216,8 @@ void traj_start_trigger_callback(const geometry_msgs::PoseStamped& msg) {
   trigged_time = odom.header.stamp;
   ROS_ASSERT(trigged_time > ros::Time(0));
 
-  ros::NodeHandle n("~");
-  n.param("waypoint_type", waypoint_type, string("manual"));
+  ros::NodeHandle nh("~");
+  nh.param("waypoint_type", waypoint_type, string("manual"));
 
   ROS_ERROR_STREAM("Pattern " << waypoint_type << " generated!");
   if (waypoint_type == string("free")) {
@@ -237,19 +237,19 @@ void traj_start_trigger_callback(const geometry_msgs::PoseStamped& msg) {
     publish_waypoints_vis();
     publish_waypoints();
   } else if (waypoint_type == string("series")) {
-    load_waypoints(n, trigged_time);
+    load_waypoints(nh, trigged_time);
   }
 }
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "waypoint_generator");
-  ros::NodeHandle n("~");
-  n.param("waypoint_type", waypoint_type, string("manual"));
-  ros::Subscriber sub1 = n.subscribe("odom", 10, odom_callback);
-  ros::Subscriber sub2 = n.subscribe("goal", 10, goal_callback);
-  ros::Subscriber sub3 = n.subscribe("traj_start_trigger", 10, traj_start_trigger_callback);
-  pub1 = n.advertise<nav_msgs::Path>("waypoints", 50);
-  pub2 = n.advertise<geometry_msgs::PoseArray>("waypoints_vis", 10);
+  ros::NodeHandle nh("~");
+  nh.param("waypoint_type", waypoint_type, string("manual"));
+  ros::Subscriber sub1 = nh.subscribe("odom", 10, odom_callback);
+  ros::Subscriber sub2 = nh.subscribe("goal", 10, goal_callback);
+  ros::Subscriber sub3 = nh.subscribe("traj_start_trigger", 10, traj_start_trigger_callback);
+  pub1 = nh.advertise<nav_msgs::Path>("waypoints", 50);
+  pub2 = nh.advertise<geometry_msgs::PoseArray>("waypoints_vis", 10);
 
   trigged_time = ros::Time(0);
 

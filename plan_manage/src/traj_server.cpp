@@ -365,7 +365,7 @@ int main(int argc, char** argv) {
   ros::Subscriber replan_sub = node.subscribe("planning/replan", 10, replanCallback);
   ros::Subscriber new_sub = node.subscribe("planning/new", 10, newCallback);
   ros::Subscriber odom_sub = node.subscribe("/odom_world", 50, odomCallbck);
-  ros::Subscriber pg_T_vio_sub = node.subscribe("/loop_fusion/pg_T_vio", 10, pgTVioCallback);
+  ros::Subscriber pg_T_vio_sub = node.subscribe("loop_fusion/pg_T_vio", 10, pgTVioCallback);
 
   cmd_vis_pub = node.advertise<visualization_msgs::Marker>("planning/position_cmd_vis", 10);
   pos_cmd_pub = node.advertise<quadrotor_msgs::PositionCommand>("/position_cmd", 2);

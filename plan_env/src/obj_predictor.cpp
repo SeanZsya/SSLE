@@ -66,12 +66,12 @@ void ObjPredictor::init() {
     obj_histories_.push_back(obj_his);
 
     ros::Subscriber pose_sub = node_handle_.subscribe<geometry_msgs::PoseStamped>(
-        "/dynamic/pose_" + std::to_string(i), 10, &ObjHistory::poseCallback, obj_his.get());
+        "dynamic_obj/dynamic/pose_" + std::to_string(i), 10, &ObjHistory::poseCallback, obj_his.get());
 
     pose_subs_.push_back(pose_sub);
   }
 
-  marker_sub_ = node_handle_.subscribe<visualization_msgs::Marker>("/dynamic/obj", 10,
+  marker_sub_ = node_handle_.subscribe<visualization_msgs::Marker>("dynamic_obj/dynamic/obj", 10,
                                                                    &ObjPredictor::markerCallback, this);
 
   /* update prediction */

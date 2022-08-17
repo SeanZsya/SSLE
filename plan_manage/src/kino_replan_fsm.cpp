@@ -30,12 +30,12 @@ void KinoReplanFSM::init(ros::NodeHandle& nh) {
   safety_timer_ = nh.createTimer(ros::Duration(0.05), &KinoReplanFSM::checkCollisionCallback, this);
 
   waypoint_sub_ =
-      nh.subscribe("/waypoint_generator/waypoints", 1, &KinoReplanFSM::waypointCallback, this);
+      nh.subscribe("waypoint_generator/waypoints", 1, &KinoReplanFSM::waypointCallback, this);
   odom_sub_ = nh.subscribe("/odom_world", 1, &KinoReplanFSM::odometryCallback, this);
 
-  replan_pub_ = nh.advertise<std_msgs::Empty>("/planning/replan", 10);
-  new_pub_ = nh.advertise<std_msgs::Empty>("/planning/new", 10);
-  bspline_pub_ = nh.advertise<bspline::Bspline>("/planning/bspline", 10);
+  replan_pub_ = nh.advertise<std_msgs::Empty>("planning/replan", 10);
+  new_pub_ = nh.advertise<std_msgs::Empty>("planning/new", 10);
+  bspline_pub_ = nh.advertise<bspline::Bspline>("planning/bspline", 10);
 }
 
 void KinoReplanFSM::waypointCallback(const nav_msgs::PathConstPtr& msg) {

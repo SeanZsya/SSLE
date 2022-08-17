@@ -40,29 +40,29 @@ void visualizeObj(int id);
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "dynamic_obj");
-  ros::NodeHandle node("~");
+  ros::NodeHandle nh("~");
 
   /* ---------- initialize ---------- */
-  node.param("obj_generator/obj_num", obj_num, 10);
-  node.param("obj_generator/xy_size", _xy_size, 15.0);
-  node.param("obj_generator/h_size", _h_size, 5.0);
-  node.param("obj_generator/vel", _vel, 5.0);
-  node.param("obj_generator/yaw_dot", _yaw_dot, 5.0);
-  node.param("obj_generator/acc_r1", _acc_r1, 4.0);
-  node.param("obj_generator/acc_r2", _acc_r2, 6.0);
-  node.param("obj_generator/acc_z", _acc_z, 3.0);
-  node.param("obj_generator/scale1", _scale1, 1.5);
-  node.param("obj_generator/scale2", _scale2, 2.5);
-  node.param("obj_generator/interval", _interval, 2.5);
+  nh.param("obj_generator/obj_num", obj_num, 10);
+  nh.param("obj_generator/xy_size", _xy_size, 15.0);
+  nh.param("obj_generator/h_size", _h_size, 5.0);
+  nh.param("obj_generator/vel", _vel, 5.0);
+  nh.param("obj_generator/yaw_dot", _yaw_dot, 5.0);
+  nh.param("obj_generator/acc_r1", _acc_r1, 4.0);
+  nh.param("obj_generator/acc_r2", _acc_r2, 6.0);
+  nh.param("obj_generator/acc_z", _acc_z, 3.0);
+  nh.param("obj_generator/scale1", _scale1, 1.5);
+  nh.param("obj_generator/scale2", _scale2, 2.5);
+  nh.param("obj_generator/interval", _interval, 2.5);
 
-  obj_pub = node.advertise<visualization_msgs::Marker>("/dynamic/obj", 10);
+  obj_pub = nh.advertise<visualization_msgs::Marker>("dynamic/obj", 10);
   for (int i = 0; i < obj_num; ++i) {
     ros::Publisher pose_pub =
-        node.advertise<geometry_msgs::PoseStamped>("/dynamic/pose_" + to_string(i), 10);
+        nh.advertise<geometry_msgs::PoseStamped>("dynamic/pose_" + to_string(i), 10);
     pose_pubs.push_back(pose_pub);
   }
 
-  ros::Timer update_timer = node.createTimer(ros::Duration(1 / 30.0), updateCallback);
+  ros::Timer update_timer = nh.createTimer(ros::Duration(1 / 30.0), updateCallback);
   cout << "[dynamic]: initialize with " + to_string(obj_num) << " moving obj." << endl;
   ros::Duration(1.0).sleep();
 

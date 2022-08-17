@@ -1,0 +1,76 @@
+<launch>
+
+	<env name="PX4_SIM_MODEL" value="p450" />
+	<env name="PX4_ESTIMATOR" value="ekf2_vision" />
+	<env name="PX4_SIM_SPEED_FACTOR" value="1.0" />
+
+	<!-- 启动Gazebo -->
+	<!-- Gazebo configs -->
+    <arg name="gui" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="false"/>
+    <arg name="paused" default="false"/>
+    <arg name="respawn_gazebo" default="false"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="world" value="$(find fuel_in_gazebo)/worlds/iscas_museum.world"/>
+    <!-- Gazebo sim -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
+        <arg name="world_name" value="$(arg world)"/>	
+    </include>
+
+
+	<arg name="uav1_name" value="/uav1"/>
+	<arg name="uav2_name" value="/uav2"/>
+
+	<!-- UAV1 -->
+	<group ns="$(arg uav1_name)">
+
+		<include file="$(find fuel_in_gazebo)/launch/exp/single_basic.launch">
+			<arg name="uav_name" value="$(arg uav1_name)"/>
+			<arg name="ID" value="0"/>
+			<arg name="vehicle" default="p450_sslidar"/>
+			<arg name="x" value="-1.0"/>
+			<arg name="y" value="0.0"/>
+			<arg name="z" value="0.0"/>
+			<arg name="R" value="0.0"/>
+			<arg name="P" value="0.0"/>
+			<arg name="Y" value="0.0"/>
+		</include>
+
+		<include file="$(find fuel_in_gazebo)/launch/exp/single_exp_sim_rgbd.launch">
+			<arg name="uav_name" value="$(arg uav1_name)"/>
+		</include>
+
+		<node name="pub_cmd_uav" pkg="run_onboard" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
+			<param name="uav_name" value="$(arg uav1_name)"/>
+		</node>
+
+		<node name="pub_lidar_pose" pkg="run_onboard" type="pub_lidar_pose" output="screen"> 
+			<param name="uav_name" value="$(arg uav1_name)"/>
+		</node>
+	
+	</group>
+	
+	
+	<!-- UAV2 -->
+	<!-- <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
+		<arg name="uav_name" value="/uav2"/>
+		<arg name="ID" value="1"/>
+		<arg name="vehicle" default="p450_sslidar"/>
+		<arg name="x" value="1.0"/>
+		<arg name="y" value="0.0"/>
+		<arg name="z" value="0.2"/>
+		<arg name="R" value="0.0"/>
+		<arg name="P" value="0.0"/>
+		<arg name="Y" value="0.0"/>
+	</include> -->
+
+
+
+</launch>

@@ -60,14 +60,14 @@ void MapROS::init() {
   esdf_timer_ = node_.createTimer(ros::Duration(0.05), &MapROS::updateESDFCallback, this);
   vis_timer_ = node_.createTimer(ros::Duration(0.05), &MapROS::visCallback, this);
 
-  map_all_pub_ = node_.advertise<sensor_msgs::PointCloud2>("/sdf_map/occupancy_all", 10);
-  map_local_pub_ = node_.advertise<sensor_msgs::PointCloud2>("/sdf_map/occupancy_local", 10);
+  map_all_pub_ = node_.advertise<sensor_msgs::PointCloud2>("sdf_map/occupancy_all", 10);
+  map_local_pub_ = node_.advertise<sensor_msgs::PointCloud2>("sdf_map/occupancy_local", 10);
   map_local_inflate_pub_ =
-      node_.advertise<sensor_msgs::PointCloud2>("/sdf_map/occupancy_local_inflate", 10);
-  unknown_pub_ = node_.advertise<sensor_msgs::PointCloud2>("/sdf_map/unknown", 10);
-  esdf_pub_ = node_.advertise<sensor_msgs::PointCloud2>("/sdf_map/esdf", 10);
-  update_range_pub_ = node_.advertise<visualization_msgs::Marker>("/sdf_map/update_range", 10);
-  depth_pub_ = node_.advertise<sensor_msgs::PointCloud2>("/sdf_map/depth_cloud", 10);
+      node_.advertise<sensor_msgs::PointCloud2>("sdf_map/occupancy_local_inflate", 10);
+  unknown_pub_ = node_.advertise<sensor_msgs::PointCloud2>("sdf_map/unknown", 10);
+  esdf_pub_ = node_.advertise<sensor_msgs::PointCloud2>("sdf_map/esdf", 10);
+  update_range_pub_ = node_.advertise<visualization_msgs::Marker>("sdf_map/update_range", 10);
+  depth_pub_ = node_.advertise<sensor_msgs::PointCloud2>("sdf_map/depth_cloud", 10);
 
   depth_sub_.reset(new message_filters::Subscriber<sensor_msgs::Image>(node_, "/map_ros/depth", 50));
   cloud_sub_.reset(
@@ -77,10 +77,9 @@ void MapROS::init() {
 
 //////////////////////////////////////////////
   uav1PosSub =
-      node_.subscribe<geometry_msgs::PoseStamped>("/uav_1/pose", 10, &MapROS::uav1Callback, this);
-  ROS_ERROR("UAVS_POSE_SUB");
+      node_.subscribe<geometry_msgs::PoseStamped>("uav_1/pose", 10, &MapROS::uav1Callback, this);
   uav2PosSub = 
-      node_.subscribe<geometry_msgs::PoseStamped>("/uav_2/pose", 10, &MapROS::uav2Callback, this);
+      node_.subscribe<geometry_msgs::PoseStamped>("uav_2/pose", 10, &MapROS::uav2Callback, this);
   uavs_pos_ << 0., 0., 10., 0., 0., 10.;
 ///////////////////////////////////////////
 

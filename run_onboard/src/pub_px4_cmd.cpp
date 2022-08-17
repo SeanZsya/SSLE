@@ -57,20 +57,20 @@ void cmd_transfer_cb(const quadrotor_msgs::PositionCommand cmd)
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "pub_px4_cmd");
-    ros::NodeHandle nh;
+    ros::NodeHandle nh("~");
     KeyboardEvent keyboardcontrol;
     char key_now, key_now2;
     char key_last;
-    // string uav_name;
-    // nh.param<string>("uav_name", uav_name, "/uav0");
-    // if (uav_name == "/uav0")
-    //     uav_name = "";
+    string uav_name;
+    nh.param<string>("uav_name", uav_name, "/uav0");
+    if (uav_name == "/uav0")
+        uav_name = "";
 
 
     //　【发布】　控制指令
-    move_pub = nh.advertise<prometheus_msgs::ControlCommand>("prometheus/control_command", 10);
+    move_pub = nh.advertise<prometheus_msgs::ControlCommand>(uav_name + "/prometheus/control_command", 10);
 
-    fuel_cmd_sub = nh.subscribe<quadrotor_msgs::PositionCommand>("planning/pos_cmd", 10, cmd_transfer_cb);
+    fuel_cmd_sub = nh.subscribe<quadrotor_msgs::PositionCommand>(uav_name + "/planning/pos_cmd", 10, cmd_transfer_cb);
 
 
     // 初始化命令 - Idle模式 电机怠速旋转 等待来自上层的控制指令
@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-      // nh.getParam("uav_name", uav_name);
+      nh.getParam("uav_name", uav_name);
       keyboardcontrol.RosWhileLoopRun();
       key_now = keyboardcontrol.GetPressedKey();
 

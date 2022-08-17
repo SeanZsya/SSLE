@@ -219,7 +219,7 @@ int main(int argc, char **argv)
             uav_name = "";
 
     // 【订阅】cartographer估计位置
-    ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>("/tf", 100, laser_cb);
+    ros::Subscriber laser_sub = nh.subscribe<tf2_msgs::TFMessage>("tf", 100, laser_cb);
 
     //  【订阅】t265估计位置
     ros::Subscriber t265_sub = nh.subscribe<nav_msgs::Odometry>(uav_name  +  "/t265/odom/sample", 100, t265_cb);

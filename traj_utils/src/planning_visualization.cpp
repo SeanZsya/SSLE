@@ -6,27 +6,27 @@ namespace fast_planner {
 PlanningVisualization::PlanningVisualization(ros::NodeHandle& nh) {
   node = nh;
 
-  traj_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/trajectory", 100);
+  traj_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/trajectory", 100);
   pubs_.push_back(traj_pub_);
 
-  topo_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/topo_path", 100);
+  topo_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/topo_path", 100);
   pubs_.push_back(topo_pub_);
 
-  predict_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/prediction", 100);
+  predict_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/prediction", 100);
   pubs_.push_back(predict_pub_);
 
-  visib_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/"
+  visib_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/"
                                                           "visib_constraint",
                                                           100);
   pubs_.push_back(visib_pub_);
 
-  frontier_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/frontier", 10000);
+  frontier_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/frontier", 10000);
   pubs_.push_back(frontier_pub_);
 
-  yaw_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/yaw", 100);
+  yaw_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/yaw", 100);
   pubs_.push_back(yaw_pub_);
 
-  viewpoint_pub_ = node.advertise<visualization_msgs::Marker>("/planning_vis/viewpoints", 1000);
+  viewpoint_pub_ = node.advertise<visualization_msgs::Marker>("planning_vis/viewpoints", 1000);
   pubs_.push_back(viewpoint_pub_);
 
   last_topo_path1_num_ = 0;

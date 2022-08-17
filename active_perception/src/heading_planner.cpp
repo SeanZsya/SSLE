@@ -100,9 +100,9 @@ void Graph::dijkstraSearch(const int& start, const int& goal, vector<YawVertex::
 }
 
 HeadingPlanner::HeadingPlanner(ros::NodeHandle& nh) {
-  frontier_pub_ = nh.advertise<sensor_msgs::PointCloud2>("/heading_planner/frontier", 20);
-  visib_pub_ = nh.advertise<sensor_msgs::PointCloud2>("/heading_planner/visib", 20);
-  box_pub_ = nh.advertise<visualization_msgs::Marker>("/heading_planner/box", 20);
+  frontier_pub_ = nh.advertise<sensor_msgs::PointCloud2>("heading_planner/frontier", 20);
+  visib_pub_ = nh.advertise<sensor_msgs::PointCloud2>("heading_planner/visib", 20);
+  box_pub_ = nh.advertise<visualization_msgs::Marker>("heading_planner/box", 20);
 
   nh.param("heading_planner/yaw_diff", yaw_diff_, -1.0);
   nh.param("heading_planner/lambda1", lambda1_, -1.0);

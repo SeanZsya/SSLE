@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "ros_info_color_test");
-    ros::NodeHandle nh;
+    ros::NodeHandle nh("~");
 
     //固定的浮点显示
     cout.setf(ios::fixed);

@@ -90,17 +90,17 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "traj_generator");
   ros::NodeHandle node;
 
-  ros::Subscriber odom_sub = node.subscribe("/uwb_vicon_odom", 50, odomCallbck);
+  ros::Subscriber odom_sub = node.subscribe("uwb_vicon_odom", 50, odomCallbck);
 
-  traj_pub = node.advertise<visualization_msgs::Marker>("/traj_generator/traj_vis", 10);
-  state_pub = node.advertise<visualization_msgs::Marker>("/traj_generator/cmd_vis", 10);
+  traj_pub = node.advertise<visualization_msgs::Marker>("traj_generator/traj_vis", 10);
+  state_pub = node.advertise<visualization_msgs::Marker>("traj_generator/cmd_vis", 10);
 
   // pos_cmd_pub =
-  // node.advertise<quadrotor_msgs::PositionCommand>("/traj_generator/position_cmd",
+  // node.advertise<quadrotor_msgs::PositionCommand>("traj_generator/position_cmd",
   // 50);
 
   pos_cmd_pub =
-      node.advertise<swarmtal_msgs::drone_onboard_command>("/drone_commander/onboard_command", 10);
+      node.advertise<swarmtal_msgs::drone_onboard_command>("drone_commander/onboard_command", 10);
 
   ros::Duration(1.0).sleep();
 

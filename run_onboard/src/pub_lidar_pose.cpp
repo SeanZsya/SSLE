@@ -31,9 +31,18 @@ int main(int argc, char** argv)
 
    ros::init(argc, argv, "pub_lidar_pose");
    ros::NodeHandle nh("~");
+   string uav_name;
+   nh.param<string>("uav_name", uav_name, "/uav0");
+   if (uav_name == "/uav0")
+      uav_name = "";
 
-   sub_lidar_pos = nh.subscribe("/mavros/local_position/odom", 50, OdometryCallback);  
+   sub_lidar_pos = nh.subscribe(uav_name + "/mavros/local_position/odom", 50, OdometryCallback);  
    pub_lidar_pos = nh.advertise<geometry_msgs::PoseStamped>("sensor_pose", 50);
-
-   ros::spin();
+   
+   while(ros::ok())
+   {
+      nh.getParam("uav_name", uav_name);
+      ros::spinOnce();
+   }
+   
 }

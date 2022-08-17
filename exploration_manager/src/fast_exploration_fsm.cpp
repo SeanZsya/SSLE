@@ -48,13 +48,13 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   /* ===========================================================================*/
 
   trigger_sub_ =
-      nh.subscribe("/waypoint_generator/waypoints", 1, &FastExplorationFSM::triggerCallback, this);
+      nh.subscribe("waypoint_generator/waypoints", 1, &FastExplorationFSM::triggerCallback, this);
   odom_sub_ = nh.subscribe("/odom_world", 1, &FastExplorationFSM::odometryCallback, this);
 
-  replan_pub_ = nh.advertise<std_msgs::Empty>("/planning/replan", 10);
-  new_pub_ = nh.advertise<std_msgs::Empty>("/planning/new", 10);
-  bspline_pub_ = nh.advertise<bspline::Bspline>("/planning/bspline", 10);
-  return_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("/position_cmd", 2);
+  replan_pub_ = nh.advertise<std_msgs::Empty>("planning/replan", 10);
+  new_pub_ = nh.advertise<std_msgs::Empty>("planning/new", 10);
+  bspline_pub_ = nh.advertise<bspline::Bspline>("planning/bspline", 10);
+  return_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("position_cmd", 2);
 }
 
 void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {

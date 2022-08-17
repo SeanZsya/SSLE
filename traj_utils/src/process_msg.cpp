@@ -69,8 +69,8 @@ int main(int argc, char** argv) {
   ros::NodeHandle node;
   ros::NodeHandle nh("~");
 
-  ros::Subscriber cloud_sub = nh.subscribe("/map_generator/global_cloud", 10, cloudCallback);
-  cloud_pub = nh.advertise<sensor_msgs::PointCloud2>("/process_msg/global_cloud", 10);
+  ros::Subscriber cloud_sub = nh.subscribe("map_generator/global_cloud", 10, cloudCallback);
+  cloud_pub = nh.advertise<sensor_msgs::PointCloud2>("process_msg/global_cloud", 10);
   map_origin_ << -20, -10, -1;
 
   ros::Duration(1.0).sleep();

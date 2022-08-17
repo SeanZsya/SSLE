@@ -71,7 +71,7 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
 6. Other Required Tools 
 
-        sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev
+        sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev xmlstarlet
 
 7. *Gazebo Models (optional)*
 

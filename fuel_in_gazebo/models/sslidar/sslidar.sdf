@@ -54,7 +54,7 @@
           </ray>
 
           <plugin name='3D_laser' filename='libgazebo_ros_velodyne_laser.so'>
-            <topicName>sensors/sslidar_scan</topicName>
+            <topicName>/uav1/sensors/sslidar_scan</topicName>
             <frameName>sslidar_link</frameName>
             <min_range>1.5</min_range>
             <max_range>10</max_range>
