@@ -78,7 +78,6 @@ void MapROS::init() {
 //////////////////////////////////////////////
   uav1PosSub =
       node_.subscribe<geometry_msgs::PoseStamped>("/uav_1/pose", 10, &MapROS::uav1Callback, this);
-  ROS_ERROR("UAVS_POSE_SUB");
   uav2PosSub = 
       node_.subscribe<geometry_msgs::PoseStamped>("/uav_2/pose", 10, &MapROS::uav2Callback, this);
   uavs_pos_ << 0., 0., 10., 0., 0., 10.;

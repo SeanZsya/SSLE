@@ -59,8 +59,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "pub_px4_cmd");
     ros::NodeHandle nh;
     KeyboardEvent keyboardcontrol;
-    char key_now, key_now2;
-    char key_last;
+    char key_now, key_wait;
 
 
     //　【发布】　控制指令
@@ -352,28 +351,18 @@ int main(int argc, char **argv)
 
           cout << " " <<endl;
           cout << "FUEL exploration starts." <<endl;
-          ros::spin();
+          sleep(0.5);
 
-          //while(ros::ok()){
-          //   cout << key_now <<endl;
-          // keyboardcontrol.RosWhileLoopRun();
-          //   cout << key_now <<endl;
-          //   key_now2 = keyboardcontrol.GetPressedKey();
-          //   cout << key_now2 <<endl;
-          //   if(key_now2 == U_KEY_R){              
-          //     ros::spinOnce();
-          //   }
-          //   else{ 
-          //     cout << "break" <<endl;
-          //     break;
-          //     }
-          //   sleep(1);
-          // } 
-
+          keyboardcontrol.RosWhileLoopRun();
+          key_wait = keyboardcontrol.GetPressedKey();
+          while(key_wait == U_KEY_NONE){
+            keyboardcontrol.RosWhileLoopRun();
+            key_wait = keyboardcontrol.GetPressedKey();
+            ros::spinOnce();
+          }
+          
           break;
     
-      key_last = key_now;
-      // ros::spinOnce();
       sleep(0.1);
       }
     }

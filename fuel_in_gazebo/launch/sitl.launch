@@ -94,11 +94,11 @@
 	</node>
 
 	<!-- run the ground_station.cpp -->
-	<node pkg="prometheus_station" type="ground_station" name="ground_station" output="screen" launch-prefix="gnome-terminal --tab --">	
-	</node>
+	<node pkg="prometheus_station" type="ground_station" name="ground_station" output="screen" launch-prefix="gnome-terminal --tab --"/>	
 
+	<node pkg="run_onboard" type="pub_px4_cmd" name="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --"/>
 	<!-- run the ground_station_msg.cpp -->
-	<node pkg="prometheus_station" type="ground_station_msg" name="ground_station_msg" output="screen" launch-prefix="gnome-terminal --tab --">	
-	</node>
+	<!-- <node pkg="prometheus_station" type="ground_station_msg" name="ground_station_msg" output="screen" ">	
+	</node> -->
 </launch>
 
