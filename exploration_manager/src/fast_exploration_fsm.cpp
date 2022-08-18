@@ -115,13 +115,17 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
         // Still in PLAN_TRAJ state, keep replanning
         ROS_WARN("plan fail");
         fd_->static_state_ = true;
+
         //Check stucked(plan failed) time, return after 5s 
-        plan_failed_time_ = ros::Time::now();
-        if ((plan_failed_time_ - unfinish_time_).toSec() > 5 && auto_return){
-          transitState(RETURN, "Stucked, returning");
-          ROS_INFO_THROTTLE(1.0, "Start Returning Process");
-        }
+        
+        // plan_failed_time_ = ros::Time::now();
+        // if ((plan_failed_time_ - unfinish_time_).toSec() > 5 && auto_return){
+        //   transitState(RETURN, "Stucked, returning");
+        //   ROS_INFO_THROTTLE(1.0, "Start Returning Process");
+        // }
+      
       }
+      unfinish_time_ = ros::Time::now();
       break;
     }
 

@@ -36,6 +36,7 @@ void MapROS::init() {
   node_.param("map_ros/show_occ_time", show_occ_time_, false);
   node_.param("map_ros/show_esdf_time", show_esdf_time_, false);
   node_.param("map_ros/show_all_map", show_all_map_, false);
+  node_.param("map_ros/rotate_lidar_points", rotate_lidar_points, false);
   node_.param("map_ros/frame_id", frame_id_, string("world"));
 
   proj_points_.resize(640 * 480 / (skip_pixel_ * skip_pixel_));
@@ -260,8 +261,17 @@ void MapROS::cloudPoseCallback(const sensor_msgs::PointCloud2ConstPtr& msg,
     return;
   camera_q_ = Eigen::Quaterniond(pose->pose.orientation.w, pose->pose.orientation.x,
                                  pose->pose.orientation.y, pose->pose.orientation.z);
+  
+  //converse point pose here========================
+  if(rotate_lidar_points)
+  {
+    camera_q2_ = Eigen::Quaterniond(0.707, 0.000, 0.000, 0.707);
+    camera_q_ = camera_q_ * camera_q2_.inverse();
+  }
+  //================================================
 
   Eigen::Vector3d pt_cur, pt_world;
+
   Eigen::Matrix3d camera_r = camera_q_.toRotationMatrix();
   
   pcl::PointCloud<pcl::PointXYZ> cloud;
