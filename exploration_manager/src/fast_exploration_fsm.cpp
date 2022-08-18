@@ -48,7 +48,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   /* ===========================================================================*/
 
   trigger_sub_ =
-      nh.subscribe("waypoint_generator/waypoints", 1, &FastExplorationFSM::triggerCallback, this);
+      nh.subscribe("/waypoints", 1, &FastExplorationFSM::triggerCallback, this);
   odom_sub_ = nh.subscribe("/odom_world", 1, &FastExplorationFSM::odometryCallback, this);
 
   replan_pub_ = nh.advertise<std_msgs::Empty>("planning/replan", 10);

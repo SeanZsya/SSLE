@@ -248,8 +248,8 @@ int main(int argc, char** argv) {
   ros::Subscriber sub1 = nh.subscribe("odom", 10, odom_callback);
   ros::Subscriber sub2 = nh.subscribe("goal", 10, goal_callback);
   ros::Subscriber sub3 = nh.subscribe("traj_start_trigger", 10, traj_start_trigger_callback);
-  pub1 = nh.advertise<nav_msgs::Path>("waypoints", 50);
-  pub2 = nh.advertise<geometry_msgs::PoseArray>("waypoints_vis", 10);
+  pub1 = nh.advertise<nav_msgs::Path>("/waypoints", 50);
+  pub2 = nh.advertise<geometry_msgs::PoseArray>("/waypoints_vis", 10);
 
   trigged_time = ros::Time(0);
 
