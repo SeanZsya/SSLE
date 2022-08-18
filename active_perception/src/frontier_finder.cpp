@@ -38,6 +38,7 @@ FrontierFinder::FrontierFinder(const EDTEnvironment::Ptr& edt, ros::NodeHandle& 
   nh.param("frontier/down_sample", down_sample_, -1);
   nh.param("frontier/min_visib_num", min_visib_num_, -1);
   nh.param("frontier/min_view_finish_fraction", min_view_finish_fraction_, -1.0);
+  nh.param("frontier/ground_noise_height", ground_noise_height_, -1.0);
 
   raycaster_.reset(new RayCaster);
   resolution_ = edt_env_->sdf_map_->getResolution();
@@ -133,7 +134,7 @@ void FrontierFinder::expandFrontier(
   edt_env_->sdf_map_->indexToPos(first, pos);
   expanded.push_back(pos);
   cell_queue.push(first);
-  frontier_flag_[toadr(first)] = 1;
+  frontier_flag_[toadr(first)] = 1;//
 
   // Search frontier cluster based on region growing (distance clustering)
   while (!cell_queue.empty()) {
@@ -148,7 +149,7 @@ void FrontierFinder::expandFrontier(
         continue;
 
       edt_env_->sdf_map_->indexToPos(nbr, pos);
-      if (pos[2] < 0.4) continue;  // Remove noise close to ground
+      if (pos[2] < ground_noise_height_) continue;  // Remove noise close to ground // .4
       expanded.push_back(pos);
       cell_queue.push(nbr);
       frontier_flag_[adr] = 1;
@@ -669,7 +670,7 @@ void FrontierFinder::sampleViewpoints(Frontier& frontier) {
       // Qualified viewpoint is in bounding box and in safe region
       if (!edt_env_->sdf_map_->isInBox(sample_pos) ||
           edt_env_->sdf_map_->getInflateOccupancy(sample_pos) == 1 || isNearUnknown(sample_pos))
-        continue;
+        continue; //
 
       // Compute average yaw
       auto& cells = frontier.filtered_cells_;

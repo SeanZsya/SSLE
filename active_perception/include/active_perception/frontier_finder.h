@@ -122,7 +122,7 @@ private:
   double candidate_rmax_, candidate_rmin_, candidate_dphi_, min_candidate_dist_,
       min_candidate_clearance_;
   int down_sample_;
-  double min_view_finish_fraction_, resolution_;
+  double min_view_finish_fraction_, resolution_, ground_noise_height_;
   int min_visib_num_, candidate_rnum_;
 
   // Utils
