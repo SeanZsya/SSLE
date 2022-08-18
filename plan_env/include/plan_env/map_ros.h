@@ -88,14 +88,14 @@ private:
   double esdf_slice_height_;
   double visualization_truncate_height_, visualization_truncate_low_;
   bool show_esdf_time_, show_occ_time_;
-  bool show_all_map_;
+  bool show_all_map_, rotate_lidar_points;
 
   // data
   // flags of map state
   bool local_updated_, esdf_need_update_;
   // input
   Eigen::Vector3d camera_pos_;
-  Eigen::Quaterniond camera_q_;
+  Eigen::Quaterniond camera_q_, camera_q2_;
   unique_ptr<cv::Mat> depth_image_;
   vector<Eigen::Vector3d> proj_points_;
   int proj_points_cnt;
