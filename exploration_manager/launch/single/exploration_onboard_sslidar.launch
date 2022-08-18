@@ -4,13 +4,13 @@
   <node pkg="run_onboard" type="pub_lidar_pose" name="pub_lidar_pose" output="screen"/> 
 
   <!-- size of map, change the size in x, y, z according to your application -->
-  <arg name="map_size_x" value="10.0"/>
-  <arg name="map_size_y" value="10.0"/>
-  <arg name="map_size_z" value=" 3.0"/>
+  <arg name="map_size_x" value="20.0"/>
+  <arg name="map_size_y" value="20.0"/>
+  <arg name="map_size_z" value=" 2.0"/>
 
   <arg name="init_x" value="0"/>
   <arg name="init_y" value="0"/>
-  <arg name="init_z" value="0"/>
+  <arg name="init_z" value="0.4"/>
   
   <!-- topic of your odometry such as VIO or LIO -->
   <arg name="odom_topic" value="/mavros/local_position/odom" />
@@ -22,12 +22,12 @@
     <arg name="map_size_y_" value="$(arg map_size_y)"/>
     <arg name="map_size_z_" value="$(arg map_size_z)"/>
 
-    <arg name="box_min_x" value="-100.0"/>
-    <arg name="box_min_y" value="-100.0"/>
-    <arg name="box_min_z" value=" -0.5"/>
-    <arg name="box_max_x" value="100.0"/>
-    <arg name="box_max_y" value="100.0"/>
-    <arg name="box_max_z" value="1.5"/>
+    <arg name="box_min_x" value="-1.0"/>
+    <arg name="box_min_y" value="-1.0"/>
+    <arg name="box_min_z" value=" -0.2"/>
+    <arg name="box_max_x" value="7.0"/>
+    <arg name="box_max_y" value="7.0"/>
+    <arg name="box_max_z" value="1.0"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
     <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
@@ -38,7 +38,7 @@
     <!-- cloud topic: point cloud measurement  -->
     <!-- subscribe ONLY TO ONE of the two topics -->
     <arg name="depth_topic" value="/camera/depth/image_raw"/>
-    <arg name="cloud_topic" value="/l515/depth/color/points"/>
+    <arg name="cloud_topic" value="/bf_lidar1/points_raw"/>
 
     <!-- intrinsic params of the depth camera -->
     <arg name="cx" value="321.04638671875"/>
@@ -67,8 +67,8 @@
     <param name="perception_utils/top_angle" value="0.56125" type="double"/>
     <param name="perception_utils/left_angle" value="0.69222" type="double"/>
     <param name="perception_utils/right_angle" value="0.68901" type="double"/>
-    <param name="perception_utils/max_dist" value="4.5" type="double"/>
-    <param name="perception_utils/vis_dist" value="1.0" type="double"/>  
+    <param name="perception_utils/max_dist" value="10.0" type="double"/>
+    <param name="perception_utils/vis_dist" value="5.0" type="double"/>  
 
   </node>
   
