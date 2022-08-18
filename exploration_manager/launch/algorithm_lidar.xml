@@ -73,7 +73,7 @@
     <param name="map_ros/show_occ_time"  value="false"/>
     <param name="map_ros/show_esdf_time" value="false"/>
     <param name="map_ros/show_all_map" value="true"/>
-    <param name="map_ros/rotate_lidar_points" value="true"/>
+    <param name="map_ros/rotate_lidar_points" value="false"/>
     <param name="map_ros/frame_id"      value="world"/>
 
     <!-- Fsm -->
@@ -103,6 +103,7 @@
     <param name="exploration/tsp_dir" value="$(find lkh_tsp_solver)/resource" type="string"/>
     <param name="exploration/relax_time" value="1.0" type="double"/>
 
+    <!-- Frontier Generation -->
     <param name="frontier/cluster_min" value="50" type="int"/>
     <param name="frontier/cluster_size_xy" value="2.0" type="double"/>
     <param name="frontier/cluster_size_z" value="10.0" type="double"/>
