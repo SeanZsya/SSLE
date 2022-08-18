@@ -1,6 +1,7 @@
 <launch>
 
   <include file="$(find exploration_manager)/launch/rviz.launch"/>
+  <include file="$(find blickfeld_driver)/launch/live_scanner.launch"/>
   <node pkg="run_onboard" type="pub_lidar_pose" name="pub_lidar_pose" output="screen"/> 
 
   <!-- size of map, change the size in x, y, z according to your application -->
