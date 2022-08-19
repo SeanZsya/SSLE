@@ -10,6 +10,8 @@
 
 		<!-- px4 -->
 		<include file="$(find exploration_manager)/launch/p450_vio_onboard.launch">
+			<arg name="uav_name" value="$(arg uav1_name)"/>
+		</include>
 
 		<!-- exploration -->
 		<include file="$(find exploration_manager)/launch/single_exp_onboard_sslidar.launch">
@@ -21,7 +23,7 @@
 
 		<!-- keyboard control -->
 		<node name="pub_cmd_uav" pkg="run_onboard" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
-			<param name="uav_name" value="$(arg uav_name)"/>
+			<param name="uav_name" value="$(arg uav1_name)"/>
 		</node>
 
 	</group>

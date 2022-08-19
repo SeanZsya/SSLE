@@ -1,8 +1,8 @@
 <launch>
   <arg name="host" default="192.168.26.26" doc="ip or host name of lidar" />
   <arg name="lidar_frame_id" default="world" doc="frame to give to this lidar sensors point cloud output" />
-  <arg name="uav_name" default="/uav_0">
-  <arg name="node_name" default="bf_lidar_$(arg uav_name)" doc="Name of this node." />
+  <arg name="uav_name1" default="uav1"/>
+  <arg name="node_name" default="bf_lidar_$(arg uav_name1)" doc="Name of this node." />
   <arg name="point_cloud_out" default="$(arg node_name)/points_raw" doc="Topic to publish the Point cloud on." />
   <arg name="remap" default="true"
        doc="Remap this node's input/output topics to commonly used ones. 'false' leads to canonical names."/>
@@ -48,7 +48,7 @@
     <param name="publish_time_delta" value="$(arg publish_time_delta)" />
     <param name="publish_point_id" value="$(arg publish_point_id)" />
 
-    <remap if="$(arg remap)" from="~/point_cloud_out" to="/$(arg point_cloud_out)" />
+    <remap if="$(arg remap)" from="~point_cloud_out" to="$(arg point_cloud_out)" />
   </node>
 
   <node if="$(arg rviz)" pkg="rviz" type="rviz" name="uav1_rviz"
