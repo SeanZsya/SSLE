@@ -356,15 +356,17 @@ int main(int argc, char **argv)
 
           cout << " " <<endl;
           cout << "FUEL exploration starts." <<endl;
-          sleep(0.5);
+          ros::spin();
 
-          keyboardcontrol.RosWhileLoopRun();
-          key_wait = keyboardcontrol.GetPressedKey();
-          while(key_wait == U_KEY_NONE){
-            keyboardcontrol.RosWhileLoopRun();
-            key_wait = keyboardcontrol.GetPressedKey();
-            ros::spinOnce();
-          }
+          // sleep(0.5);
+
+          // keyboardcontrol.RosWhileLoopRun();
+          // key_wait = keyboardcontrol.GetPressedKey();
+          // while(key_wait == U_KEY_NONE){
+          //   keyboardcontrol.RosWhileLoopRun();
+          //   key_wait = keyboardcontrol.GetPressedKey();
+          //   ros::spinOnce();
+          // }
           
           break;
     

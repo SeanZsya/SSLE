@@ -1,58 +1,8 @@
 <launch>
 
-	<env name="PX4_SIM_MODEL" value="p450" />
-	<env name="PX4_ESTIMATOR" value="ekf2_vision" />
-	<env name="PX4_SIM_SPEED_FACTOR" value="1.0" />
+  <arg name="uav_name" default="/uav0"/>
 
-	<!-- 启动Gazebo -->
-	<!-- Gazebo configs -->
-    <arg name="gui" default="true"/>
-    <arg name="debug" default="false"/>
-    <arg name="verbose" default="false"/>
-    <arg name="paused" default="false"/>
-    <arg name="respawn_gazebo" default="false"/>
-	<arg name="use_sim_time" default="true"/>
-	<arg name="world" value="$(find fuel_in_gazebo)/worlds/iscas_museum.world"/>
-    <!-- Gazebo sim -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
-        <arg name="gui" value="$(arg gui)"/>
-        <arg name="debug" value="$(arg debug)"/>
-        <arg name="verbose" value="$(arg verbose)"/>
-        <arg name="paused" value="$(arg paused)"/>
-        <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
-        <arg name="world_name" value="$(arg world)"/>	
-    </include>
-
-
-	<!-- UAV1 -->
-	<include file="$(find fuel_in_gazebo)/launch/sitl_exp.launch">
-		<arg name="uav_name" value="/uav1"/>
-		<arg name="ID" value="0"/>
-		<arg name="vehicle" default="p450_sslidar"/>
-		<arg name="x" value="-1.0"/>
-		<arg name="y" value="0.0"/>
-		<arg name="z" value="0.0"/>
-		<arg name="R" value="0.0"/>
-		<arg name="P" value="0.0"/>
-		<arg name="Y" value="0.0"/>
-	</include>
-
-	<!-- UAV2 -->
-	<!-- <include file="$(find fuel_in_gazebo)/launch/sitl.launch">
-		<arg name="uav_name" value="/uav2"/>
-		<arg name="ID" value="1"/>
-		<arg name="vehicle" default="p450_sslidar"/>
-		<arg name="x" value="1.0"/>
-		<arg name="y" value="0.0"/>
-		<arg name="z" value="0.2"/>
-		<arg name="R" value="0.0"/>
-		<arg name="P" value="0.0"/>
-		<arg name="Y" value="0.0"/>
-	</include> -->
-
-	<include file="$(find exploration_manager)/launch/rviz.launch"/>
-	<node pkg="run_onboard" type="pub_lidar_pose" name="pub_lidar_pose" output="screen"/> 
+	
 
 	<!-- size of map, change the size in x, y, z according to your application -->
 	<arg name="map_size_x" value="200.0"/>
@@ -63,11 +13,12 @@
 	<arg name="init_y" value="0"/>
 	<arg name="init_z" value="0"/>
 	
+
 	<!-- topic of your odometry such as VIO or LIO -->
-	<arg name="odom_topic" value="/uav1/mavros/local_position/odom" />
+	<arg name="odom_topic" value="/$(arg uav_name)/mavros/local_position/odom" />
 
 	<!-- main algorithm params -->
-	<include file="$(find exploration_manager)/launch/algorithm_lidar.xml">
+	<include file="$(find fuel_in_gazebo)/launch/include/algorithm_lidar.xml">
 
 		<arg name="map_size_x_" value="$(arg map_size_x)"/>
 		<arg name="map_size_y_" value="$(arg map_size_y)"/>
@@ -83,13 +34,13 @@
 		<arg name="odometry_topic" value="$(arg odom_topic)"/>
 		<!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
 		<!-- <arg name="sensor_pose_topic" value="/mavros/local_position/pose"/> -->
-		<arg name="sensor_pose_topic" value="/pub_lidar_pose/sensor_pose"/>
+		<arg name="sensor_pose_topic" value="/$(arg uav_name)/pub_lidar_pose/sensor_pose"/>
 		
 		<!-- depth topic: depth image, 640x480 by default -->
 		<!-- cloud topic: point cloud measurement  -->
 		<!-- subscribe ONLY TO ONE of the two topics -->
-		<arg name="depth_topic" value="/realsense___plugin/camera/depth/image_raw"/>
-		<arg name="cloud_topic" value="/uav1/sensors/sslidar_scan"/>
+		<arg name="depth_topic" value="/realsense_plugin/camera/depth/image_raw"/>
+		<arg name="cloud_topic" value="/$(arg uav_name)/sensors/sslidar_scan"/>
 
 		<!-- intrinsic params of the depth camera -->
 		<arg name="cx" value="321.04638671875"/>
@@ -106,9 +57,9 @@
 	<!-- trajectory server -->
 	<node pkg="plan_manage" name="traj_server" type="traj_server" output="screen">
 		
-		<remap from="/position_cmd" to="/planning/pos_cmd"/>
-
+		<remap from="/position_cmd" to="/$(arg uav_name)/planning/pos_cmd"/>
 		<remap from="/odom_world" to="$(arg odom_topic)"/>
+
 		<param name="traj_server/time_forward" value="1.5" type="double"/>
 		<param name="traj_server/pub_traj_id" value="4" type="int"/>
 		<param name="traj_server/init_x" value="$(arg init_x)" type="double"/>
@@ -125,6 +76,8 @@
 	
 	<node pkg="waypoint_generator" name="waypoint_generator" type="waypoint_generator" output="screen">
 		<remap from="~odom" to="$(arg odom_topic)"/>        
+		<!-- <remap from="~goal" to="/$(arg uav_name)/move_base_simple/goal"/>
+		<remap from="~traj_start_trigger" to="/$(arg uav_name)/traj_start_trigger" /> -->
 		<remap from="~goal" to="/move_base_simple/goal"/>
 		<remap from="~traj_start_trigger" to="/traj_start_trigger" />
 		<param name="waypoint_type" value="point"/>    

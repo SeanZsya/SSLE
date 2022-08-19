@@ -50,7 +50,7 @@
 
 
 <!-- TF transform -->
-<include file="$(find fuel_in_gazebo)/launch/tf_transform.launch">
+<include file="$(find fuel_in_gazebo)/launch/include/tf_transform.launch">
 	<arg name="x" value="$(arg x)"/>
 	<arg name="y" value="$(arg y)"/>
 	<arg name="z" value="$(arg z)"/>
