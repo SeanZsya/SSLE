@@ -75,17 +75,17 @@ include_directories(
 
 ##ground_station.cpp
 add_executable(ground_station src/ground_station.cpp)
-add_dependencies(ground_station prometheus_station_gencpp)
+add_dependencies(ground_station  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(ground_station ${catkin_LIBRARIES})
 
 ##ground_station_msg.cpp
 add_executable(ground_station_msg src/ground_station_msg.cpp)
-add_dependencies(ground_station_msg prometheus_station_gencpp)
+add_dependencies(ground_station_msg  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(ground_station_msg ${catkin_LIBRARIES})
 
 ##ground_station_aruco.cpp
 add_executable(ground_station_aruco src/ground_station_aruco.cpp)
-add_dependencies(ground_station_aruco prometheus_station_gencpp)
+add_dependencies(ground_station_aruco  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(ground_station_aruco ${catkin_LIBRARIES})
 
 # add_executable(sender_ground_station src/sender_ground_station.cpp)
