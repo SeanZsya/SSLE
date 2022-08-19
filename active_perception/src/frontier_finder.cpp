@@ -847,16 +847,34 @@ inline vector<Eigen::Vector3i> FrontierFinder::tenNeighbors(const Eigen::Vector3
 }
 
 inline vector<Eigen::Vector3i> FrontierFinder::allNeighbors(const Eigen::Vector3i& voxel) {
-  vector<Eigen::Vector3i> neighbors(26);
+  vector<Eigen::Vector3i> neighbors(16); // 26
   Eigen::Vector3i tmp;
   int count = 0;
-  for (int x = -1; x <= 1; ++x)
-    for (int y = -1; y <= 1; ++y)
-      for (int z = -1; z <= 1; ++z) {
-        if (x == 0 && y == 0 && z == 0) continue;
-        tmp = voxel + Eigen::Vector3i(x, y, z);
-        neighbors[count++] = tmp;
-      }
+  // for (int x = -1; x <= 1; ++x)
+  //   for (int y = -1; y <= 1; ++y)
+  //     for (int z = -1; z <= 1; ++z) {
+  //       if (x == 0 && y == 0 && z == 0) continue;
+  //       tmp = voxel + Eigen::Vector3i(x, y, z);
+  //       neighbors[count++] = tmp;
+  //     }
+  for (int i (1); i <= 3; ++i) {
+    tmp = voxel + Eigen::Vector3i(i, 0, 0);
+    neighbors[count++] = tmp;
+    tmp = voxel + Eigen::Vector3i(-i, 0, 0);
+    neighbors[count++] = tmp;
+    tmp = voxel + Eigen::Vector3i(0, i, 0);
+    neighbors[count++] = tmp;
+    tmp = voxel + Eigen::Vector3i(0, -i, 0);
+    neighbors[count++] = tmp;
+  }
+  tmp = voxel + Eigen::Vector3i(0, 0, 1);
+  neighbors[count++] = tmp;
+  tmp = voxel + Eigen::Vector3i(0, 0, -1);
+  neighbors[count++] = tmp;
+  tmp = voxel + Eigen::Vector3i(0, 0, 2);
+  neighbors[count++] = tmp;
+  tmp = voxel + Eigen::Vector3i(0, 0, -2);
+  neighbors[count++] = tmp;
   return neighbors;
 }
 

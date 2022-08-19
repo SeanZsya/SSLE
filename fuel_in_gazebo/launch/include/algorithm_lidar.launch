@@ -111,7 +111,7 @@
     <param name="frontier/min_candidate_clearance" value="0.21" type="double"/>
     <param name="frontier/candidate_dphi" value="$(eval 15 * 3.1415926 / 180.0)" type="double"/>
     <param name="frontier/candidate_rnum" value="3" type="int"/>
-    <param name="frontier/candidate_rmin" value="0.5" type="double"/>
+    <param name="frontier/candidate_rmin" value="1.5" type="double"/>
     <param name="frontier/candidate_rmax" value="2.5" type="double"/>
     <param name="frontier/down_sample" value="3" type="int"/>
     <param name="frontier/min_visib_num" value="15" type="int"/>
