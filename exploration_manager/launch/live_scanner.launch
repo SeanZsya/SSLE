@@ -1,0 +1,60 @@
+<launch>
+  <arg name="host" default="192.168.26.26" doc="ip or host name of lidar" />
+  <arg name="lidar_frame_id" default="world" doc="frame to give to this lidar sensors point cloud output" />
+  <arg name="uav_name" default="/uav_0">
+  <arg name="node_name" default="bf_lidar_$(arg uav_name)" doc="Name of this node." />
+  <arg name="point_cloud_out" default="$(arg node_name)/points_raw" doc="Topic to publish the Point cloud on." />
+  <arg name="remap" default="true"
+       doc="Remap this node's input/output topics to commonly used ones. 'false' leads to canonical names."/>
+  <arg name="rviz" default="false" doc="set to true if you want to have default visualisation" />
+
+
+  <arg name="use_lidar_timestamp" default="false"
+    doc="set to true if the timestamp in the ros point cloud message should be generated from the timestamp in the bf_lidar frame" />
+
+  <arg name="publish_intensities" default="true" doc="Set to true if intensities should be published for each point" />
+
+  <arg name="publish_ambient_light" default="false"
+    doc="Set to true if ambient light should be published for each point" />
+
+  <arg name="publish_explicit_range" default="false"
+    doc="Set to true if (ToF/polar) range should be published explicitly for each point" />
+
+  <arg name="publish_no_return_points" default="false"
+    doc="Set to true if points without a return should be published with given range" />
+  <arg name="no_return_point_range" default="1.0"
+    doc="The range in which points without a return should be published at" />
+
+  <arg name="returns_publishing_options" default="strongest"
+    doc="different options to publish the returns: strongest, first, last, all" />
+
+
+  <arg name="publish_time_delta" default="true"
+    doc="Set to true if each point should carry time offset [ns] to frame start" />
+
+  <arg name="publish_point_id" default="true"
+    doc="Publish 'scanline_id', 'scanline_point_index' (= the point's number in the scanline) and 'point_id' (= frame-global point ID)" />
+
+  <node pkg="blickfeld_driver" type="lidar_driver_node" name="$(arg node_name)" output="screen">
+    <param name="host" value="$(arg host)" type="str" />
+    <param name="lidar_frame_id" value="$(arg lidar_frame_id)" />
+    <param name="use_lidar_timestamp" value="$(arg use_lidar_timestamp)" />
+    <param name="publish_intensities" value="$(arg publish_intensities)" />
+    <param name="publish_ambient_light" value="$(arg publish_ambient_light)" />
+    <param name="publish_explicit_range" value="$(arg publish_explicit_range)" />
+    <param name="publish_no_return_points" value="$(arg publish_no_return_points)" />
+    <param name="no_return_point_range" value="$(arg no_return_point_range)" />
+    <param name="returns_publishing_options" value="$(arg returns_publishing_options)" />
+    <param name="publish_time_delta" value="$(arg publish_time_delta)" />
+    <param name="publish_point_id" value="$(arg publish_point_id)" />
+
+    <remap if="$(arg remap)" from="~/point_cloud_out" to="/$(arg point_cloud_out)" />
+  </node>
+
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="uav1_rviz"
+    args="-v -d $(find blickfeld_driver)/config/blickfeld_scanner.rviz" />
+
+  <node pkg="blickfeld_driver" type="imu_driver" name="imu1_driver_node" output="screen">
+    <param name="host" value="$(arg host)" type="str" />
+  </node>
+</launch>

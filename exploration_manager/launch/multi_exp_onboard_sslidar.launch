@@ -1,0 +1,31 @@
+<launch>
+
+	<node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find exploration_manager)/config/multi_exp.rviz" />
+
+	<arg name="uav1_name" value="/uav1"/>
+	<arg name="uav2_name" value="/uav2"/>
+
+	<!-- UAV1 -->
+	<group ns="$(arg uav1_name)">
+
+		<!-- px4 -->
+		<include file="$(find exploration_manager)/launch/p450_vio_onboard.launch">
+
+		<!-- exploration -->
+		<include file="$(find exploration_manager)/launch/single_exp_onboard_sslidar.launch">
+			<arg name="uav_name" value="$(arg uav1_name)"/>
+			<arg name="init_x" value="0"/>
+			<arg name="init_y" value="0"/>
+			<arg name="init_z" value="0"/>
+		</include>
+
+		<!-- keyboard control -->
+		<node name="pub_cmd_uav" pkg="run_onboard" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
+			<param name="uav_name" value="$(arg uav_name)"/>
+		</node>
+
+	</group>
+	
+
+
+</launch>
