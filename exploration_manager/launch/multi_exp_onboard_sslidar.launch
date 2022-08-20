@@ -16,6 +16,7 @@
 		<!-- exploration -->
 		<include file="$(find exploration_manager)/launch/single_exp_onboard_sslidar.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
+			<arg name="uav_name_" value="uav1"/>
 			<arg name="init_x" value="0"/>
 			<arg name="init_y" value="0"/>
 			<arg name="init_z" value="0.4"/>

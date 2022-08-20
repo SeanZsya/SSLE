@@ -15,11 +15,6 @@
   <arg name="depth_topic"/>
   <arg name="cloud_topic"/>
 
-  <arg name="cx"/>
-  <arg name="cy"/>
-  <arg name="fx"/>
-  <arg name="fy"/>
-
   <arg name="max_vel"/>
   <arg name="max_acc"/>
 
@@ -58,10 +53,11 @@
     <param name="sdf_map/box_max_y" value="$(arg box_max_y)" type="double"/>
     <param name="sdf_map/box_max_z" value="$(arg box_max_z)" type="double"/>
 
-    <param name="map_ros/cx" value="$(arg cx)"/>
-    <param name="map_ros/cy" value="$(arg cy)"/>
-    <param name="map_ros/fx" value="$(arg fx)"/>
-    <param name="map_ros/fy" value="$(arg fy)"/>
+    <!-- intrinsic params of the depth camera -->
+    <param name="map_ros/cx" value="321.04638671875"/>
+    <param name="map_ros/cy" value="243.44969177246094"/>
+    <param name="map_ros/fx" value="387.229248046875"/>
+    <param name="map_ros/fy" value="387.229248046875"/>
     <param name="map_ros/depth_filter_maxdist"   value="5.0"/>
     <param name="map_ros/depth_filter_mindist"   value="0.2"/>
     <param name="map_ros/depth_filter_margin"    value="2"/>
