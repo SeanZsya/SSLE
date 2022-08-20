@@ -29,6 +29,7 @@ void MapROS::init() {
   node_.param("map_ros/depth_filter_margin", depth_filter_margin_, -1);
   node_.param("map_ros/k_depth_scaling_factor", k_depth_scaling_factor_, -1.0);
   node_.param("map_ros/skip_pixel", skip_pixel_, -1);
+  node_.param("map_ros/y_offset", y_offset, -1.0);
 
   node_.param("map_ros/esdf_slice_height", esdf_slice_height_, -0.1);
   node_.param("map_ros/visualization_truncate_height", visualization_truncate_height_, -0.1);
@@ -38,6 +39,8 @@ void MapROS::init() {
   node_.param("map_ros/show_all_map", show_all_map_, false);
   node_.param("map_ros/rotate_lidar_points", rotate_lidar_points, false);
   node_.param("map_ros/frame_id", frame_id_, string("world"));
+  
+
 
   proj_points_.resize(640 * 480 / (skip_pixel_ * skip_pixel_));
   point_cloud_.points.resize(640 * 480 / (skip_pixel_ * skip_pixel_));
@@ -78,7 +81,7 @@ void MapROS::init() {
 
 //////////////////////////////////////////////
   uav1PosSub =
-      node_.subscribe<geometry_msgs::PoseStamped>("uav_1/pose", 10, &MapROS::uav1Callback, this);
+      node_.subscribe<geometry_msgs::PoseStamped>("/uav1/pub_lidar_pose/sensor_pose", 10, &MapROS::uav1Callback, this);
   uav2PosSub = 
       node_.subscribe<geometry_msgs::PoseStamped>("uav_2/pose", 10, &MapROS::uav2Callback, this);
   uavs_pos_ << 0., 0., 10., 0., 0., 10.;
@@ -163,7 +166,7 @@ void MapROS::removeMap() {
 
 void MapROS::uav1Callback(const geometry_msgs::PoseStampedConstPtr& pose) {
   uavs_pos_(0,0) = pose->pose.position.x;
-  uavs_pos_(0,1) = pose->pose.position.y;
+  uavs_pos_(0,1) = pose->pose.position.y + y_offset;
   uavs_pos_(0,2) = pose->pose.position.z;
 }
 
