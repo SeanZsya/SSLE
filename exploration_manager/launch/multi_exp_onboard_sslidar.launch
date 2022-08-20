@@ -18,7 +18,7 @@
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 			<arg name="init_x" value="0"/>
 			<arg name="init_y" value="0"/>
-			<arg name="init_z" value="0"/>
+			<arg name="init_z" value="0.4"/>
 		</include>
 
 		<!-- keyboard control -->

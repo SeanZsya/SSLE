@@ -857,7 +857,7 @@ inline vector<Eigen::Vector3i> FrontierFinder::allNeighbors(const Eigen::Vector3
   //       tmp = voxel + Eigen::Vector3i(x, y, z);
   //       neighbors[count++] = tmp;
   //     }
-  for (int i (1); i <= 3; ++i) {
+  for (int i (1); i <= 5; i+=2) {
     tmp = voxel + Eigen::Vector3i(i, 0, 0);
     neighbors[count++] = tmp;
     tmp = voxel + Eigen::Vector3i(-i, 0, 0);
