@@ -10,8 +10,10 @@
   <!-- odom and sensor pose -->
   <arg name="odom_topic" value="/$(arg uav_name)/mavros/local_position/odom" />
 
-    <!-- blick-feld lidar scanner -->
-  <include file="$(find exploration_manager)/launch/include/live_scanner.launch"/>
+  <!-- blick-feld lidar scanner -->
+  <include file="$(find exploration_manager)/launch/include/live_scanner.launch">
+    <arg name="uav_name_" value="$(arg uav_name_)"/>
+  </include>
 
   <!-- pub sensor pose (convert from odom, if not provided) -->
   <node name="pub_lidar_pose" pkg="run_onboard" type="pub_lidar_pose" output="screen"> 
@@ -35,13 +37,13 @@
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
     <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
     <!-- <arg name="sensor_pose_topic" value="/mavros/local_position/pose"/> -->
-    <arg name="sensor_pose_topic" value="/$(arg uav_name)/pub_lidar_pose/sensor_pose"/>
+    <arg name="sensor_pose_topic" value="$(arg uav_name)/pub_lidar_pose/sensor_pose"/>
       
     <!-- depth topic: depth image, 640x480 by default -->
     <!-- cloud topic: point cloud measurement  -->
     <!-- subscribe ONLY TO ONE of the two topics -->
     <arg name="depth_topic" value="/camera/depth/image_raw"/>
-    <arg name="cloud_topic" value="/$(arg uav_name)/bf_lidar_uav1/points_raw"/>
+    <arg name="cloud_topic" value="$(arg uav_name)/bf_lidar_$(arg uav_name_)/points_raw"/>
 
     <arg name="max_vel" value="0.8" />
     <arg name="max_acc" value="0.8" />
@@ -52,7 +54,7 @@
   <!-- trajectory server -->
   <node pkg="plan_manage" name="traj_server" type="traj_server" output="screen">
     
-    <remap from="/position_cmd" to="/$(arg uav_name)/planning/pos_cmd"/>
+    <remap from="/position_cmd" to="$(arg uav_name)/planning/pos_cmd"/>
 
     <remap from="/odom_world" to="$(arg odom_topic)"/>
     <param name="traj_server/time_forward" value="1.5" type="double"/>

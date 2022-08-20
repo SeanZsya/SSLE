@@ -2,6 +2,7 @@
 <launch>
 	<!-- uav_name -->
 	<arg name="uav_name" default="/uav0"/>
+	<arg name="uav_name_" default="uav0"/>
 	<arg name="ID" default="0"/>
 
 	<!-- 启动MAVROS -->
@@ -16,7 +17,8 @@
 		<rosparam command="load" file="$(find exploration_manager)/config/px4_config.yaml" />
 	</node>
     
-    <include file="$(find p450_experiment)/launch_basic/rs_t265.launch">
+    <include file="$(find exploration_manager)/launch/include/rs_t265.launch">
+		<!-- <arg name="uav_name" value="$(arg uav_name)"/> -->
     </include>
     
 
@@ -33,7 +35,7 @@
 	
 	<!-- run the px4_sender.cpp -->
 	<node pkg="prometheus_control" type="px4_sender" name="px4_sender" output="screen">
-		<rosparam command="load" file="$(find p450_experiment)/config/prometheus_control_config/px4_sender.yaml"/>
+		<rosparam command="load" file="$(find exploration_manager)/config/px4_sender.yaml"/>
 		<param name="uav_name" value="$(arg uav_name)"/>
 	</node>
 

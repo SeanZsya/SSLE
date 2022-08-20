@@ -11,6 +11,7 @@
 		<!-- px4 -->
 		<include file="$(find exploration_manager)/launch/p450_vio_onboard.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
+			<arg name="uav_name_" value="uav1"/>
 		</include>
 
 		<!-- exploration -->
