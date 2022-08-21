@@ -17,9 +17,10 @@
 
   <arg name="max_vel"/>
   <arg name="max_acc"/>
+  <arg name="rotate_lidar_points"/>
 
   <!-- main node -->
-  <node pkg="exploration_manager" name="exploration_node" type="exploration_node" output="screen">
+  <node pkg="exploration_manager" name="exploration_node" type="exploration_node" output="screen" launch-prefix="gnome-terminal --tab --">
     <remap from ="/odom_world" to="$(arg odometry_topic)"/>
     <remap from ="/map_ros/pose"   to = "$(arg sensor_pose_topic)"/> 
     <remap from ="/map_ros/depth" to = "$(arg depth_topic)"/>
@@ -70,7 +71,7 @@
     <param name="map_ros/show_occ_time"  value="false"/>
     <param name="map_ros/show_esdf_time" value="false"/>
     <param name="map_ros/show_all_map" value="true"/>
-    <param name="map_ros/rotate_lidar_points" value="true"/>
+    <param name="map_ros/rotate_lidar_points" value="$(arg rotate_lidar_points)"/>
     <param name="map_ros/frame_id"      value="world"/>
 
     <!-- Fsm -->
