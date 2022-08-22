@@ -82,7 +82,7 @@ private:
   double depth_filter_maxdist_, depth_filter_mindist_;
   int depth_filter_margin_;
   double k_depth_scaling_factor_;
-  double y_offset;
+  double x_offset, y_offset;
   int skip_pixel_;
   string frame_id_;
   // msg publication
