@@ -12,7 +12,7 @@
     <arg name="paused" default="false"/>
     <arg name="respawn_gazebo" default="false"/>
 	<arg name="use_sim_time" default="true"/>
-	<arg name="world" value="$(find fuel_in_gazebo)/worlds/iscas_museum.world"/>
+	<arg name="world" value="$(find fuel_in_gazebo)/worlds/room_mini.world"/>
     <!-- Gazebo sim -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
@@ -37,8 +37,8 @@
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 			<arg name="ID" value="0"/>
 			<arg name="vehicle" default="p450_sslidar"/>
-			<arg name="x" value="-1.0"/>
-			<arg name="y" value="0.0"/>
+			<arg name="x" value="0.5"/>
+			<arg name="y" value="0.5"/>
 			<arg name="z" value="0.0"/>
 			<arg name="R" value="0.0"/>
 			<arg name="P" value="0.0"/>

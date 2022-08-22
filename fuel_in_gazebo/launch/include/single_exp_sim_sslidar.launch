@@ -63,8 +63,8 @@
 		<param name="perception_utils/top_angle" value="0.56125" type="double"/>
 		<param name="perception_utils/left_angle" value="0.69222" type="double"/>
 		<param name="perception_utils/right_angle" value="0.68901" type="double"/>
-		<param name="perception_utils/max_dist" value="4.5" type="double"/>
-		<param name="perception_utils/vis_dist" value="1.0" type="double"/>  
+		<param name="perception_utils/max_dist" value="10.0" type="double"/>
+		<param name="perception_utils/vis_dist" value="1.5" type="double"/>  
 
 	</node>
 
