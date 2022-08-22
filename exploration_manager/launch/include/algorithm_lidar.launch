@@ -17,6 +17,7 @@
 
   <arg name="max_vel"/>
   <arg name="max_acc"/>
+  <arg name="rotate_lidar_points"/>
 
   <!-- main node -->
   <node pkg="exploration_manager" name="exploration_node" type="exploration_node" output="screen">
@@ -71,7 +72,7 @@
     <param name="map_ros/show_occ_time"  value="false"/>
     <param name="map_ros/show_esdf_time" value="false"/>
     <param name="map_ros/show_all_map" value="true"/>
-    <param name="map_ros/rotate_lidar_points" value="true"/>
+    <param name="map_ros/rotate_lidar_points" value="$(arg rotate_lidar_points)"/>
     <param name="map_ros/frame_id"      value="world"/>
 
     <!-- Fsm -->
@@ -115,20 +116,6 @@
     <param name="frontier/min_visib_num" value="1" type="int"/>
     <param name="frontier/min_view_finish_fraction" value="0.2" type="double"/>
     <param name="frontier/ground_noise_height" value="0.2" type="double"/>
-    
-    <!-- <param name="frontier/cluster_min" value="100" type="int"/>
-    <param name="frontier/cluster_size_xy" value="2.0" type="double"/>
-    <param name="frontier/cluster_size_z" value="10.0" type="double"/>
-    <param name="frontier/min_candidate_dist" value="0.75" type="double"/>
-    <param name="frontier/min_candidate_clearance" value="0.21" type="double"/>
-    <param name="frontier/candidate_dphi" value="$(eval 15 * 3.1415926 / 180.0)" type="double"/>
-    <param name="frontier/candidate_rnum" value="3" type="int"/>
-    <param name="frontier/candidate_rmin" value="2" type="double"/>
-    <param name="frontier/candidate_rmax" value="10" type="double"/>
-    <param name="frontier/down_sample" value="3" type="int"/>
-    <param name="frontier/min_visib_num" value="15" type="int"/>
-    <param name="frontier/min_view_finish_fraction" value="0.2" type="double"/>
-    <param name="frontier/ground_noise_height" value="0.2" type="double"/> -->
 
     <!-- Perception utils -->
     <param name="perception_utils/top_angle" value="0.56125" type="double"/>

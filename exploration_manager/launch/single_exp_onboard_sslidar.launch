@@ -8,7 +8,7 @@
   <arg name="init_z" default="0"/>
   
   <!-- odom and sensor pose -->
-  <arg name="odom_topic" value="/$(arg uav_name)/mavros/local_position/odom" />
+  <arg name="odom_topic" value="$(arg uav_name)/mavros/local_position/odom"/>
 
   <!-- blick-feld lidar scanner -->
   <include file="$(find exploration_manager)/launch/include/live_scanner.launch">
@@ -33,6 +33,8 @@
     <arg name="box_max_x" value="25.0"/>
     <arg name="box_max_y" value="7.0"/>
     <arg name="box_max_z" value="1.0"/>
+
+    <arg name="rotate_lidar_points" value="true"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
     <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
