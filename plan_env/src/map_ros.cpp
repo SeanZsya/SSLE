@@ -100,49 +100,54 @@ void MapROS::init() {
 }
 
 ///////////////////////////////////////////////////
-void MapROS::appendMap() {
-  const double step = 0.4, s = map_->getResolution();
+void MapROS::appendMap() { 
+  const double step = 0.4, step_inflate = 0.5, s = map_->getResolution(); 
+  const double l = step + step_inflate; 
 
-  if (uavs_pos_(0, 2) > 10.)
-    ROS_INFO("no uav1 pose");
-  else {
-    pts1.clear();
-    for (double x = -step; x <= step; x+=s)
-      for (double y = -step; y <= step; y+=s)
-        for (double z = -step; z <= step; z+=s) {
-          Eigen::Vector3d p = Eigen::Vector3d(uavs_pos_(0,0) + x, uavs_pos_(0,1) + y, uavs_pos_(0,2) + z);
-          Eigen::Vector3i id;
-          map_->posToIndex(p, id);
-          if (map_->isInMap(id)) {
-            auto id_m = map_->toAddress(id);
-            map_->md_->occupancy_buffer_inflate_[id_m] = 1;
-            map_->md_->occupancy_buffer_[id_m] = map_->mp_->clamp_max_log_;
-            pts1.emplace_back(id);
-            // map_->setOccupied(pts1.back(), 2);
-          }
-        }
-    // uav1 = true;
-  }
-  
-  if (uavs_pos_(1, 2) > 10.)
-    ROS_INFO("no uav2 pose");
-  else {
-    pts2.clear();
-    for (double x = -step; x <= step; x+=s)
-      for (double y = -step; y <= step; y+=s)
-        for (double z = -step; z <= step; z+=s) {
-          Eigen::Vector3d p = Eigen::Vector3d(uavs_pos_(1,0) + x, uavs_pos_(1,1) + y, uavs_pos_(1,2) + z);
-          Eigen::Vector3i id;
-          map_->posToIndex(p, id);
-          if (map_->isInMap(id)) {
-            auto id_m = map_->toAddress(id);
-            map_->md_->occupancy_buffer_inflate_[id_m] = 1;
-            map_->md_->occupancy_buffer_[id_m] = map_->mp_->clamp_max_log_;
-            pts2.emplace_back(id);
-          }
-        }
-  }
-}
+  if (uavs_pos_(0, 2) > 10.) 
+    ROS_INFO("no uav1 pose"); 
+  else { 
+    pts1.clear(); 
+    for (double x = -l; x <= l; x+=s) 
+      for (double y = -l; y <= l; y+=s) 
+        for (double z = -l; z <= l; z+=s) { 
+          Eigen::Vector3d p = Eigen::Vector3d(uavs_pos_(0,0) + x, uavs_pos_(0,1) + y, uavs_pos_(0,2) + z); 
+          Eigen::Vector3i id; 
+          if (!map_->isInBox(p)) continue;
+          map_->posToIndex(p, id); 
+          if (!map_->isInMap(id)) { 
+            auto id_m = map_->toAddress(id); 
+            map_->md_->occupancy_buffer_inflate_[id_m] = 1; 
+            if ((abs(x) <= step) && (abs(y) <= step) && (abs(z) <= step)) 
+              map_->md_->occupancy_buffer_[id_m] = map_->mp_->clamp_max_log_; 
+            pts1.emplace_back(id); 
+            // map_->setOccupied(pts1.back(), 2); 
+          } 
+        } 
+    // uav1 = true; 
+  } 
+
+  if (uavs_pos_(1, 2) > 10.) 
+    ROS_INFO("no uav2 pose"); 
+  else { 
+    pts2.clear(); 
+    for (double x = -l; x <= l; x+=s) 
+      for (double y = -l; y <= l; y+=s) 
+        for (double z = -l; z <= l; z+=s) { 
+          Eigen::Vector3d p = Eigen::Vector3d(uavs_pos_(1,0) + x, uavs_pos_(1,1) + y, uavs_pos_(1,2) + z); 
+          Eigen::Vector3i id; 
+          if (!map_->isInBox(p)) continue;
+          map_->posToIndex(p, id); 
+          if (!map_->isInMap(id)) { 
+            auto id_m = map_->toAddress(id); 
+            map_->md_->occupancy_buffer_inflate_[id_m] = 1; 
+            if ((abs(x) <= step) && (abs(y) <= step) && (abs(z) <= step)) 
+              map_->md_->occupancy_buffer_[id_m] = map_->mp_->clamp_max_log_; 
+            pts2.emplace_back(id); 
+          } 
+        } 
+  } 
+} 
 
 void MapROS::removeMap() {
   static double occ_free = (map_->mp_->clamp_min_log_ - 1e-3 + map_->mp_->min_occupancy_log_) * 0.5;

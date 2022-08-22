@@ -25,7 +25,7 @@
 
 	<!-- 使用xmlstarlet工具修改sdf文件内容：更改mavlink_tcp_port -->
 	<arg name="cmd" value="xmlstarlet ed -d '//plugin[@name=&quot;mavlink_interface&quot;]/mavlink_tcp_port' 
-	-s '//plugin[@name=&quot;mavlink_interface&quot;]' 	-t elem 	-n mavlink_tcp_port -v $(arg mavlink_tcp_port) $(find fuel_in_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
+	-s '//plugin[@name=&quot;mavlink_interface&quot;]' -t elem -n mavlink_tcp_port -v $(arg mavlink_tcp_port) $(find fuel_in_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
 	
 	<param name="model_description" command="$(arg cmd)"/>
 

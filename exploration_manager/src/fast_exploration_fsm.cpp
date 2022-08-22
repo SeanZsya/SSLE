@@ -241,10 +241,10 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
         return;
       }
       // Replan after some time
-      if (t_cur > fp_->replan_thresh3_ && !classic_) {
-        transitState(RETURN, "FSM");
-        ROS_WARN("Replan: periodic call=======================================");
-      }
+      // if (t_cur > fp_->replan_thresh3_ && !classic_) {
+      //   transitState(RETURN, "FSM");
+      //   ROS_WARN("Replan: periodic call=======================================");
+      // }
       break;
     }
 
