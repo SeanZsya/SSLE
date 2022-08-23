@@ -3,9 +3,10 @@
   <arg name="uav_name" default="/uav0"/>
   <arg name="uav_name_" default="uav0"/>
 
-  <arg name="init_x" default="0"/>
-  <arg name="init_y" default="0"/>
-  <arg name="init_z" default="0"/>
+  <!-- initial pose -->
+  <arg name="init_x_" default="0.0"/>
+  <arg name="init_y_" default="0.0"/>
+  <arg name="init_z_" default="0.0"/>
   
   <!-- odom and sensor pose -->
   <arg name="odom_topic" value="$(arg uav_name)/mavros/local_position/odom"/>
@@ -61,9 +62,9 @@
     <remap from="/odom_world" to="$(arg odom_topic)"/>
     <param name="traj_server/time_forward" value="1.5" type="double"/>
     <param name="traj_server/pub_traj_id" value="4" type="int"/>
-    <param name="traj_server/init_x" value="$(arg init_x)" type="double"/>
-    <param name="traj_server/init_y" value="$(arg init_y)" type="double"/>
-    <param name="traj_server/init_z" value="$(arg init_z)" type="double"/>
+    <param name="traj_server/init_x" value="$(arg init_x_)" type="double"/>
+    <param name="traj_server/init_y" value="$(arg init_y_)" type="double"/>
+    <param name="traj_server/init_z" value="$(arg init_z_)" type="double"/>
 
     <param name="perception_utils/top_angle" value="0.56125" type="double"/>
     <param name="perception_utils/left_angle" value="0.69222" type="double"/>

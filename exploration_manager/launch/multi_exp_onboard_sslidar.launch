@@ -2,25 +2,37 @@
 
 	<node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find exploration_manager)/config/multi_exp.rviz" />
 
+	<!-- name tag -->
 	<arg name="uav1_name" value="/uav1"/>
-	<arg name="uav2_name" value="/uav2"/>
+	<arg name="uav1_name_" value="uav1"/>
+
+	<!-- initial pose -->
+	<arg name="uav1_init_x_" value="0.0"/>
+	<arg name="uav1_init_y_" value="0.0"/>
+	<arg name="uav1_init_z_" value="0.0"/>
+
 
 	<!-- UAV1 -->
 	<group ns="$(arg uav1_name)">
 
+
 		<!-- px4 -->
 		<include file="$(find exploration_manager)/launch/p450_vio_onboard.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
-			<arg name="uav_name_" value="uav1"/>
+			<arg name="uav_name_" value="$(arg uav1_name_)"/>
+			<arg name="init_x_" value="$arg(uav1_init_x_)"/>
+			<arg name="init_y_" value="$arg(uav1_init_y_)"/>
+			<arg name="init_z_" value="$arg(uav1_init_z_)"/>
 		</include>
 
 		<!-- exploration -->
 		<include file="$(find exploration_manager)/launch/single_exp_onboard_sslidar.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
-			<arg name="uav_name_" value="uav1"/>
-			<arg name="init_x" value="0"/>
-			<arg name="init_y" value="0"/>
-			<arg name="init_z" value="0.4"/>
+			<arg name="uav_name_" value="$(arg uav1_name_)"/>
+			<arg name="init_x_" value="$(arg uav1_init_x_)"/>
+			<arg name="init_y_" value="$(arg uav1_init_y_)"/>
+			<arg name="init_z_" value="$(arg uav1_init_z_)"/>
+
 		</include>
 
 		<!-- keyboard control -->

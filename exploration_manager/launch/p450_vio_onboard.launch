@@ -5,6 +5,11 @@
 	<arg name="uav_name_" default="uav0"/>
 	<arg name="ID" default="0"/>
 
+	<!-- initial pose -->
+	<arg name="init_x_" default="0"/>
+	<arg name="init_y_" default="0"/>
+	<arg name="init_z_" default="0"/>
+
 	<!-- 启动MAVROS -->
 	<!-- 不同机载电脑,注意修改fcu_url至正确的端口号及波特率 -->
 	<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
@@ -22,15 +27,14 @@
     </include>
     
 
-	<!-- 启动Prometheus代码 -->
 	<!-- run the px4_pos_estimator.cpp -->
 	<node pkg="prometheus_control" type="px4_pos_estimator" name="px4_pos_estimator" output="screen">
-		<!-- 0 for vicon， 1 for 激光SLAM, 2 for gazebo ground truth(仿真用) -->
+		<!-- 0 for vicon， 1 for lidar-SLAM, 2 for gazebo ground truth -->
 		<param name="input_source" value="3" />
 		<param name="uav_name" value="$(arg uav_name)"/>
-		<param name="offset_x" value="0"/>
-		<param name="offset_y" value="0"/>
-		<param name="offset_z" value="0"/>
+		<param name="offset_x" value="$(arg init_x_)"/>
+		<param name="offset_y" value="$(arg init_y_)"/>
+		<param name="offset_z" value="$(arg init_z_)"/>
 	</node>
 	
 	<!-- run the px4_sender.cpp -->

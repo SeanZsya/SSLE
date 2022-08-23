@@ -29,8 +29,6 @@ void MapROS::init() {
   node_.param("map_ros/depth_filter_margin", depth_filter_margin_, -1);
   node_.param("map_ros/k_depth_scaling_factor", k_depth_scaling_factor_, -1.0);
   node_.param("map_ros/skip_pixel", skip_pixel_, -1);
-  node_.param("map_ros/x_offset", x_offset, -1.0);
-  node_.param("map_ros/y_offset", y_offset, -1.0);
 
   node_.param("map_ros/esdf_slice_height", esdf_slice_height_, -0.1);
   node_.param("map_ros/visualization_truncate_height", visualization_truncate_height_, -0.1);
@@ -171,8 +169,8 @@ void MapROS::removeMap() {
 }
 
 void MapROS::uav1Callback(const geometry_msgs::PoseStampedConstPtr& pose) {
-  uavs_pos_(0,0) = pose->pose.position.x + x_offset;
-  uavs_pos_(0,1) = pose->pose.position.y + y_offset;
+  uavs_pos_(0,0) = pose->pose.position.x;
+  uavs_pos_(0,1) = pose->pose.position.y;
   uavs_pos_(0,2) = pose->pose.position.z;
 }
 

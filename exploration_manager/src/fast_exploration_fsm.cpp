@@ -6,6 +6,7 @@
 #include <exploration_manager/expl_data.h>
 #include <plan_env/edt_environment.h>
 #include <plan_env/sdf_map.h>
+#include <std_msgs/Int8.h>
 
 using Eigen::Vector4d;
 quadrotor_msgs::PositionCommand cmd;
@@ -55,6 +56,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   new_pub_ = nh.advertise<std_msgs::Empty>("planning/new", 10);
   bspline_pub_ = nh.advertise<bspline::Bspline>("planning/bspline", 10);
   return_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("position_cmd", 2);
+  status_pub_ = nh.advertise<std_msgs::Int8>("/status",10);
 }
 
 void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
@@ -438,6 +440,10 @@ void FastExplorationFSM::triggerCallback(const nav_msgs::PathConstPtr& msg) {
   fd_->trigger_ = true;
   cout << "Triggered!" << endl;
   transitState(PLAN_TRAJ, "triggerCallback");
+
+  std_msgs::Int8 status_msg;
+  status_msg.data = 1;
+  status_pub_.publish(status_msg);
 }
 
 

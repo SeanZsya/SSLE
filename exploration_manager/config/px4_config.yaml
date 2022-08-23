@@ -68,7 +68,7 @@ imu:
 local_position:
   frame_id: "world"
   tf:
-    send: true
+    send: false
     frame_id: "world"
     child_frame_id: "base_link"
     send_fcu: false
@@ -200,7 +200,7 @@ landing_target:
     fov_x: 2.0071286398   # default: 115 [degrees]
     fov_y: 2.0071286398
   tf:
-    send: true
+    send: false
     listen: false
     frame_id: "landing_target"
     child_frame_id: "camera_center"
