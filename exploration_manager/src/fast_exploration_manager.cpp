@@ -238,10 +238,15 @@ int FastExplorationManager::planExploreMotion(
   }
   ed_->path_next_goal_ = planner_manager_->path_finder_->getPath();
   shortenPath(ed_->path_next_goal_);
-  
+
   for (auto x: ed_->path_next_goal_)
     std::cout << x.transpose() << "\n" << std::endl;
   
+  if(ed_->path_next_goal_.size() < 3){
+    ROS_ERROR("too few viewpoint");
+    return FAIL;
+  }
+
   const double radius_far = 5.0;
   const double radius_close = 1.5;
 
@@ -251,6 +256,7 @@ int FastExplorationManager::planExploreMotion(
   if (len < radius_close) {
     // Next viewpoint is very close, no need to search kinodynamic path, just use waypoints-based
     // optimization
+    std::cout << "Close goal." << std::endl;
     planner_manager_->planExploreTraj(ed_->path_next_goal_, vel, acc, time_lb);
     ed_->next_goal_ = next_pos;
 
@@ -280,12 +286,12 @@ int FastExplorationManager::planExploreMotion(
             pos, vel, acc, ed_->next_goal_, Vector3d(0, 0, 0), time_lb))
       return FAIL;
   }
-
+  
   if (planner_manager_->local_data_.position_traj_.getTimeSum() < time_lb - 0.1)
     ROS_ERROR("Lower bound not satified!");
 
   planner_manager_->planYawExplore(yaw, next_yaw, true, ep_->relax_time_);
-
+  
   // double traj_plan_time = (ros::Time::now() - t1).toSec();
   // t1 = ros::Time::now();
 
@@ -341,20 +347,23 @@ int FastExplorationManager::planReturnMotion(
   for (auto x: ed_->path_next_goal_)
     std::cout << x.transpose() << "\n" << std::endl;
   
+  if(ed_->path_next_goal_.size() < 3){
+    ROS_ERROR("too few viewpoint");
+    return FAIL;
+  }
+  
   const double radius_far = 5.0;
   const double radius_close = 1.5;
   const double len = Astar::pathLength(ed_->path_next_goal_);
   
   if (len < radius_close) {
     // Next viewpoint is very close, no need to search kinodynamic path, just use waypoints-based optimization
-    ROS_INFO_STREAM_THROTTLE(1,"Stage4");
     planner_manager_->planExploreTraj(ed_->path_next_goal_, vel, acc, time_lb);
     ed_->next_goal_ = next_pos;
 
   } else if (len > radius_far) {
     // Next viewpoint is far away, select intermediate goal on geometric path (this also deal with dead end)
     //std::cout << "Far goal." << std::endl;
-    ROS_INFO_STREAM_THROTTLE(1,"Stage5");
     double len2 = 0.0;
     vector<Eigen::Vector3d> truncated_path = { ed_->path_next_goal_.front() };
     for (int i = 1; i < ed_->path_next_goal_.size() && len2 < radius_far; ++i) {
@@ -371,7 +380,6 @@ int FastExplorationManager::planReturnMotion(
   } else {
     // Search kino path to exactly next viewpoint and optimize
     //std::cout << "Mid goal" << std::endl;
-    ROS_INFO_STREAM_THROTTLE(1,"Stage6");
     ed_->next_goal_ = next_pos;
 
     if (!planner_manager_->kinodynamicReplan(
@@ -382,7 +390,6 @@ int FastExplorationManager::planReturnMotion(
   // if (planner_manager_->local_data_.position_traj_.getTimeSum() < time_lb - 0.1)
   //   ROS_ERROR("Lower bound not satified!");
   planner_manager_->planYawExplore(yaw, next_yaw, true, ep_->relax_time_);
-  ROS_INFO_STREAM_THROTTLE(1,"Stage7");
   // double traj_plan_time = (ros::Time::now() - t1).toSec();
   // t1 = ros::Time::now();
 

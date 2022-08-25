@@ -101,7 +101,7 @@
     <param name="exploration/relax_time" value="1.0" type="double"/>
 
     <!-- Frontier Generation -->
-    <param name="frontier/cluster_min" value="20" type="int"/>
+    <param name="frontier/cluster_min" value="5" type="int"/>
     <param name="frontier/cluster_size_xy" value="1.0" type="double"/>
     <param name="frontier/cluster_size_z" value="10.0" type="double"/>
     <param name="frontier/min_candidate_dist" value="0.75" type="double"/>
@@ -113,7 +113,7 @@
     <param name="frontier/down_sample" value="3" type="int"/>
     <param name="frontier/min_visib_num" value="1" type="int"/>
     <param name="frontier/min_view_finish_fraction" value="0.2" type="double"/>
-    <param name="frontier/ground_noise_height" value="0.2" type="double"/>
+    <param name="frontier/ground_noise_height" value="0.4" type="double"/>
 
     <!-- Perception utils -->
     <param name="perception_utils/top_angle" value="0.56125" type="double"/>
@@ -171,7 +171,7 @@
   <!-- trajectory optimization -->
     <param name="optimization/ld_smooth" value="20.0" type="double"/>
     <param name="optimization/ld_dist" value="10.0" type="double"/>
-    <param name="optimization/ld_feasi" value="2.0" type="double"/>
+    <param name="optimization/ld_feasi" value="2.2" type="double"/>
     <param name="optimization/ld_start" value="100.0" type="double"/>
     <param name="optimization/ld_end" value="0.5" type="double"/>
     <param name="optimization/ld_guide" value="1.5" type="double"/>

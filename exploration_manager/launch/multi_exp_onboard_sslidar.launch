@@ -20,9 +20,9 @@
 		<include file="$(find exploration_manager)/launch/p450_vio_onboard.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 			<arg name="uav_name_" value="$(arg uav1_name_)"/>
-			<arg name="init_x_" value="$arg(uav1_init_x_)"/>
-			<arg name="init_y_" value="$arg(uav1_init_y_)"/>
-			<arg name="init_z_" value="$arg(uav1_init_z_)"/>
+			<arg name="init_x_" value="$(arg uav1_init_x_)"/>
+			<arg name="init_y_" value="$(arg uav1_init_y_)"/>
+			<arg name="init_z_" value="$(arg uav1_init_z_)"/>
 		</include>
 
 		<!-- exploration -->
