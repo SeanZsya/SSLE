@@ -413,6 +413,7 @@ void FastExplorationManager::shortenPath(vector<Vector3d>& path) {
   const double dist_thresh = 3.0;
   vector<Vector3d> short_tour = { path.front() };
   for (int i = 1; i < path.size() - 1; ++i) {
+    // Ensure distance between viewpoints 3m at least
     if ((path[i] - short_tour.back()).norm() > dist_thresh)
       short_tour.push_back(path[i]);
     else {
@@ -428,7 +429,8 @@ void FastExplorationManager::shortenPath(vector<Vector3d>& path) {
       }
     }
   }
-  if ((path.back() - short_tour.back()).norm() > 1e-3) short_tour.push_back(path.back());
+  if ((path.back() - short_tour.back()).norm() > 1e-3) 
+    short_tour.push_back(path.back());
 
   // Ensure at least three points in the path
   if (short_tour.size() == 2)

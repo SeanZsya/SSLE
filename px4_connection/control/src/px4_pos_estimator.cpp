@@ -137,10 +137,10 @@ void gazebo_cb(const nav_msgs::Odometry::ConstPtr &msg)
 {
     if (msg->header.frame_id == "world")
     {
-        //pos_drone_gazebo = Eigen::Vector3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
-        pos_drone_gazebo[0] = msg->pose.pose.position.x + pos_offset[0];
-        pos_drone_gazebo[1] = msg->pose.pose.position.y + pos_offset[1];
-        pos_drone_gazebo[2] = msg->pose.pose.position.z + pos_offset[2];
+        pos_drone_gazebo = Eigen::Vector3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
+        // pos_drone_gazebo[0] = msg->pose.pose.position.x + pos_offset[0];
+        // pos_drone_gazebo[1] = msg->pose.pose.position.y + pos_offset[1];
+        // pos_drone_gazebo[2] = msg->pose.pose.position.z + pos_offset[2];
 
         q_gazebo = Eigen::Quaterniond(msg->pose.pose.orientation.w, msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z);
         Euler_gazebo = quaternion_to_euler(q_gazebo);

@@ -3,12 +3,6 @@
 <arg name="uav_name" default="/uav0"/>
 <arg name="model" default="p450_sslidar"/>
 <arg name="ID" default="0"/>
-<arg name="x" default="0.0"/>
-<arg name="y" default="0.0"/>
-<arg name="z" default="0.0"/>
-<arg name="R" default="0.0"/>
-<arg name="P" default="0.0"/>
-<arg name="Y" default="0.0"/>
 
 
 	
@@ -16,25 +10,25 @@
 	<arg name="interactive" default="true"/>
 	<arg unless="$(arg interactive)" name="px4_command_arg1" value="-d"/>
 	<arg     if="$(arg interactive)" name="px4_command_arg1" value=""/>
-<node name="sitl_$(arg ID)" pkg="px4" type="px4" output="screen" args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS -i $(arg ID) -w sitl_$(arg model)_$(arg ID) $(arg px4_command_arg1)"/>
+<node name="sitl_$(arg ID)" pkg="px4" type="px4" output="screen" args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS  $(arg px4_command_arg1)"/>
 
 
 <!-- Spawn model model -->
-	<arg name="mavlink_udp_port" value="$(eval 14560 + arg('ID'))"/>
-	<arg name="mavlink_tcp_port" value="$(eval 4560 + arg('ID'))"/>
-
-	<!-- 使用xmlstarlet工具修改sdf文件内容：更改mavlink_tcp_port -->
-	<arg name="cmd" value="xmlstarlet ed -d '//plugin[@name=&quot;mavlink_interface&quot;]/mavlink_tcp_port' 
-	-s '//plugin[@name=&quot;mavlink_interface&quot;]' -t elem -n mavlink_tcp_port -v $(arg mavlink_tcp_port) $(find fuel_in_gazebo)/models/$(arg model)/$(arg model).sdf"/>
-	
-	<param name="model_description" command="$(arg cmd)"/>
-
-<node name="$(arg model)_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-sdf -param model_description -model $(arg model)_$(arg ID) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
+<arg name="x" default="0.0"/>
+<arg name="y" default="0.0"/>
+<arg name="z" default="0.0"/>
+<arg name="R" default="0.0"/>
+<arg name="P" default="0.0"/>
+<arg name="Y" default="0.0"/>
+	<arg name="sdf" default="$(find fuel_in_gazebo)/models/multi_uavs/$(arg model)/$(arg model).sdf"/>
+	<node name="model_spawn_$(arg ID)" pkg="gazebo_ros" type="spawn_model" output="screen" 
+		args="-sdf -file $(arg sdf) -model $(arg model) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)">
+	</node>
 
 
 <!-- MAVROS -->
-	<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-	<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+	<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+	<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 <node pkg="mavros" type="mavros_node" name="mavros" output="screen">
 	<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
 	<param name="gcs_url" value="" />
@@ -46,11 +40,11 @@
 
 
 <!-- TF transform -->
-<include file="$(find fuel_in_gazebo)/launch/include/tf_transform.launch">
+<!-- <include file="$(find fuel_in_gazebo)/launch/include/tf_transform.launch">
 	<arg name="x" value="$(arg x)"/>
 	<arg name="y" value="$(arg y)"/>
 	<arg name="z" value="$(arg z)"/>
-</include>
+</include> -->
 
 
 <!-- run the px4_pos_estimator -->
