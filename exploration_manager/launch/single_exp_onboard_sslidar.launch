@@ -28,11 +28,11 @@
     <arg name="map_size_y_" value="50.0"/>
     <arg name="map_size_z_" value=" 3.0"/>
 
-    <arg name="box_min_x" value="-2.0"/>
+    <arg name="box_min_x" value="-1.0"/>
     <arg name="box_min_y" value="-8.0"/>
     <arg name="box_min_z" value=" -0.2"/>
-    <arg name="box_max_x" value="25.0"/>
-    <arg name="box_max_y" value="7.0"/>
+    <arg name="box_max_x" value="8.0"/>
+    <arg name="box_max_y" value="2.0"/>
     <arg name="box_max_z" value="1.0"/>
 
     <arg name="rotate_lidar_points" value="true"/>
@@ -69,7 +69,7 @@
     <param name="perception_utils/top_angle" value="0.56125" type="double"/>
     <param name="perception_utils/left_angle" value="0.69222" type="double"/>
     <param name="perception_utils/right_angle" value="0.68901" type="double"/>
-    <param name="perception_utils/max_dist" value="7.0" type="double"/>
+    <param name="perception_utils/max_dist" value="8.0" type="double"/>
     <param name="perception_utils/vis_dist" value="4.0" type="double"/>  
 
   </node>

@@ -311,7 +311,7 @@ int FastExplorationManager::planReturnMotion(
   ros::Time t1 = ros::Time::now();
   auto t2 = t1;
 
-  Vector3d next_pos(0,0,0);
+  Vector3d next_pos(0,0,0.4);
   double next_yaw = 0.0;
 
   // Only 1 destination, no need to find global tour through TSP

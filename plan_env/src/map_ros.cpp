@@ -80,7 +80,7 @@ void MapROS::init() {
 
 //////////////////////////////////////////////
   uav1PosSub =
-      node_.subscribe<geometry_msgs::PoseStamped>("/uav1/pub_lidar_pose/sensor_pose_", 10, &MapROS::uav1Callback, this);
+      node_.subscribe<geometry_msgs::PoseStamped>("/uav1/pub_lidar_pose/sensor_pose", 10, &MapROS::uav1Callback, this);
   uav2PosSub = 
       node_.subscribe<geometry_msgs::PoseStamped>("/uav2/pub_lidar_pose/sensor_pose_", 10, &MapROS::uav2Callback, this);
   uavs_pos_ << 0., 0., 10., 0., 0., 10.;
@@ -113,7 +113,7 @@ void MapROS::appendMap() {
           Eigen::Vector3i id; 
           if (!map_->isInBox(p)) continue;
           map_->posToIndex(p, id); 
-          if (!map_->isInMap(id)) { 
+          if (map_->isInMap(id)) { 
             auto id_m = map_->toAddress(id); 
             map_->md_->occupancy_buffer_inflate_[id_m] = 1; 
             if ((abs(x) <= step) && (abs(y) <= step) && (abs(z) <= step)) 
@@ -136,7 +136,7 @@ void MapROS::appendMap() {
           Eigen::Vector3i id; 
           if (!map_->isInBox(p)) continue;
           map_->posToIndex(p, id); 
-          if (!map_->isInMap(id)) { 
+          if (map_->isInMap(id)) { 
             auto id_m = map_->toAddress(id); 
             map_->md_->occupancy_buffer_inflate_[id_m] = 1; 
             if ((abs(x) <= step) && (abs(y) <= step) && (abs(z) <= step)) 
