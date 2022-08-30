@@ -1,0 +1,5 @@
+<launch>
+
+	<node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find exploration_manager)/config/multi_exp.rviz" />
+
+</launch>

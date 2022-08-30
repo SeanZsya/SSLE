@@ -27,7 +27,7 @@
 		<arg name="box_min_z" value=" -0.2"/>
 		<arg name="box_max_x" value="80.0"/>
 		<arg name="box_max_y" value="80.0"/>
-		<arg name="box_max_z" value="1.5"/>
+		<arg name="box_max_z" value="1.0"/>
 
 		<arg name="rotate_lidar_points" value="false"/>
 
