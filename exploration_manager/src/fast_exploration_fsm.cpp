@@ -242,11 +242,11 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
         ROS_WARN("Replan: traj fully executed=================================");
         return;
       }
-      // Replan after some time
-      // if (t_cur > fp_->replan_thresh3_ && !classic_) {
-      //   transitState(RETURN, "FSM");
-      //   ROS_WARN("Replan: periodic call=======================================");
-      // }
+      //Replan after some time
+      if (t_cur > fp_->replan_thresh3_ && !classic_) {
+        transitState(RETURN, "FSM");
+        ROS_WARN("Replan: periodic call=======================================");
+      }
       break;
     }
 

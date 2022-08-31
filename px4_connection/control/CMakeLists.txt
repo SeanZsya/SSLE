@@ -43,7 +43,6 @@ catkin_package(
 ###########
 
 
-
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
@@ -59,21 +58,6 @@ include_directories(
 add_library(OptiTrackFeedbackRigidBody src/lib/OptiTrackFeedBackRigidBody.cpp)
 
 ###### Main File ##########
-##rover_pos_controller.cpp
-add_executable(rover_pos_controller src/rover_control/rover_pos_controller.cpp)
-# add_dependencies(rover_pos_controller prometheus_control_gencpp)
-add_dependencies(rover_pos_controller  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(rover_pos_controller ${catkin_LIBRARIES})
-
-##px4_pos_controller.cpp
-add_executable(px4_pos_controller src/px4_pos_controller.cpp)
-add_dependencies(px4_pos_controller  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(px4_pos_controller ${catkin_LIBRARIES})
-
-##px4_geometry_controller.cpp
-add_executable(px4_geometry_controller src/px4_geometry_controller.cpp)
-add_dependencies(px4_geometry_controller  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(px4_geometry_controller ${catkin_LIBRARIES})
 
 ##px4_pos_estimator.cpp
 add_executable(px4_pos_estimator src/px4_pos_estimator.cpp)
@@ -81,79 +65,13 @@ add_dependencies(px4_pos_estimator  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 target_link_libraries(px4_pos_estimator ${catkin_LIBRARIES})
 target_link_libraries(px4_pos_estimator OptiTrackFeedbackRigidBody)
 
-##ros_info_color_test.cpp
-add_executable(ros_info_color_test src/Utilities/ros_info_color_test.cpp)
-add_dependencies(ros_info_color_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(ros_info_color_test ${catkin_LIBRARIES})
-
-# add_executable(planner_server src/Test/planner_server.cpp)
-# add_dependencies(planner_server prometheus_control_gencpp)
-# target_link_libraries(planner_server ${catkin_LIBRARIES})
-
-
-###### Test File ##########
-#add_executable(px4_fw_controller src/Test/px4_fw_controller.cpp)
-#add_dependencies(px4_fw_controller prometheus_control_gencpp)
-#target_link_libraries(px4_fw_controller ${catkin_LIBRARIES})
-
 add_executable(px4_sender src/px4_sender.cpp)
 add_dependencies(px4_sender  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
 target_link_libraries(px4_sender ${catkin_LIBRARIES})
 
-
-###### Utilities File ##########
-#add_executable(keyboard_control src/Utilities/keyboard_control.cpp)
-#add_dependencies(keyboard_control prometheus_control_gencpp)
-#target_link_libraries(keyboard_control ${catkin_LIBRARIES})
-
-add_executable(filter_tester src/Utilities/filter_tester.cpp)
-add_dependencies(filter_tester  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(filter_tester ${catkin_LIBRARIES})
-
-add_executable(TFmini src/Utilities/TFmini.cpp)
-add_dependencies(TFmini  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(TFmini ${catkin_LIBRARIES})
-
-add_executable(fake_vicon src/Utilities/fake_vicon.cpp)
-add_dependencies(fake_vicon  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(fake_vicon ${catkin_LIBRARIES})
-
-
-
-add_executable(set_mode src/Utilities/set_mode.cpp)
-add_dependencies(set_mode  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(set_mode ${catkin_LIBRARIES})
-
-add_executable(eigen_test src/Utilities/eigen_test.cpp)
-add_dependencies(eigen_test  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}) 
-target_link_libraries(eigen_test ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
-
-# all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark executables and/or libraries for installation
-# install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
 
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
@@ -165,16 +83,3 @@ install(DIRECTORY include/${PROJECT_NAME}/
 install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
-
-#############
-## Testing ##
-#############
-
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_prometheus_control.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
