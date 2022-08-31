@@ -89,9 +89,9 @@ int main(int argc, char **argv)
     Command_to_pub.Reference_State.yaw_ref             = 0;
     
 
-    cout << ">>>>>>>>>>>>>>>> Welcome to use Prometheus Terminal Control <<<<<<<<<<<<<<<<"<< endl;
+    cout << ">>>>>>>>>>>>>>>>>>>>>>>>>> Terminal Control <<<<<<<<<<<<<<<<<<<<<<<<<<"<< endl;
     cout << "ENTER key to control the drone: " <<endl;
-    cout << "1 for Arm, Space for Takeoff, L for Land, H for Hold, 0 for Disarm, r for runing FUEL onboard" <<endl;
+    cout << "1 for Arm, Space for Takeoff, L for Land, 0 for Disarm, R for runing FUEL (double press H for exit)" <<endl;
     cout << "Move mode is fixed (XYZ_VEL,BODY_FRAME): w/s for body_x, a/d for body_y, k/m for z, q/e for body_yaw" <<endl;
     cout << "CTRL-C to quit." <<endl;
 
@@ -355,17 +355,20 @@ int main(int argc, char **argv)
 
           cout << " " <<endl;
           cout << "FUEL exploration starts." <<endl;
-          ros::spin();
+          // ros::spin();
 
-          // sleep(0.5);
+          sleep(0.5);
 
-          // keyboardcontrol.RosWhileLoopRun();
-          // key_wait = keyboardcontrol.GetPressedKey();
-          // while(key_wait == U_KEY_NONE){
-          //   keyboardcontrol.RosWhileLoopRun();
-          //   key_wait = keyboardcontrol.GetPressedKey();
-          //   ros::spinOnce();
-          // }
+          keyboardcontrol.RosWhileLoopRun();
+          key_wait = keyboardcontrol.GetPressedKey();
+          while(key_wait != U_KEY_H){
+            keyboardcontrol.RosWhileLoopRun();
+            key_wait = keyboardcontrol.GetPressedKey();
+            ros::spinOnce();
+          }
+
+          cout << " " <<endl;
+          cout << "FUEL exploration ends." <<endl;
           
           break;
     
