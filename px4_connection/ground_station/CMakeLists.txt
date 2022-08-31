@@ -42,7 +42,7 @@ generate_messages(
 )
 
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS ../common_include
   CATKIN_DEPENDS  message_runtime
 )
 
@@ -54,8 +54,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
   ${catkin_INCLUDE_DIRS}
+  ../common_include
 )
 
 

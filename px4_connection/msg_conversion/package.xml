@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>run_onboard</name>
+  <name>msg_conversion</name>
   <version>0.0.0</version>
   <description>The package used for run fuel in real world.</description>
 

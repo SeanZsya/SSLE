@@ -27,7 +27,7 @@ Adapted from [FUEL](https://github.com/HKUST-Aerial-Robotics/FUEL), an excellent
   
 - **px4_connection:** Command analysis and other tools for communicate with px4 (both on sitl and onboard).
   
-- **run_onboard:** Tools for running FUEL onboard, including keyboard control，sensor pose / control command conversion.
+  - **msg_conversion:** Tools for running FUEL onboard, including keyboard control，sensor pose / control command conversion.
 
 ### others
 
@@ -51,7 +51,14 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
 2. PX4
 
-    Coming soon.
+    Install PX4 using [v1.11.1](https://github.com/PX4/PX4-Autopilot/tree/v1.11.1):
+
+        git clone -b 'v1.11.1' --single-branch --depth 1 https://github.com/PX4/PX4-Autopilot.git
+        cd prometheus_px4
+        git submodule update --init --recursive
+        pip3 install --user toml empy jinja2 packaging
+        source ./prometheus_px4/Tools/setup/ubuntu.sh
+        make sitl_default gazebo
 
 3. MavROS
 
@@ -95,13 +102,10 @@ Add these lines to your ~./bashrc:
 
 - For Solid-state lidar:
 
-        roslaunch exploration_manager exploration_gazebo_sslidar.launch
+        roslaunch exploration_manager multi_exp_onboard_sslidar.launch
 
-- For RGBD camera:
+<!-- - For RGBD camera:
 
-        roslaunch exploration_manager exploration_gazebo_rgbd.launch
+        roslaunch exploration_manager exploration_gazebo_rgbd.launch -->
 
-
-**Start Keyboard Control:** (follow the instructions inside it)
-
-    rosrun run_onboard pub_px4_cmd
+Then follow the instructions inside the keyboard control tab, pressing `R` and using `2d Nav Goal` in Rviz to trigger exploration.

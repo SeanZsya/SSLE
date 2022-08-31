@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(run_onboard)
+project(msg_conversion)
 
 find_package(catkin REQUIRED COMPONENTS
    roscpp  
@@ -28,15 +28,15 @@ generate_messages(
 )
 
 catkin_package(
-   INCLUDE_DIRS include
+   INCLUDE_DIRS ../common_include
 #  LIBRARIES px4_command
    CATKIN_DEPENDS mavros roscpp rospy message_runtime
 #  DEPENDS system_lib
 )
 
 include_directories(
-  include
   ${catkin_INCLUDE_DIRS}
+  ../common_include
 )
 
 add_library(KeyboardEvent src/KeyboardEvent.cpp)

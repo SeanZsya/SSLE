@@ -36,7 +36,7 @@
 		</include>
 
 		<!-- keyboard control -->
-		<node name="pub_cmd_uav" pkg="run_onboard" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
+		<node name="pub_cmd_uav" pkg="msg_conversion" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
 			<param name="uav_name" value="$(arg uav1_name)"/>
 		</node>
 
