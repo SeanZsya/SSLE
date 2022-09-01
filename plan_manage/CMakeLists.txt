@@ -53,11 +53,11 @@ include_directories(
 #   -ldw
 #   )
 
-# add_library(plan_manage 
-#   src/planner_manager.cpp
-#   src/planner_manager_dev.cpp
-#   )
-# target_link_libraries(plan_manage ${catkin_LIBRARIES})
+add_library(plan_manage 
+  src/planner_manager.cpp
+  src/planner_manager_dev.cpp
+  )
+target_link_libraries(plan_manage ${catkin_LIBRARIES})
 
 add_executable(traj_server 
 src/traj_server.cpp)
