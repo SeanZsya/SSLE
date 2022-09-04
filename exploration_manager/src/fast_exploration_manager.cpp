@@ -305,13 +305,13 @@ int FastExplorationManager::planExploreMotion(
 }
 
 int FastExplorationManager::planReturnMotion(
-    const Vector3d& pos, const Vector3d& vel, const Vector3d& acc, const Vector3d& yaw) {
+    const Vector3d& pos, const Vector3d& vel, const Vector3d& acc, const Vector3d& yaw, const Vector3d& init_pos) {
   
   ROS_INFO_STREAM_THROTTLE(1,"Start planning to return");
   ros::Time t1 = ros::Time::now();
   auto t2 = t1;
 
-  Vector3d next_pos(0,0,0.4);
+  Vector3d next_pos = init_pos;
   double next_yaw = 0.0;
 
   // Only 1 destination, no need to find global tour through TSP
@@ -320,6 +320,9 @@ int FastExplorationManager::planReturnMotion(
   ed_->refined_tour_.clear();
   ed_->refined_views1_.clear();
   ed_->refined_views2_.clear();
+  
+  if((pos - next_pos).norm() < 0.3)
+    return HOMED;
 
   // Plan trajectory (position and yaw) to the next viewpoint
   t1 = ros::Time::now();

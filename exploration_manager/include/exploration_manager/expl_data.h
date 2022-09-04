@@ -18,7 +18,7 @@ struct FSMData {
   Eigen::Quaterniond odom_orient_;
   double odom_yaw_;
 
-  Eigen::Vector3d start_pt_, start_vel_, start_acc_, start_yaw_;  // start state
+  Eigen::Vector3d initial_position_, start_pt_, start_vel_, start_acc_, start_yaw_;  // start state
   vector<Eigen::Vector3d> start_poss;
   bspline::Bspline newest_traj_;
 };
@@ -28,6 +28,7 @@ struct FSMParam {
   double replan_thresh2_;
   double replan_thresh3_;
   double replan_time_;  // second
+  bool auto_return_;
 };
 
 struct ExplorationData {

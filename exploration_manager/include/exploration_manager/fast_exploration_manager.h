@@ -19,7 +19,7 @@ class FrontierFinder;
 struct ExplorationParam;
 struct ExplorationData;
 
-enum EXPL_RESULT { NO_FRONTIER, FAIL, SUCCEED };
+enum EXPL_RESULT { NO_FRONTIER, FAIL, SUCCEED, HOMED};
 
 class FastExplorationManager {
 public:
@@ -32,7 +32,7 @@ public:
                         const Vector3d& yaw);
 
   int planReturnMotion(const Vector3d& pos, const Vector3d& vel, const Vector3d& acc,
-                      const Vector3d& yaw);
+                      const Vector3d& yaw, const Vector3d& init_pos);
                       
   // Benchmark method, classic frontier and rapid frontier
   int classicFrontier(const Vector3d& pos, const double& yaw);

@@ -10,7 +10,6 @@
 
 using Eigen::Vector4d;
 quadrotor_msgs::PositionCommand cmd;
-bool auto_return;
 
 namespace fast_planner {
 void FastExplorationFSM::init(ros::NodeHandle& nh) {
@@ -22,7 +21,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   nh.param("fsm/thresh_replan2", fp_->replan_thresh2_, -1.0);
   nh.param("fsm/thresh_replan3", fp_->replan_thresh3_, -1.0);
   nh.param("fsm/replan_time", fp_->replan_time_, -1.0);
-  nh.param("fsm/auto_return", auto_return, true);
+  nh.param("fsm/auto_return", fp_->auto_return_, true);
 
   /* Initialize main modules */
   expl_manager_.reset(new FastExplorationManager);
@@ -55,7 +54,6 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   replan_pub_ = nh.advertise<std_msgs::Empty>("planning/replan", 10);
   new_pub_ = nh.advertise<std_msgs::Empty>("planning/new", 10);
   bspline_pub_ = nh.advertise<bspline::Bspline>("planning/bspline", 10);
-  return_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("position_cmd", 2);
   status_pub_ = nh.advertise<std_msgs::Int8>("/status",10);
 }
 
@@ -121,7 +119,7 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
         //Check stucked(plan failed) time, return after 5s 
         
         // plan_failed_time_ = ros::Time::now();
-        // if ((plan_failed_time_ - unfinish_time_).toSec() > 5 && auto_return){
+        // if ((plan_failed_time_ - unfinish_time_).toSec() > 5 && fd->auto_return_){
         //   transitState(RETURN, "Stucked, returning");
         //   ROS_INFO_THROTTLE(1.0, "Start Returning Process");
         // }
@@ -176,7 +174,7 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
       // Saty in FINSH state more than 5s, RETURN
       ROS_INFO_THROTTLE(1.0, "finish exploration.");
       finish_time_= ros::Time::now();
-      if ((finish_time_ - unfinish_time_).toSec() > 5 && auto_return){
+      if ((finish_time_ - unfinish_time_).toSec() > 4 && fp_->auto_return_){
         transitState(RETURN, "Returning");
         ROS_INFO_THROTTLE(1.0, "Start Returning Process");
       }
@@ -218,6 +216,10 @@ void FastExplorationFSM::FSMCallback(const ros::TimerEvent& e) {
         // Still in PLAN_TRAJ state, keep replanning
         ROS_WARN("plan fail");
         fd_->static_state_ = true;
+      }
+      else if (res == HOMED){
+        ROS_WARN("Already returned to inital point");
+        transitState(WAIT_TRIGGER, "FSM");
       }
       else {
         fd_->newest_traj_.start_time = ros::Time::now();
@@ -261,7 +263,7 @@ int FastExplorationFSM::callExplorationPlanner() {
   ros::Time time_r = ros::Time::now() + ros::Duration(fp_->replan_time_);
 
   if (state_ == RETURN){
-    res = expl_manager_->planReturnMotion(fd_->start_pt_, fd_->start_vel_, fd_->start_acc_, fd_->start_yaw_);
+    res = expl_manager_->planReturnMotion(fd_->start_pt_, fd_->start_vel_, fd_->start_acc_, fd_->start_yaw_, fd_->initial_position_);
   }
   else{
     res = expl_manager_->planExploreMotion(fd_->start_pt_, fd_->start_vel_, fd_->start_acc_, fd_->start_yaw_);
@@ -438,29 +440,31 @@ void FastExplorationFSM::triggerCallback(const nav_msgs::PathConstPtr& msg) {
   if (msg->poses[0].pose.position.z < -0.1) return;
   if (state_ != WAIT_TRIGGER) return;
   fd_->trigger_ = true;
-  cout << "Triggered!" << endl;
+  cout << "Triggered!" << endl;  
   transitState(PLAN_TRAJ, "triggerCallback");
 
   std_msgs::Int8 status_msg;
   status_msg.data = 1;
   status_pub_.publish(status_msg);
+  
+  fd_->initial_position_ = fd_->odom_pos_;
+  ROS_WARN_STREAM("Initial point set to: "<< fd_->initial_position_.transpose() );
 }
 
 
-void FastExplorationFSM::safetyCallback(const ros::TimerEvent& e) {
+void FastExplorationFSM::safetyCallback(const ros::TimerEvent& e) { 
+  // Check safety and trigger replan if necessary
+  double dist;
+  bool safe;
   if (state_ == EXPL_STATE::EXEC_TRAJ) {
-    // Check safety and trigger replan if necessary
-    double dist;
-    bool safe = planner_manager_->checkTrajCollision(dist);
+    safe = planner_manager_->checkTrajCollision(dist);
     if (!safe) {
       ROS_WARN("Replan: collision detected==================================");
       transitState(PLAN_TRAJ, "safetyCallback");
     }
   }
-  if (state_ == EXPL_STATE::EXEC_RETURN) {
-    // Check safety and trigger replan if necessary
-    double dist;
-    bool safe = planner_manager_->checkTrajCollision(dist);
+  else if (state_ == EXPL_STATE::EXEC_RETURN){
+    safe = planner_manager_->checkTrajCollision(dist);
     if (!safe) {
       ROS_WARN("Replan: collision detected==================================");
       transitState(RETURN, "safetyCallback while returning");
