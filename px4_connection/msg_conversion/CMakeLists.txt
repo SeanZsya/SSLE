@@ -41,16 +41,10 @@ include_directories(
 
 add_library(KeyboardEvent src/KeyboardEvent.cpp)
 
-add_executable(pub_cam_pose src/pub_cam_pose.cpp)
-add_executable(pub_lidar_pose src/pub_lidar_pose.cpp)
+add_executable(pub_sensor_pose src/pub_sensor_pose.cpp)
+add_dependencies(pub_sensor_pose  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(pub_sensor_pose ${catkin_LIBRARIES})
+
 add_executable(pub_px4_cmd src/pub_px4_cmd.cpp)
-
-add_dependencies(pub_cam_pose  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(pub_lidar_pose  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(pub_px4_cmd  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-
-target_link_libraries(pub_px4_cmd ${catkin_LIBRARIES})
-target_link_libraries(pub_px4_cmd KeyboardEvent)
-target_link_libraries(pub_cam_pose ${catkin_LIBRARIES})
-target_link_libraries(pub_lidar_pose ${catkin_LIBRARIES})
+target_link_libraries(pub_px4_cmd ${catkin_LIBRARIES} KeyboardEvent)

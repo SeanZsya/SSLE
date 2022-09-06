@@ -18,9 +18,9 @@
 	<!-- main algorithm params -->
 	<include file="$(find exploration_manager)/launch/include/algorithm_lidar.launch">
 
-		<arg name="map_size_x_" value="$(arg map_size_x)"/>
-		<arg name="map_size_y_" value="$(arg map_size_y)"/>
-		<arg name="map_size_z_" value="$(arg map_size_z)"/>
+		<arg name="map_size_x" value="$(arg map_size_x)"/>
+		<arg name="map_size_y" value="$(arg map_size_y)"/>
+		<arg name="map_size_z" value="$(arg map_size_z)"/>
 
 		<arg name="box_min_x" value="-80.0"/>
 		<arg name="box_min_y" value="-80.0"/>
@@ -34,7 +34,7 @@
 		<arg name="odometry_topic" value="$(arg odom_topic)"/>
 		<!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
 		<!-- <arg name="sensor_pose_topic" value="/mavros/local_position/pose"/> -->
-		<arg name="sensor_pose_topic" value="$(arg uav_name)/pub_lidar_pose/sensor_pose"/>
+		<arg name="sensor_pose_topic" value="$(arg uav_name)/pub_sensor_pose/sensor_pose"/>
 		
 		<!-- depth topic: depth image, 640x480 by default -->
 		<!-- cloud topic: point cloud measurement  -->

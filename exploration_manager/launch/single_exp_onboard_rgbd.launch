@@ -23,10 +23,8 @@
   <!-- odom and sensor pose -->
   <arg name="odom_topic" value="$(arg uav_name)/mavros/local_position/odom"/>
 
-  <!-- blick-feld lidar scanner -->
-  <include file="$(find exploration_manager)/launch/include/live_scanner.launch">
-    <arg name="uav_name_" value="$(arg uav_name_)"/>
-  </include>
+  <!-- rgbd camera (realsense d435i) -->
+  <include file="$(find exploration_manager)/launch/include/d435.launch"/>
 
   <!-- pub sensor pose (convert from odom, if not provided) -->
   <node name="pub_sensor_pose" pkg="msg_conversion" type="pub_sensor_pose" output="screen"> 
@@ -46,7 +44,7 @@
     <arg name="box_max_y" value="$(arg box_max_y)"/>
     <arg name="box_max_z" value="$(arg box_max_z)"/>
 
-    <arg name="rotate_lidar_points" value="true"/>
+    <arg name="rotate_lidar_points" value="false"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
     <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
@@ -57,7 +55,7 @@
     <!-- cloud topic: point cloud measurement  -->
     <!-- subscribe ONLY TO ONE of the two topics -->
     <arg name="depth_topic" value="/camera/depth/image_raw"/>
-    <arg name="cloud_topic" value="$(arg uav_name)/bf_lidar_$(arg uav_name_)/points_raw"/>
+    <arg name="cloud_topic" value="$(arg uav_name)/bf_lidar_$(arg uav_name_)/points_raw_"/>
 
     <arg name="max_vel" value="0.6" />
     <arg name="max_acc" value="0.8" />

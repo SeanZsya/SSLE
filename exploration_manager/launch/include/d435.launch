@@ -7,9 +7,9 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
 <launch>
   <arg name="serial_no"           default=""/>
   <arg name="usb_port_id"         default=""/>
-  <arg name="device_type"         default="t265"/>
+  <arg name="device_type"         default="d435"/>
   <arg name="json_file_path"      default=""/>
-  <arg name="camera"              default="t265" />
+  <arg name="camera"              default="d435" />
   <arg name="tf_prefix"           default="$(arg camera)"/>
 
   <arg name="fisheye_width"       default="848"/> 

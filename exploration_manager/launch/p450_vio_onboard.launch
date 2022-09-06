@@ -1,4 +1,3 @@
-<!-- 本launch为使用px4_sender进行机载控制时的机载端启动脚本 -->
 <launch>
 	<!-- uav_name -->
 	<arg name="uav_name" default="/uav0"/>
@@ -6,9 +5,9 @@
 	<arg name="ID" default="0"/>
 
 	<!-- initial pose -->
-	<arg name="init_x_" default="0"/>
-	<arg name="init_y_" default="0"/>
-	<arg name="init_z_" default="0"/>
+	<arg name="init_x" default="0"/>
+	<arg name="init_y" default="0"/>
+	<arg name="init_z" default="0"/>
 
 	<!-- 启动MAVROS -->
 	<!-- 不同机载电脑,注意修改fcu_url至正确的端口号及波特率 -->
@@ -22,22 +21,19 @@
 		<rosparam command="load" file="$(find exploration_manager)/config/px4_config.yaml" />
 	</node>
     
-    <include file="$(find exploration_manager)/launch/include/rs_t265.launch">
-		<!-- <arg name="uav_name" value="$(arg uav_name)"/> -->
-    </include>
-    
+    <include file="$(find exploration_manager)/launch/include/rs_t265.launch"/>
 
 	<!-- run the px4_pos_estimator.cpp -->
 	<node pkg="prometheus_control" type="px4_pos_estimator" name="px4_pos_estimator" output="screen">
 		<!-- 0 for vicon， 1 for lidar-SLAM, 2 for gazebo ground truth -->
 		<param name="input_source" value="3" />
 		<param name="uav_name" value="$(arg uav_name)"/>
-		<param name="offset_x" value="$(arg init_x_)"/>
-		<param name="offset_y" value="$(arg init_y_)"/>
-		<param name="offset_z" value="$(arg init_z_)"/>
+		<param name="offset_x" value="$(arg init_x)"/>
+		<param name="offset_y" value="$(arg init_y)"/>
+		<param name="offset_z" value="$(arg init_z)"/>
 	</node>
 	
-	<!-- run the px4_sender.cpp -->
+	<!-- run the px4_sender.c<launch>pp -->
 	<node pkg="prometheus_control" type="px4_sender" name="px4_sender" output="screen">
 		<rosparam command="load" file="$(find exploration_manager)/config/px4_sender.yaml"/>
 		<param name="uav_name" value="$(arg uav_name)"/>

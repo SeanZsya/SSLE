@@ -80,9 +80,9 @@ void MapROS::init() {
 
 //////////////////////////////////////////////
   uav1PosSub =
-      node_.subscribe<geometry_msgs::PoseStamped>("/uav1/pub_lidar_pose/sensor_pose_", 10, &MapROS::uav1Callback, this);
+      node_.subscribe<geometry_msgs::PoseStamped>("/uav1/pub_sensor_pose/sensor_pose_", 10, &MapROS::uav1Callback, this);
   uav2PosSub = 
-      node_.subscribe<geometry_msgs::PoseStamped>("/uav2/pub_lidar_pose/sensor_pose_", 10, &MapROS::uav2Callback, this);
+      node_.subscribe<geometry_msgs::PoseStamped>("/uav2/pub_sensor_pose/sensor_pose_", 10, &MapROS::uav2Callback, this);
   uavs_pos_ << 0., 0., 10., 0., 0., 10.;
 ///////////////////////////////////////////
 

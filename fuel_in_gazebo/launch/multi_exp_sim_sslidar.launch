@@ -53,7 +53,7 @@
 			<param name="uav_name" value="$(arg uav1_name)"/>
 		</node>
 
-		<node name="pub_lidar_pose" pkg="msg_conversion" type="pub_lidar_pose" output="screen"> 
+		<node name="pub_sensor_pose" pkg="msg_conversion" type="pub_sensor_pose" output="screen"> 
 			<param name="uav_name" value="$(arg uav1_name)"/>
 		</node>
 	
@@ -82,7 +82,7 @@
 			<param name="uav_name" value="$(arg uav2_name)"/>
 		</node>
 
-		<node name="pub_lidar_pose" pkg="msg_conversion" type="pub_lidar_pose" output="screen"> 
+		<node name="pub_sensor_pose" pkg="msg_conversion" type="pub_sensor_pose" output="screen"> 
 			<param name="uav_name" value="$(arg uav2_name)"/>
 		</node>
 	
