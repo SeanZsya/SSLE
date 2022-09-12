@@ -56,7 +56,6 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
         git clone -b 'v1.11.1' --single-branch --depth 1 https://github.com/PX4/PX4-Autopilot.git
         cd prometheus_px4
         git submodule update --init --recursive
-        pip3 install --user toml empy jinja2 packaging
         source ./prometheus_px4/Tools/setup/ubuntu.sh
         make sitl_default gazebo
 
@@ -102,7 +101,7 @@ Add these lines to your ~./bashrc:
 
 - For Solid-state lidar:
 
-        roslaunch exploration_manager multi_exp_onboard_sslidar.launch
+        roslaunch fuel_in_gazebo multi_exp_sim_sslidar.launch
 
 <!-- - For RGBD camera:
 
