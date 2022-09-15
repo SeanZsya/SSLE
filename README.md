@@ -51,13 +51,18 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
 
 2. PX4
 
-    Install PX4 using [v1.11.1](https://github.com/PX4/PX4-Autopilot/tree/v1.11.1):
+    Install PX4 using v1.11.1 (with configurations of drone model *Amov P450*):
 
-        git clone -b 'v1.11.1' --single-branch --depth 1 https://github.com/PX4/PX4-Autopilot.git
+        git clone -b 'v1.11.1-22.7.28' --single-branch --depth 1 https://gitee.com/amovlab/prometheus_px4.git
         cd prometheus_px4
         git submodule update --init --recursive
-        source ./prometheus_px4/Tools/setup/ubuntu.sh
-        make sitl_default gazebo
+        source ./Tools/setup/ubuntu.sh
+        make px4_sitl_default gazebo
+
+    If you still meet python dependencies (like `toml`, `jinja2`, etc.) problems after `source ./Tools/setup/ubuntu.sh` , try:
+
+        cd ~/.local
+        sudo chown -R ${username} lib/
 
 3. MavROS
 
@@ -75,11 +80,16 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
         sudo apt-get install freeglut3-dev
         sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev 
 
-6. Other Required Tools 
+6. GeographicLib
+        
+        wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+        sudo ./install_geographiclib_datasets.sh
+
+7. Other Required Tools 
 
         sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev xmlstarlet
 
-7. *Gazebo Models (optional)*
+8. *Gazebo Models (optional)*
 
     Clone the third-party models:
 
@@ -94,6 +104,10 @@ Add these lines to your ~./bashrc:
     source ${path to your workspace}/devel/setup.bash
     export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${path to your workspace}/src/FUEL/fuel_in_gazebo/models
     export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:${path to your workspace}/devel/lib
+
+    source ${path to your px4}/Tools/setup_gazebo.bash ${path to your px4} ${path to your px4}/build/px4_sitl_default
+    export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:${path to your px4}
+    export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:${path to your px4}/Tools/sitl_gazebo
     
 ### Run FUEL Simulation in Gazebo
 
