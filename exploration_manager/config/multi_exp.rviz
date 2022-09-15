@@ -86,7 +86,7 @@ Visualization Manager:
               Marker Topic: /uav1/exploration_node/planning_vis/trajectory
               Name: bspline_traj
               Namespaces:
-                {}
+                B-Spline: true
               Queue Size: 100
               Value: true
             - Class: rviz/Marker
@@ -102,7 +102,7 @@ Visualization Manager:
               Marker Topic: /uav1/planning/travel_traj
               Name: executed_traj
               Namespaces:
-                {}
+                "": true
               Queue Size: 100
               Value: true
             - Class: rviz/Marker
@@ -110,10 +110,10 @@ Visualization Manager:
               Marker Topic: /uav1/planning/position_cmd_vis
               Name: position_cmd
               Namespaces:
-                {}
+                current_pose: true
               Queue Size: 100
               Value: true
-          Enabled: false
+          Enabled: true
           Name: Planning
         - Class: rviz/Group
           Displays:
