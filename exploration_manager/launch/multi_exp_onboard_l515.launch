@@ -26,7 +26,7 @@
 		</include>
 
 		<!-- exploration -->
-		<include file="$(find exploration_manager)/launch/single_exp_onboard_l515.launch">
+		<include file="$(find exploration_manager)/launch/single_exp_onboard_sslidar.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 			<arg name="uav_name_" value="$(arg uav1_name_)"/>
 			<arg name="init_x_" value="$(arg uav1_init_x_)"/>

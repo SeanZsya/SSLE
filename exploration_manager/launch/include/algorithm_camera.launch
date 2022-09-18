@@ -62,8 +62,8 @@
     <param name="map_ros/cy" value="$(arg cy)"/>
     <param name="map_ros/fx" value="$(arg fx)"/>
     <param name="map_ros/fy" value="$(arg fy)"/>
-    <param name="map_ros/depth_filter_maxdist"   value="5.0"/>
-    <param name="map_ros/depth_filter_mindist"   value="0.2"/>
+    <param name="map_ros/depth_filter_maxdist"   value="6.0"/>
+    <param name="map_ros/depth_filter_mindist"   value="0.1"/>
     <param name="map_ros/depth_filter_margin"    value="2"/>
     <param name="map_ros/k_depth_scaling_factor" value="1000.0"/>
     <param name="map_ros/skip_pixel" value="2"/>
@@ -118,7 +118,7 @@
     <param name="perception_utils/top_angle" value="0.56125" type="double"/>;
     <param name="perception_utils/left_angle" value="0.69222" type="double"/>;
     <param name="perception_utils/right_angle" value="0.68901" type="double"/>;
-    <param name="perception_utils/max_dist" value="4.5" type="double"/>;
+    <param name="perception_utils/max_dist" value="6.0" type="double"/>;
     <param name="perception_utils/vis_dist" value="1.0" type="double"/>;
 
 
