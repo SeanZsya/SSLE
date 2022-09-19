@@ -5,7 +5,7 @@ ROS/realsense in upcoming releases. Currently, the API is available in the
 https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/libtm/include/TrackingDevice.h#L508-L515.
 -->
 <launch>
-  <arg name="serial_no"           default=""/>
+  <arg name="serial_no"           default="109422110262"/>
   <arg name="usb_port_id"         default=""/>
   <arg name="device_type"         default="t265"/>
   <arg name="json_file_path"      default=""/>

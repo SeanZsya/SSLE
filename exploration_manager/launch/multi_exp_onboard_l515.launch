@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!-- put this launch file separately in each UAV -->
+<launch>
+	<!-- name tag -->
+	<arg name="uav_name" value="/uav1"/>
+	<arg name="uav_name_" value="uav1"/>
+
+	<!-- initial pose -->
+	<arg name="init_x" value="0.0"/>
+	<arg name="init_y" value="0.0"/>
+	<arg name="init_z" value="0.0"/>
+
+	<!-- map size -->
+	<arg name="map_size_x" default="50.0"/>
+	<arg name="map_size_y" default="50.0"/>
+	<arg name="map_size_z" default=" 3.0"/>
+
+	<!-- box size -->
+	<arg name="box_min_x" default="-0.5"/>
+	<arg name="box_min_y" default="-3.1"/>
+	<arg name="box_min_z" default=" -0.2"/>
+	<arg name="box_max_x" default="4.2"/>
+	<arg name="box_max_y" default="3.1"/>
+	<arg name="box_max_z" default="1.0"/>
+
+	<!-- launch Rviz -->
+	<node name="rviz_visualisation_$(arg uav_name_)" pkg="rviz" type="rviz" output="log" args="-d $(find exploration_manager)/config/multi_exp.rviz" />
+
+
+
+	<group ns="$(arg uav_name)">
+
+		<!-- px4 -->
+		<include file="$(find exploration_manager)/launch/p450_vio_onboard.launch">
+			<arg name="uav_name" value="$(arg uav_name)"/>
+			<arg name="uav_name_" value="$(arg uav_name_)"/>
+			<arg name="init_x" value="$(arg init_x)"/>
+			<arg name="init_y" value="$(arg init_y)"/>
+			<arg name="init_z" value="$(arg init_z)"/>
+		</include>
+
+		<!-- cam l515 -->
+ 		<include file="$(find exploration_manager)/launch/include/rs_l515.launch"/>
+
+		<!-- exploration -->
+		<include file="$(find exploration_manager)/launch/single_exp_onboard_l515.launch">
+			<arg name="uav_name" value="$(arg uav_name)"/>
+			<arg name="uav_name_" value="$(arg uav_name_)"/>
+
+			<arg name="init_x" value="$(arg init_x)"/>
+			<arg name="init_y" value="$(arg init_y)"/>
+			<arg name="init_z" value="$(arg init_z)"/>
+
+			<arg name="map_size_x" value="$(arg map_size_x)"/>
+			<arg name="map_size_y" value="$(arg map_size_y)"/>
+			<arg name="map_size_z" value="$(arg map_size_z)"/>
+
+			<arg name="box_min_x" value="$(arg box_min_x)"/>
+			<arg name="box_min_y" value="$(arg box_min_y)"/>
+			<arg name="box_min_z" value="$(arg box_min_z)"/>
+			<arg name="box_max_x" value="$(arg box_max_x)"/>
+			<arg name="box_max_y" value="$(arg box_max_y)"/>
+			<arg name="box_max_z" value="$(arg box_max_z)"/>
+		</include>
+
+		<!-- keyboard control -->
+		<node name="pub_cmd_uav" pkg="msg_conversion" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
+			<param name="uav_name" value="$(arg uav_name)"/>
+		</node>
+
+	</group>
+	
+
+
+</launch>
