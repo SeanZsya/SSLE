@@ -6,10 +6,12 @@ Panels:
       Expanded:
         - /Global Options1
         - /UAV11
+        - /UAV11/Planning1
         - /UAV11/active_perception1/frontier1
         - /UAV11/Pose1
         - /UAV11/Odometry1
         - /UAV11/Odometry1/Shape1
+        - /UAV11/Odometry1/Covariance1/Position1
         - /UAV21/Planning1
         - /UAV21/active_perception1/frontier1
         - /UAV21/LocalMap1/occupied_local1/Autocompute Value Bounds1
@@ -86,7 +88,7 @@ Visualization Manager:
               Marker Topic: /uav1/exploration_node/planning_vis/trajectory
               Name: bspline_traj
               Namespaces:
-                B-Spline: true
+                {}
               Queue Size: 100
               Value: true
             - Class: rviz/Marker
@@ -286,20 +288,20 @@ Visualization Manager:
               Color: 204; 51; 204
               Scale: 1
               Value: true
-            Value: true
+            Value: false
           Enabled: true
           Keep: 1000
           Name: Odometry
           Position Tolerance: 0.10000000149011612
           Shape:
-            Alpha: 1
+            Alpha: 0.6000000238418579
             Axes Length: 1
             Axes Radius: 0.10000000149011612
             Color: 204; 0; 0
-            Head Length: 0
-            Head Radius: 0
-            Shaft Length: 0.10000000149011612
-            Shaft Radius: 0.10000000149011612
+            Head Length: 0.05999999865889549
+            Head Radius: 0.05999999865889549
+            Shaft Length: 0.07999999821186066
+            Shaft Radius: 0.029999999329447746
             Value: Arrow
           Topic: /uav1/mavros/local_position/odom
           Unreliable: false
@@ -534,25 +536,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 12.15503215789795
+      Distance: 10.46712875366211
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -1.7709319591522217
-        Y: 1.5675485134124756
+        X: 1.4242832660675049
+        Y: 1.6670713424682617
         Z: -2.616558049339801e-5
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 1.0147967338562012
       Target Frame: <Fixed Frame>
       Value: ThirdPersonFollower (rviz)
-      Yaw: 3.1345911026000977
+      Yaw: 3.0196008682250977
     Saved:
       - Class: rviz/ThirdPersonFollower
         Distance: 40.93450164794922

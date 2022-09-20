@@ -30,7 +30,6 @@
     <param name="sdf_map/map_size_x"   value="$(arg map_size_x)" /> 
     <param name="sdf_map/map_size_y"   value="$(arg map_size_y)" /> 
     <param name="sdf_map/map_size_z"   value="$(arg map_size_z)" /> 
-    <!-- <param name="sdf_map/obstacles_inflation"     value="0.099" />  -->
     <param name="sdf_map/obstacles_inflation"     value="0.25" /> 
     <param name="sdf_map/local_bound_inflate"    value="0.3"/>
     <param name="sdf_map/local_map_margin" value="50"/>
@@ -42,8 +41,8 @@
     <param name="sdf_map/p_min"  value="0.12"/>
     <param name="sdf_map/p_max"  value="0.90"/>
     <param name="sdf_map/p_occ"  value="0.80"/>
-    <param name="sdf_map/min_ray_length" value="0.05"/>
-    <param name="sdf_map/max_ray_length" value="10"/>
+    <param name="sdf_map/min_ray_length" value="0.3"/>
+    <param name="sdf_map/max_ray_length" value="8"/>
     <param name="sdf_map/virtual_ceil_height"   value="-10"/>
     <param name="sdf_map/optimistic" value="false" type="bool"/>
     <param name="sdf_map/signed_dist" value="false" type="bool"/>
@@ -55,12 +54,18 @@
     <param name="sdf_map/box_max_z" value="$(arg box_max_z)" type="double"/>
 
     <!-- intrinsic params of the depth camera -->
-    <param name="map_ros/cx" value="321.04638671875"/>
-    <param name="map_ros/cy" value="243.44969177246094"/>
+    <!-- 
+      cx: optical center x
+      cy: optical center y 
+      fx: focal length x
+      fy: focal length y
+    -->
+    <param name="map_ros/cx" value="320.0"/>
+    <param name="map_ros/cy" value="240.0"/>
     <param name="map_ros/fx" value="387.229248046875"/>
     <param name="map_ros/fy" value="387.229248046875"/>
     <param name="map_ros/depth_filter_maxdist"   value="8.0"/>
-    <param name="map_ros/depth_filter_mindist"   value="0.2"/>
+    <param name="map_ros/depth_filter_mindist"   value="0.3"/>
     <param name="map_ros/depth_filter_margin"    value="2"/>
     <param name="map_ros/k_depth_scaling_factor" value="1000.0"/>
     <param name="map_ros/skip_pixel" value="2"/>
@@ -116,11 +121,16 @@
     <param name="frontier/ground_noise_height" value="0.4" type="double"/>
 
     <!-- Perception utils -->
-    <param name="perception_utils/top_angle" value="0.56125" type="double"/>;
-    <param name="perception_utils/left_angle" value="0.69222" type="double"/>;
-    <param name="perception_utils/right_angle" value="0.68901" type="double"/>;
-    <param name="perception_utils/max_dist" value="8.0" type="double"/>;
-    <param name="perception_utils/vis_dist" value="6.0" type="double"/>;
+    <!--
+      bottom_angle equals top_angle 
+      vis_dist: only for visualization 
+    -->
+    <param name="perception_utils/top_angle" value="0.4363" type="double"/>
+    <param name="perception_utils/left_angle" value="0.6108" type="double"/>
+    <param name="perception_utils/right_angle" value="0.6108" type="double"/>
+    <param name="perception_utils/max_dist" value="8.0" type="double"/>
+    <param name="perception_utils/vis_dist" value="6.0" type="double"/>  
+    
 
 
     <param name="heading_planner/yaw_diff" value="$(eval 30 * 3.1415926 / 180.0)" type="double"/>
