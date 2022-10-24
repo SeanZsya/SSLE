@@ -19,7 +19,7 @@
         <arg name="gui" value="$(arg gui)"/>
         <arg name="debug" value="$(arg debug)"/>
         <arg name="verbose" value="$(arg verbose)"/>
-        <arg name="paused" value="$(arg paused)"/>
+        <arg name="paused" value ="$(arg paused)"/>
         <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
         <arg name="world_name" value="$(arg world)"/>	
     </include>
@@ -30,15 +30,15 @@
 	<arg name="uav1_name" value="/uav1"/>
 	<arg name="uav2_name" value="/uav2"/>
 
-	<!-- UAV1 -->
+<!-- UAV1 -->
 	<group ns="$(arg uav1_name)">
 
 		<include file="$(find fuel_in_gazebo)/launch/include/single_basic.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 			<arg name="ID" value="0"/>
 			<arg name="model" value="p450_sslidar"/>
-			<arg name="x" value="0.5"/>
-			<arg name="y" value="0.5"/>
+			<arg name="x" value="0.0"/>
+			<arg name="y" value="0.0"/>
 			<arg name="z" value="0.0"/>
 			<arg name="R" value="0.0"/>
 			<arg name="P" value="0.0"/>
@@ -60,7 +60,7 @@
 	</group>
 	
 	<!-- UAV2 -->
-	<group ns="$(arg uav2_name)">
+	<!-- <group ns="$(arg uav2_name)">
 
 		<include file="$(find fuel_in_gazebo)/launch/include/single_basic.launch">
 			<arg name="uav_name" value="$(arg uav2_name)"/>
@@ -78,7 +78,7 @@
 			<arg name="uav_name" value="$(arg uav2_name)"/>
 		</include>
 
-		<node name="pub_cmd_uav" pkg="msg_conversion" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal --tab --">
+		<node name="pub_cmd_uav" pkg="msg_conversion" type="pub_px4_cmd" output="screen" launch-prefix="gnome-terminal tab ">
 			<param name="uav_name" value="$(arg uav2_name)"/>
 		</node>
 
@@ -86,7 +86,7 @@
 			<param name="uav_name" value="$(arg uav2_name)"/>
 		</node>
 	
-	</group>
+	</group> -->
 
 
 
