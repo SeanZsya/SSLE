@@ -269,7 +269,7 @@ void MapROS::cloudPoseCallback(const sensor_msgs::PointCloud2ConstPtr& msg,
   camera_q_ = Eigen::Quaterniond(pose->pose.orientation.w, pose->pose.orientation.x,
                                  pose->pose.orientation.y, pose->pose.orientation.z);
   
-  //converse point pose here========================
+  //rotate pointcloud here========================
   if(rotate_lidar_points)
   {
     camera_q2_ = Eigen::Quaterniond(0.707, 0.000, 0.000, 0.707);
@@ -287,7 +287,7 @@ void MapROS::cloudPoseCallback(const sensor_msgs::PointCloud2ConstPtr& msg,
 
   int num = cloud.points.size();
 
-  //转换到统一世界坐标下
+  //convert to world coordinate
   for (size_t i = 0; i < num; i++)
   {
     pt_cur(0) = cloud.points[i].x;
@@ -299,8 +299,7 @@ void MapROS::cloudPoseCallback(const sensor_msgs::PointCloud2ConstPtr& msg,
     cloud.points[i].x = pt_world[0];
     cloud.points[i].y = pt_world[1];
     cloud.points[i].z = pt_world[2];
-    //为何在这里使用类似processDepthImage()中定义pt的类似方法
-    //就不起作用，只有直接赋值才能使变换生效？
+
   }
   
   //update map
@@ -324,7 +323,7 @@ void MapROS::processDepthImage() {
   Eigen::Vector3d pt_cur, pt_mid, pt_world;
   const double inv_factor = 1.0 / k_depth_scaling_factor_;  //depth_scaling为1000
 
-  //skip_pixel为2
+  //skip_pixel:2
   for (int v = depth_filter_margin_; v < rows - depth_filter_margin_; v += skip_pixel_) {
     row_ptr = depth_image_->ptr<uint16_t>(v) + depth_filter_margin_;
     for (int u = depth_filter_margin_; u < cols - depth_filter_margin_; u += skip_pixel_) {
@@ -335,23 +334,23 @@ void MapROS::processDepthImage() {
       // if (depth > 0.01)
       //   depth += rand_noise_(eng_);
 
-      //深度预处理
+      //depth preprocessing
       if (*row_ptr == 0 || depth > depth_filter_maxdist_)
         depth = depth_filter_maxdist_;
       else if (depth < depth_filter_mindist_)
         continue;
 
-      //深度图像（图像坐标）转点云（机体坐标）
+      //depth image（image frame）to point cloud（body frame）
       pt_cur(0) = (u - cx_) * depth / fx_;
       pt_cur(1) = (v - cy_) * depth / fy_;
       pt_cur(2) = depth;
 
-      //相机坐标，世界坐标对齐
+      //align image and world frame
       pt_mid(0) = pt_cur(2);
       pt_mid(1) = -pt_cur(0);
       pt_mid(2) = -pt_cur(1);
 
-      //转换到统一世界坐标下
+      //convert to world coordiante
       pt_world = camera_r * pt_mid + camera_pos_;
 
       auto& pt = point_cloud_.points[proj_points_cnt++];
@@ -361,8 +360,8 @@ void MapROS::processDepthImage() {
     }
   }
   
-  //仅用于可视化
-  //更新地图时实际使用的是point_cloud_
+  //only for visualization
+  //using point_cloud_ for map update
   publishDepth();
 
 }

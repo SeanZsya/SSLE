@@ -221,7 +221,7 @@ int FastExplorationManager::planExploreMotion(
   } else
     ROS_ERROR("Empty destination.");
 
-  ROS_INFO_STREAM("Next view: " << next_pos.transpose() << ", " << next_yaw);
+  // ROS_INFO_STREAM("Next view: " << next_pos.transpose() << ", " << next_yaw);
 
   // Plan trajectory (position and yaw) to the next viewpoint
   t1 = ros::Time::now();
@@ -239,8 +239,8 @@ int FastExplorationManager::planExploreMotion(
   ed_->path_next_goal_ = planner_manager_->path_finder_->getPath();
   shortenPath(ed_->path_next_goal_);
 
-  for (auto x: ed_->path_next_goal_)
-    std::cout << x.transpose() << "\n" << std::endl;
+  // for (auto x: ed_->path_next_goal_)
+  //   std::cout << x.transpose() << "\n" << std::endl;
   
   if(ed_->path_next_goal_.size() < 3){
     ROS_ERROR("too few viewpoint");
@@ -341,7 +341,7 @@ int FastExplorationManager::planReturnMotion(
     return FAIL;
   }
   
-  ROS_INFO_STREAM("Next view: " << next_pos.transpose() << ", " << next_yaw);
+  // ROS_INFO_STREAM("Next view: " << next_pos.transpose() << ", " << next_yaw);
 
   ed_->path_next_goal_ = planner_manager_->path_finder_->getPath();
 
@@ -349,8 +349,8 @@ int FastExplorationManager::planReturnMotion(
   shortenPath(ed_->path_next_goal_);
 
   //output the shortenPath result
-  for (auto x: ed_->path_next_goal_)
-    std::cout << x.transpose() << "\n" << std::endl;
+  // for (auto x: ed_->path_next_goal_)
+  //   std::cout << x.transpose() << "\n" << std::endl;
   
   if(ed_->path_next_goal_.size() < 3){
     ROS_ERROR("too few viewpoint");
