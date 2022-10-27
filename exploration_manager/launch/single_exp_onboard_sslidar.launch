@@ -60,7 +60,7 @@
     <arg name="cloud_topic" value="$(arg uav_name)/bf_lidar_$(arg uav_name_)/points_raw"/>
 
     <arg name="max_vel" value="0.6" />
-    <arg name="max_acc" value="0.8" />
+    <arg name="max_acc" value="0.4" />
 
   </include>
  

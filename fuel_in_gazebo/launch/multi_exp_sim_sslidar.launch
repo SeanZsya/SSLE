@@ -12,7 +12,7 @@
     <arg name="paused" default="false"/>
     <arg name="respawn_gazebo" default="false"/>
 	<arg name="use_sim_time" default="true"/>
-	<arg name="world" value="$(find fuel_in_gazebo)/worlds/room_mini.world"/>
+	<arg name="world" value="$(find fuel_in_gazebo)/worlds/room_mini_clustered.world"/>
     <!-- Gazebo sim -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
