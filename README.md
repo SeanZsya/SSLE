@@ -43,7 +43,9 @@ Adapted from [FUEL](https://github.com/HKUST-Aerial-Robotics/FUEL), an excellent
 
 ### Dependencies
 
-This project has been tested on 18.04(ROS Melodic). Before you build it using `catkin_make`, make sure you meet the following requirements:
+This project has been tested on 18.04(ROS Melodic). 
+
+Before you build it using `catkin_make`, make sure you meet the following requirements:
 
 1. Basic ROS Environment (recommand desktop-full)
 
@@ -56,7 +58,7 @@ This project has been tested on 18.04(ROS Melodic). Before you build it using `c
         git clone -b 'v1.11.1-22.7.28' --single-branch --depth 1 https://gitee.com/amovlab/prometheus_px4.git
         cd prometheus_px4
         git submodule update --init --recursive
-        source ./Tools/setup/ubuntu.sh
+        source ./Tools/setup/ubuntu.sh --no-nuttx
         make px4_sitl_default gazebo
 
     If you still meet python dependencies (like `toml`, `jinja2`, etc.) problems after `source ./Tools/setup/ubuntu.sh` , try:
