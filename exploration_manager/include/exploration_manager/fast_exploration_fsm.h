@@ -60,7 +60,7 @@ private:
   void FSMCallback(const ros::TimerEvent& e);
   void safetyCallback(const ros::TimerEvent& e);
   void frontierCallback(const ros::TimerEvent& e);
-  void triggerCallback(const nav_msgs::PathConstPtr& msg);
+  void triggerCallback(const geometry_msgs::PoseStamped& msg);
   void odometryCallback(const nav_msgs::OdometryConstPtr& msg);
   void visualize();
   void clearVisMarker();

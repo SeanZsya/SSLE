@@ -48,7 +48,7 @@ void FastExplorationFSM::init(ros::NodeHandle& nh) {
   /* ===========================================================================*/
 
   trigger_sub_ =
-      nh.subscribe("/waypoints", 1, &FastExplorationFSM::triggerCallback, this);
+      nh.subscribe("/move_base_simple/goal", 1, &FastExplorationFSM::triggerCallback, this);
   odom_sub_ = nh.subscribe("/odom_world", 1, &FastExplorationFSM::odometryCallback, this);
 
   replan_pub_ = nh.advertise<std_msgs::Empty>("planning/replan", 10);
@@ -436,8 +436,8 @@ void FastExplorationFSM::frontierCallback(const ros::TimerEvent& e) {
   // }
 }
 
-void FastExplorationFSM::triggerCallback(const nav_msgs::PathConstPtr& msg) {
-  if (msg->poses[0].pose.position.z < -0.1) return;
+void FastExplorationFSM::triggerCallback(const geometry_msgs::PoseStamped& msg) {
+  if (fd_->odom_pos_(2) < 0.2) return;
   if (state_ != WAIT_TRIGGER) return;
   fd_->trigger_ = true;
   cout << "Triggered!" << endl;  
