@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   quadrotor_msgs
-  prometheus_msgs
   poly_traj
   plan_env
   path_searching
@@ -39,20 +38,6 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
-
-# add_executable(fast_planner_node
-#   src/fast_planner_node.cpp 
-#   src/kino_replan_fsm.cpp
-#   src/topo_replan_fsm.cpp
-#   src/local_explore_fsm.cpp
-#   src/planner_manager.cpp
-#   src/planner_manager_dev.cpp
-#   )
-# target_link_libraries(fast_planner_node 
-#   ${catkin_LIBRARIES}
-#   -ldw
-#   )
-
 add_library(plan_manage 
   src/planner_manager.cpp
   src/planner_manager_dev.cpp
@@ -63,31 +48,3 @@ add_executable(traj_server
 src/traj_server.cpp)
 target_link_libraries(traj_server ${catkin_LIBRARIES} -ldw)
 # add_dependencies(traj_server ${${PROJECT_NAME}_EXPORTED_TARGETS})
-
-# benchmark node
-# add_executable(compare_topo
-#   src/compare_topo.cpp 
-#   src/planner_manager.cpp
-#   )
-# target_link_libraries(compare_topo 
-#   ${catkin_LIBRARIES}
-#   )
-
-# add_executable(rotation test/rotation.cpp)
-# target_link_libraries(rotation ${catkin_LIBRARIES})
-
-# add_executable(proc_msg 
-#     test/process_msg.cpp
-# )
-# target_link_libraries( proc_msg
-#     ${catkin_LIBRARIES} 
-#     ${PCL_LIBRARIES}
-#     )  
-
-# add_executable(proc_msg2 
-#     test/process_msg2.cpp
-# )
-# target_link_libraries( proc_msg2
-#     ${catkin_LIBRARIES} 
-#     ${PCL_LIBRARIES}
-#     )

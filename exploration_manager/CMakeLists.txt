@@ -49,21 +49,3 @@ target_link_libraries(exploration_node
   ${catkin_LIBRARIES}
   # -ldw
   )
-
-# add_library(exploration_manager
-#   src/fast_exploration_manager.cpp
-# )
-# target_link_libraries(exploration_manager
-#   ${catkin_LIBRARIES}
-# )
-
-# add_executable(write_tsp test/write_tsp.cpp)
-# target_link_libraries(write_tsp
-#   ${catkin_LIBRARIES} 
-# )
-
-
-# add_executable(load_obj test/load_obj.cpp)
-# target_link_libraries(load_obj
-#   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
-# )
