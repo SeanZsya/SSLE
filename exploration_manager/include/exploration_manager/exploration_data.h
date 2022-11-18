@@ -1,5 +1,5 @@
-#ifndef _EXPL_DATA_H_
-#define _EXPL_DATA_H_
+#ifndef _EXPLORATION_DATA_H_
+#define _EXPLORATION_DATA_H_
 
 #include <Eigen/Eigen>
 #include <vector>

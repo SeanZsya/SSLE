@@ -3,7 +3,7 @@
 #include <traj_utils/planning_visualization.h>
 
 #include <exploration_manager/fast_exploration_fsm.h>
-#include <exploration_manager/expl_data.h>
+#include <exploration_manager/exploration_data.h>
 #include <plan_env/edt_environment.h>
 #include <plan_env/sdf_map.h>
 #include <std_msgs/Int8.h>

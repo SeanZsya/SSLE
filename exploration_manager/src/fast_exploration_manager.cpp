@@ -13,7 +13,7 @@
 #include <active_perception/frontier_finder.h>
 #include <plan_manage/planner_manager.h>
 
-#include <exploration_manager/expl_data.h>
+#include <exploration_manager/exploration_data.h>
 
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
