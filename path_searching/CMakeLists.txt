@@ -35,7 +35,6 @@ include_directories(
 
 add_library( path_searching 
     src/kinodynamic_astar.cpp 
-    # src/astar.cpp
     src/astar2.cpp
     src/topo_prm.cpp
     )

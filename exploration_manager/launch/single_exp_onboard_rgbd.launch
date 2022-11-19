@@ -1,7 +1,7 @@
 <launch>
 
-  <arg name="uav_name" default="/uav0"/>
-  <arg name="uav_name_" default="uav0"/>
+  <arg name="uav_name" default=""/>
+  <arg name="uav_name_" default=""/>
 
   <!-- initial pose -->
   <arg name="init_x" default="0.0"/>
@@ -18,19 +18,10 @@
   <arg name="box_max_x" default="8.0"/>
   <arg name="box_max_y" default="2.0"/>
   <arg name="box_max_z" default="1.0"/>
-
   
   <!-- odom and sensor pose -->
-  <arg name="odom_topic" value="$(arg uav_name)/mavros/local_position/odom"/>
-
-  <!-- rgbd camera (realsense d435i) -->
-  <include file="$(find exploration_manager)/launch/include/d435.launch"/>
-
-  <!-- pub sensor pose (convert from odom, if not provided) -->
-  <node name="pub_sensor_pose" pkg="msg_conversion" type="pub_sensor_pose" output="screen"> 
-			<param name="uav_name" value="$(arg uav_name)"/>
-	</node>
-
+  <arg name="odom_topic" value="$(arg uav_name)/vins_fusion/imu_propagate"/>
+]
   <!-- exploration node -->
   <include file="$(find exploration_manager)/launch/include/algorithm_lidar.launch">
 
@@ -47,15 +38,13 @@
     <arg name="rotate_lidar_points" value="false"/>
 
     <arg name="odometry_topic" value="$(arg odom_topic)"/>
-    <!-- <arg name="sensor_pose_topic" value="/mavros/vision_pose/pose"/> -->
-    <!-- <arg name="sensor_pose_topic" value="/mavros/local_position/pose"/> -->
-    <arg name="sensor_pose_topic" value="$(arg uav_name)/pub_sensor_pose/sensor_pose"/>
+    <arg name="sensor_pose_topic" value="$(arg uav_name)/mavros/vision_pose/pose"/>
       
     <!-- depth topic: depth image, 640x480 by default -->
     <!-- cloud topic: point cloud measurement  -->
     <!-- subscribe ONLY TO ONE of the two topics -->
-    <arg name="depth_topic" value="/camera/depth/image_raw"/>
-    <arg name="cloud_topic" value="$(arg uav_name)/bf_lidar_$(arg uav_name_)/points_raw_"/>
+    <arg name="depth_topic" value="$(arg uav_name)/d435/depth/image_raw"/>
+    <arg name="cloud_topic" value="$(arg uav_name)/bf_lidar/points_raw_"/>
 
     <arg name="max_vel" value="0.6" />
     <arg name="max_acc" value="0.8" />
