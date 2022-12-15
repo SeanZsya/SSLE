@@ -25,9 +25,6 @@ Adapted from [FUEL](https://github.com/HKUST-Aerial-Robotics/FUEL), an excellent
 
 - **fuel_in_gazebo:** Components required by Gazebo, like models, worlds and pulgins.
   
-- **px4_connection:** Command analysis and other tools for communicate with px4 (both on sitl and onboard).
-  
-  - **msg_conversion:** Tools for running FUEL onboard, including keyboard control，sensor pose / control command conversion.
 
 ### others
 
@@ -47,9 +44,7 @@ This project has been tested on 18.04(ROS Melodic).
 
 Before you build it using `catkin_make`, make sure you meet the following requirements:
 
-1. Basic ROS Environment (recommand desktop-full)
-
-        sudo apt-get install ros-melodic-desktop-full
+1. Basic ROS Environment (recommand ros-melodic-desktop-full)
 
 2. PX4
 
@@ -66,32 +61,36 @@ Before you build it using `catkin_make`, make sure you meet the following requir
         cd ~/.local
         sudo chown -R ${username} lib/
 
-3. MavROS
+3. PX4 connections
+
+        git clone https://github.com/SeanZsya/basic_flight_suit
+
+4. MavROS
 
         sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
 
-4. Gazebo Plugins
+5. Gazebo Plugins
    
     For realsense sensors and lidar Gazebo plugins, in your workspace, run:
 
         git clone https://github.com/SeanZsya/gazebo_pulgins
         
-5. OpenGL
+6. OpenGL
         
         sudo apt-get install build-essential libgl1-mesa-dev
         sudo apt-get install freeglut3-dev
         sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev 
 
-6. GeographicLib
+7. GeographicLib
         
         wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
         sudo ./install_geographiclib_datasets.sh
 
-7. Other Required Tools 
+8. Other Required Tools 
 
         sudo apt-get install libarmadillo-dev ros-melodic-nlopt libdw-dev xmlstarlet
 
-8. *Gazebo Models (optional)*
+9.  *Gazebo Models (optional)*
 
     Clone the third-party models:
 
