@@ -25,7 +25,7 @@
 
 	<!-- 使用xmlstarlet工具修改sdf文件内容：更改mavlink_tcp_port -->
 	<arg name="cmd" value="xmlstarlet ed -d '//plugin[@name=&quot;mavlink_interface&quot;]/mavlink_tcp_port' 
-	-s '//plugin[@name=&quot;mavlink_interface&quot;]' -t elem -n mavlink_tcp_port -v $(arg mavlink_tcp_port) $(find fuel_in_gazebo)/models/$(arg model)/$(arg model).sdf"/>
+	-s '//plugin[@name=&quot;mavlink_interface&quot;]' -t elem -n mavlink_tcp_port -v $(arg mavlink_tcp_port) $(find sim_kit)/models/$(arg model)/$(arg model).sdf"/>
 	
 	<param name="model_description" command="$(arg cmd)"/>
 
@@ -46,7 +46,7 @@
 
 
 <!-- TF transform -->
-<include file="$(find fuel_in_gazebo)/launch/include/tf_transform.launch">
+<include file="$(find sim_kit)/launch/include/tf_transform.launch">
 	<arg name="x" value="$(arg x)"/>
 	<arg name="y" value="$(arg y)"/>
 	<arg name="z" value="$(arg z)"/>

@@ -1,4 +1,4 @@
-# FUEL (with SSLidar option and Gazebo Simulation)
+# SSLE
 
 Adapted from [FUEL](https://github.com/HKUST-Aerial-Robotics/FUEL), an excellent drone exploration algorithm from Boyu Zhou.
 
@@ -23,7 +23,7 @@ Adapted from [FUEL](https://github.com/HKUST-Aerial-Robotics/FUEL), an excellent
 
 ### Running Preparation
 
-- **fuel_in_gazebo:** Components required by Gazebo, like models, worlds and pulgins.
+- **sim_kit:** Components required by Gazebo, like models, worlds and pulgins.
   
 
 ### others
@@ -103,7 +103,7 @@ Before you build it using `catkin_make`, make sure you meet the following requir
 Add these lines to your ~./bashrc:
 
     source ${path to your workspace}/devel/setup.bash
-    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${path to your workspace}/src/FUEL/fuel_in_gazebo/models
+    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${path to your workspace}/src/FUEL/sim_kit/models
     export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:${path to your workspace}/devel/lib
 
     source ${path to your px4}/Tools/setup_gazebo.bash ${path to your px4} ${path to your px4}/build/px4_sitl_default
@@ -116,7 +116,7 @@ Add these lines to your ~./bashrc:
 
 - For Solid-state lidar:
 
-        roslaunch fuel_in_gazebo multi_exp_sim_sslidar.launch
+        roslaunch sim_kit multi_exp_sim_sslidar.launch
 
 <!-- - For RGBD camera:
 

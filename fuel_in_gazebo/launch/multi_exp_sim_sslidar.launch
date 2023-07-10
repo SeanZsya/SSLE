@@ -12,7 +12,7 @@
     <arg name="paused" default="false"/>
     <arg name="respawn_gazebo" default="false"/>
 	<arg name="use_sim_time" default="true"/>
-	<arg name="world" value="$(find fuel_in_gazebo)/worlds/room_mini_clustered.world"/>
+	<arg name="world" value="$(find sim_kit)/worlds/room_mini_clustered.world"/>
     <!-- Gazebo sim -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
@@ -33,7 +33,7 @@
 <!-- UAV1 -->
 	<group ns="$(arg uav1_name)">
 
-		<include file="$(find fuel_in_gazebo)/launch/include/single_basic.launch">
+		<include file="$(find sim_kit)/launch/include/single_basic.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 			<arg name="ID" value="0"/>
 			<arg name="model" value="p450_sslidar"/>
@@ -45,7 +45,7 @@
 			<arg name="Y" value="0.0"/>
 		</include>
 
-		<include file="$(find fuel_in_gazebo)/launch/include/single_exp_sim_sslidar.launch">
+		<include file="$(find sim_kit)/launch/include/single_exp_sim_sslidar.launch">
 			<arg name="uav_name" value="$(arg uav1_name)"/>
 		</include>
 
@@ -62,7 +62,7 @@
 	<!-- UAV2 -->
 	<!-- <group ns="$(arg uav2_name)">
 
-		<include file="$(find fuel_in_gazebo)/launch/include/single_basic.launch">
+		<include file="$(find sim_kit)/launch/include/single_basic.launch">
 			<arg name="uav_name" value="$(arg uav2_name)"/>
 			<arg name="ID" value="1"/>
 			<arg name="model" default="p450_sslidar"/>
@@ -74,7 +74,7 @@
 			<arg name="Y" value="0.0"/>
 		</include>
 
-		<include file="$(find fuel_in_gazebo)/launch/include/single_exp_sim_sslidar.launch">
+		<include file="$(find sim_kit)/launch/include/single_exp_sim_sslidar.launch">
 			<arg name="uav_name" value="$(arg uav2_name)"/>
 		</include>
 
